@@ -296,5 +296,137 @@
     ],
     "correct": ["b", "c", "d"],
     "explanation": "Sur un penalty, les coéquipiers du tireur doivent se trouver derrière le point de penalty et donc derrière le ballon au moment du tir : ils ne peuvent pas être en position de hors-jeu à cet instant. La Loi 11 prévoit par ailleurs qu'il n'y a pas d'infraction de hors-jeu lorsqu'un joueur reçoit directement le ballon sur un corner ou un coup de pied de but."
+  },
+  {
+    "id": "q18",
+    "category": "Distances et reprises rapides",
+    "type": "multiple",
+    "question": "Si l'exécutant décide de jouer rapidement, pour lesquelles de ces reprises les adversaires qui n'ont pas eu le temps de se mettre à la distance réglementaire peuvent-ils ne pas être sanctionnés du seul fait de leur position ?",
+    "image": null,
+    "options": [
+      { "id": "a", "text": "Coup d'envoi" },
+      { "id": "b", "text": "6 mètres (coup de pied de but)" },
+      { "id": "c", "text": "Coup franc direct" },
+      { "id": "d", "text": "Touche" }
+    ],
+    "correct": ["b", "c"],
+    "explanation": "Sur un coup franc joué rapidement, un adversaire à moins de 9,15 m peut intercepter le ballon s'il ne cherchait pas délibérément à empêcher l'exécution. Sur un coup de pied de but, si des adversaires sont encore dans la surface parce qu'ils n'ont pas eu le temps d'en sortir, l'arbitre laisse le jeu se poursuivre. En revanche, sur une rentrée de touche, tous les adversaires doivent rester à au moins 2 m."
+  },
+  {
+    "id": "q19",
+    "category": "Blessures",
+    "type": "single",
+    "question": "Un joueur qui reçoit des soins sur le terrain peut exceptionnellement y rester si :",
+    "image": null,
+    "options": [
+      { "id": "a", "text": "Il est le tireur attitré d'un penalty qui vient d'être accordé" },
+      { "id": "b", "text": "Il doit effectuer le coup d'envoi" },
+      { "id": "c", "text": "Il doit tirer un coup franc direct" },
+      { "id": "d", "text": "Il doit tirer un corner" }
+    ],
+    "correct": ["a"],
+    "explanation": "La Loi 5 prévoit plusieurs exceptions à l'obligation de quitter le terrain après des soins, notamment lorsqu'un penalty a été accordé et que le joueur blessé en est le tireur attitré."
+  },
+  {
+    "id": "q20",
+    "category": "Coup d'envoi",
+    "type": "single",
+    "question": "Lors du tirage au sort avant le début du match, que peut choisir l'équipe qui remporte le toss ?",
+    "image": null,
+    "options": [
+      { "id": "a", "text": "Uniquement le camp" },
+      { "id": "b", "text": "Le but qu'elle attaquera en première période ou d'effectuer le coup d'envoi" },
+      { "id": "c", "text": "Obligatoirement le coup d'envoi" }
+    ],
+    "correct": ["b"],
+    "explanation": "L'équipe qui remporte le toss choisit soit le but qu'elle attaquera en première période, soit d'effectuer le coup d'envoi. L'autre équipe obtient l'autre choix."
+  },
+  {
+    "id": "q21",
+    "category": "Balle à terre",
+    "type": "single",
+    "question": "Après une balle à terre, un joueur part en conduite de balle, tire et le ballon entre directement dans le but adverse sans avoir touché un autre joueur. Décision ?",
+    "image": null,
+    "options": [
+      { "id": "a", "text": "But accordé" },
+      { "id": "b", "text": "Nouvelle balle à terre" },
+      { "id": "c", "text": "6 mètres (coup de pied de but)" }
+    ],
+    "correct": ["c"],
+    "explanation": "Un but ne peut être marqué après une balle à terre que si le ballon a touché au moins deux joueurs. S'il entre dans le but adverse après n'avoir été touché que par le joueur ayant reçu la balle à terre, un coup de pied de but est accordé."
+  },
+  {
+    "id": "q22",
+    "category": "Penalty",
+    "type": "single",
+    "question": "Sur un penalty, le ballon touche un poteau, rebondit sur le dos du gardien de but puis entre dans le but. Décision ?",
+    "image": null,
+    "options": [
+      { "id": "a", "text": "But accordé" },
+      { "id": "b", "text": "Penalty à refaire" },
+      { "id": "c", "text": "6 mètres (coup de pied de but)" }
+    ],
+    "correct": ["a"],
+    "explanation": "Le ballon reste en jeu après avoir rebondi sur un poteau et sur le gardien. S'il franchit ensuite entièrement la ligne de but entre les poteaux et sous la barre sans infraction, le but est accordé."
+  },
+  {
+    "id": "q23",
+    "category": "Durée du match",
+    "type": "single",
+    "question": "Pour laquelle de ces reprises le temps d'une période doit-il être prolongé afin de permettre son exécution et son achèvement ?",
+    "image": null,
+    "options": [
+      { "id": "a", "text": "Penalty" },
+      { "id": "b", "text": "Coup d'envoi" },
+      { "id": "c", "text": "Coup franc direct" },
+      { "id": "d", "text": "Corner" }
+    ],
+    "correct": ["a"],
+    "explanation": "La Loi 7 prévoit qu'une période doit être prolongée pour permettre l'exécution d'un penalty accordé à la fin de cette période et pour que le tir puisse être achevé."
+  },
+  {
+    "id": "q24",
+    "category": "Coups francs",
+    "type": "single",
+    "question": "Un coup franc indirect est tiré directement dans le but adverse sans toucher un autre joueur. Décision ?",
+    "image": null,
+    "options": [
+      { "id": "a", "text": "6 mètres (coup de pied de but)" },
+      { "id": "b", "text": "Balle à terre" },
+      { "id": "c", "text": "Coup franc indirect à refaire" },
+      { "id": "d", "text": "Coup d'envoi" }
+    ],
+    "correct": ["a"],
+    "explanation": "Un but ne peut pas être marqué directement sur un coup franc indirect. Si le ballon entre directement dans le but adverse, un coup de pied de but est accordé à l'équipe adverse."
+  },
+  {
+    "id": "q25",
+    "category": "Ballon hors du jeu et sanctions disciplinaires",
+    "type": "single",
+    "question": "Le ballon sort en coup de pied de but. Avant la reprise, des joueurs se battent dans la surface de réparation. Quelle sera la reprise du jeu après les sanctions disciplinaires appropriées ?",
+    "image": null,
+    "options": [
+      { "id": "a", "text": "Penalty" },
+      { "id": "b", "text": "Balle à terre" },
+      { "id": "c", "text": "Corner" },
+      { "id": "d", "text": "6 mètres (coup de pied de but)" }
+    ],
+    "correct": ["d"],
+    "explanation": "La confrontation a lieu alors que le ballon est déjà hors du jeu. L'arbitre sanctionne disciplinairement les joueurs concernés, mais la reprise déjà acquise ne change pas : le jeu reprend par le coup de pied de but."
+  },
+  {
+    "id": "q26",
+    "category": "Emplacement des reprises",
+    "type": "multiple",
+    "question": "Pour lesquelles de ces reprises le ballon peut-il être placé à n'importe quel endroit de la surface de but lorsque les conditions de la Loi sont réunies ?",
+    "image": null,
+    "options": [
+      { "id": "a", "text": "6 mètres (coup de pied de but)" },
+      { "id": "b", "text": "Balle à terre" },
+      { "id": "c", "text": "Coup franc accordé à l'équipe qui défend dans sa propre surface de but" },
+      { "id": "d", "text": "Touche" }
+    ],
+    "correct": ["a", "c"],
+    "explanation": "Un coup de pied de but peut être exécuté depuis n'importe quel point de la surface de but. De même, un coup franc accordé à l'équipe qui défend dans sa propre surface de but peut être exécuté depuis n'importe quel point de cette surface. Une balle à terre est donnée à l'endroit prévu par la Loi 8 et une rentrée de touche s'effectue depuis le point de la ligne de touche où le ballon est sorti."
   }
 ]
