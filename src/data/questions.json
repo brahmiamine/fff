@@ -253,5 +253,48 @@
     ],
     "correct": ["b"],
     "explanation": "Lors d'un penalty, le tireur doit obligatoirement jouer le ballon vers l'avant. S'il ne respecte pas cette règle, l'arbitre arrête le jeu et accorde un coup franc indirect à l'équipe adverse, à exécuter à l'endroit où l'infraction a eu lieu (Loi 14)."
+  },
+  {
+    "id": "q15",
+    "category": "Coups francs et coup de pied de but",
+    "type": "multiple",
+    "question": "Remise en jeu pour la défense dans sa surface de réparation. Pour lesquelles de ces reprises de jeu les adversaires doivent-ils se trouver en dehors de la surface jusqu'à ce que le ballon soit en jeu ?",
+    "image": null,
+    "options": [
+      { "id": "a", "text": "Coup franc direct" },
+      { "id": "b", "text": "Balle à terre" },
+      { "id": "c", "text": "Coup franc indirect" },
+      { "id": "d", "text": "6 mètres (coup de pied de but)" }
+    ],
+    "correct": ["a", "c", "d"],
+    "explanation": "Lors d'un coup franc direct ou indirect accordé à l'équipe qui défend dans sa propre surface de réparation, les adversaires doivent être en dehors de cette surface jusqu'à ce que le ballon soit en jeu. Il en va de même lors d'un coup de pied de but."
+  },
+  {
+    "id": "q16",
+    "category": "Rentrée de touche",
+    "type": "single",
+    "question": "L'exécutant d'une remise en jeu saute en lâchant le ballon. La remise en jeu est donnée à l'équipe adverse. De quelle remise en jeu s'agit-il ?",
+    "image": null,
+    "options": [
+      { "id": "a", "text": "Touche" },
+      { "id": "b", "text": "Balle à terre" }
+    ],
+    "correct": ["a"],
+    "explanation": "Lors d'une rentrée de touche, l'exécutant doit avoir au moins une partie de chaque pied sur la ligne de touche ou à l'extérieur de celle-ci au moment de lâcher le ballon. S'il saute et n'a plus les pieds au sol au moment de la remise, la rentrée de touche est accordée à l'équipe adverse."
+  },
+  {
+    "id": "q17",
+    "category": "Hors-jeu",
+    "type": "multiple",
+    "question": "Il n'y a pas de hors-jeu sur :",
+    "image": null,
+    "options": [
+      { "id": "a", "text": "Coup franc direct" },
+      { "id": "b", "text": "Penalty" },
+      { "id": "c", "text": "Corner" },
+      { "id": "d", "text": "6 mètres (coup de pied de but)" }
+    ],
+    "correct": ["b", "c", "d"],
+    "explanation": "Sur un penalty, les coéquipiers du tireur doivent se trouver derrière le point de penalty et donc derrière le ballon au moment du tir : ils ne peuvent pas être en position de hors-jeu à cet instant. La Loi 11 prévoit par ailleurs qu'il n'y a pas d'infraction de hors-jeu lorsqu'un joueur reçoit directement le ballon sur un corner ou un coup de pied de but."
   }
 ]
