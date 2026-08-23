@@ -150,6 +150,28 @@ body {
   margin-top: 14px;
 }
 
+.quiz-actions-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.quiz-actions-row .btn-primary {
+  flex: 1;
+}
+
+.btn-skip {
+  flex: none;
+  background: none;
+  border: none;
+  color: var(--fff-blue);
+  font-weight: 700;
+  font-size: 0.88rem;
+  padding: 8px 2px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
 .btn-link {
   background: none;
   border: none;

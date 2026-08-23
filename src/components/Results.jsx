@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { isAnswerCorrect } from './QuestionCard.jsx'
+import { computeScore } from '../utils/scoring.js'
 
 const BASE = import.meta.env.BASE_URL
 
@@ -13,8 +14,9 @@ export default function Results({ questions, answers, passThreshold, onRestart }
   }))
   const goodCount = scored.filter((s) => s.correct).length
   const total = questions.length
-  const ratio = total > 0 ? goodCount / total : 0
-  const passed = ratio >= passThreshold
+
+  const score = computeScore(questions, answers)
+  const passed = score.total / 100 >= passThreshold
 
   function optionLabel(question, optionId) {
     const opt = question.options.find((o) => o.id === optionId)
@@ -25,10 +27,11 @@ export default function Results({ questions, answers, passThreshold, onRestart }
     <div className="screen results-screen">
       <div className={`card score-card ${passed ? 'score-pass' : 'score-fail'}`}>
         <p className="score-headline">{passed ? 'Réussi' : 'À retravailler'}</p>
-        <p className="score-number">
-          {goodCount} / {total}
+        <p className="score-number">{score.total} / 100</p>
+        <p className="score-percent">
+          {goodCount} / {total} questions entièrement correctes
+          {score.unanswered > 0 && ` · ${score.unanswered} non répondue${score.unanswered > 1 ? 's' : ''}`}
         </p>
-        <p className="score-percent">{Math.round(ratio * 100)}% de bonnes réponses</p>
       </div>
 
       <div className="results-actions">

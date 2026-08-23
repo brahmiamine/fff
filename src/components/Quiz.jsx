@@ -40,6 +40,17 @@ export default function Quiz({ questions, onFinish, onAbort }) {
     setIndex((i) => i + 1)
   }
 
+  function handleSkip() {
+    const nextAnswers = { ...answers, [question.id]: [] }
+    setAnswers(nextAnswers)
+    if (isLast) {
+      onFinish(nextAnswers)
+      return
+    }
+    setRevealed(false)
+    setIndex((i) => i + 1)
+  }
+
   return (
     <div className="screen quiz-screen">
       <div className="quiz-header">
@@ -58,14 +69,19 @@ export default function Quiz({ questions, onFinish, onAbort }) {
 
       <div className="quiz-actions">
         {!revealed ? (
-          <button
-            type="button"
-            className="btn btn-primary"
-            disabled={selected.length === 0}
-            onClick={handleValidate}
-          >
-            Valider
-          </button>
+          <div className="quiz-actions-row">
+            <button
+              type="button"
+              className="btn btn-primary"
+              disabled={selected.length === 0}
+              onClick={handleValidate}
+            >
+              Valider
+            </button>
+            <button type="button" className="btn-skip" onClick={handleSkip}>
+              Suivant →
+            </button>
+          </div>
         ) : (
           <button type="button" className="btn btn-primary" onClick={handleNext}>
             {isLast ? 'Voir les résultats' : 'Question suivante'}
