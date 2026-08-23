@@ -18,10 +18,12 @@ export function loadProgress(questionsData) {
     }
     if (typeof parsed.answers !== 'object' || parsed.answers === null) return null
 
-    // Discard stale saves if the question bank changed since it was saved.
-    const currentIds = questionsData.map((q) => q.id).sort().join(',')
-    const savedIds = [...parsed.quizQuestions].map((q) => q.id).sort().join(',')
-    if (currentIds !== savedIds) return null
+    // Discard stale saves if any saved question no longer exists in the current
+    // question bank (content updated/removed). This must stay a subset check —
+    // a saved run can cover any lot size (10, 20, all...), not just the full bank.
+    const currentIds = new Set(questionsData.map((q) => q.id))
+    const stillValid = parsed.quizQuestions.every((q) => currentIds.has(q.id))
+    if (!stillValid) return null
 
     return parsed
   } catch {
