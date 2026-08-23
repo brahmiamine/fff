@@ -1,7 +1,20 @@
+import { useState } from 'react'
 import fffLogo from '../assets/fff-logo.png'
 import district75Logo from '../assets/district75-logo.png'
+import { computeCountTiers } from '../utils/tiers.js'
 
-export default function Home({ totalQuestions, onStart, resumable, resumeIndex, onResume, onReset }) {
+export default function Home({
+  totalQuestions,
+  onStart,
+  resumable,
+  resumeIndex,
+  onResume,
+  onReset,
+  onViewAnswers,
+}) {
+  const tiers = computeCountTiers(totalQuestions)
+  const [count, setCount] = useState(totalQuestions)
+
   function handleReset() {
     if (window.confirm('Réinitialiser toute la progression de ce quiz ?')) {
       onReset()
@@ -37,12 +50,33 @@ export default function Home({ totalQuestions, onStart, resumable, resumeIndex, 
               {totalQuestions} questions officielles issues de l'examen théorique CDA, avec correction
               et explication détaillée après chaque réponse.
             </p>
-            <button type="button" className="btn btn-primary btn-start" onClick={onStart}>
+
+            <span className="field-label">Nombre de questions</span>
+            <div className="count-options" role="group" aria-label="Nombre de questions">
+              {tiers.map((tier) => (
+                <button
+                  type="button"
+                  key={tier}
+                  className={`chip ${count === tier ? 'chip-active' : ''}`}
+                  onClick={() => setCount(tier)}
+                >
+                  {tier === totalQuestions ? `Toutes (${tier})` : tier}
+                </button>
+              ))}
+            </div>
+
+            <button type="button" className="btn btn-primary btn-start" onClick={() => onStart(count)}>
               Commencer le quiz
             </button>
           </>
         )}
       </div>
+
+      {!resumable && (
+        <button type="button" className="link-button" onClick={onViewAnswers}>
+          Voir toutes les questions et réponses
+        </button>
+      )}
 
       <p className="footer-note">
         Questions extraites du test théorique officiel de la Commission Départementale de

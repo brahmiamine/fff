@@ -117,6 +117,50 @@ body {
   text-align: center;
 }
 
+.field-label {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--fff-blue);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  text-align: center;
+}
+
+.count-options {
+  display: flex;
+  gap: 8px;
+}
+
+.chip {
+  flex: 1;
+  padding: 10px 6px;
+  border-radius: 999px;
+  border: 1.5px solid var(--gray-300);
+  background: var(--off-white);
+  color: var(--fff-blue);
+  font-weight: 700;
+  font-size: 0.92rem;
+  cursor: pointer;
+}
+
+.chip-active {
+  background: var(--fff-blue);
+  border-color: var(--fff-blue);
+  color: var(--white);
+}
+
+.link-button {
+  background: none;
+  border: none;
+  color: var(--fff-blue);
+  font-weight: 700;
+  font-size: 0.92rem;
+  padding: 8px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: underline;
+}
+
 .btn {
   border: none;
   border-radius: var(--radius-md);
@@ -480,6 +524,31 @@ body {
   font-size: 0.88rem;
   line-height: 1.45;
   color: var(--gray-600);
+}
+
+.answerkey-screen .app-title {
+  font-size: 1.35rem;
+  margin-top: 8px;
+}
+
+.answerkey-options {
+  list-style: none;
+  margin: 0 0 4px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.answerkey-option {
+  font-size: 0.92rem;
+  color: var(--gray-600);
+  padding: 4px 0;
+}
+
+.answerkey-option-correct {
+  color: var(--success);
+  font-weight: 700;
 }
 
 @media (min-width: 480px) {

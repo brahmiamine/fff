@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import Home from './components/Home.jsx'
 import Quiz from './components/Quiz.jsx'
 import Results from './components/Results.jsx'
+import AnswerKey from './components/AnswerKey.jsx'
 import questionsData from './data/questions.json'
 import { prepareQuestions } from './utils/shuffle.js'
 import { loadProgress, saveProgress, clearProgress } from './utils/storage.js'
@@ -21,10 +22,11 @@ export default function App() {
     }
   }, [state])
 
-  function startQuiz() {
+  function startQuiz(count) {
+    const size = Math.min(Math.max(count || questionsData.length, 1), questionsData.length)
     setState({
       screen: 'quiz',
-      quizQuestions: prepareQuestions(questionsData),
+      quizQuestions: prepareQuestions(questionsData).slice(0, size),
       answers: {},
       currentIndex: 0,
     })
@@ -60,6 +62,14 @@ export default function App() {
     setState((s) => ({ ...s, answers: nextAnswers }))
   }
 
+  function viewAnswers() {
+    setState((s) => ({ ...s, screen: 'answers' }))
+  }
+
+  function backToHome() {
+    setState((s) => ({ ...s, screen: 'home' }))
+  }
+
   const resumable = state.quizQuestions.length > 0 && state.screen === 'home'
 
   return (
@@ -72,6 +82,7 @@ export default function App() {
           resumeIndex={state.currentIndex}
           onResume={resumeQuiz}
           onReset={resetProgress}
+          onViewAnswers={viewAnswers}
         />
       )}
       {state.screen === 'quiz' && (
@@ -94,6 +105,7 @@ export default function App() {
           onRestart={resetProgress}
         />
       )}
+      {state.screen === 'answers' && <AnswerKey questions={questionsData} onBack={backToHome} />}
     </div>
   )
 }
