@@ -1,0 +1,15 @@
+<svg viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Schéma de la surface de réparation et de la surface de but">
+  <rect x="0" y="0" width="400" height="260" fill="#0e7a3a"/>
+  <rect x="0" y="30" width="10" height="200" fill="#f5c400"/>
+  <!-- surface de reparation -->
+  <rect x="10" y="50" width="150" height="160" fill="none" stroke="#ffffff" stroke-width="3"/>
+  <!-- surface de but -->
+  <rect x="10" y="95" width="55" height="70" fill="none" stroke="#ffffff" stroke-width="3"/>
+  <!-- but -->
+  <rect x="0" y="112" width="10" height="36" fill="none" stroke="#f5c400" stroke-width="3"/>
+  <circle cx="118" cy="130" r="3" fill="#ffffff"/>
+  <path d="M 160 100 A 42 42 0 0 1 160 160" fill="none" stroke="#ffffff" stroke-width="2" stroke-dasharray="4 3"/>
+  <text x="30" y="230" fill="#ffffff" font-size="15" font-family="Arial, sans-serif">Surface de but : 5,5 m</text>
+  <text x="180" y="80" fill="#ffffff" font-size="15" font-family="Arial, sans-serif">Surface de réparation : 16,5 m</text>
+  <text x="90" y="145" fill="#ffffff" font-size="12" font-family="Arial, sans-serif">Point de penalty : 11 m</text>
+</svg>
