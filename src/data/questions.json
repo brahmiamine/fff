@@ -193,5 +193,65 @@
     ],
     "correct": ["a", "b", "c"],
     "explanation": "Contrairement au cas où le joueur se replace simplement, un joueur qui cherche volontairement à ne pas respecter les 9,15 m sur un coup franc doit être sanctionné : arrêt du jeu, coup franc à refaire, et avertissement pour ne pas avoir respecté la distance requise."
+  },
+  {
+    "id": "q11",
+    "category": "Remises en jeu (catégories jeunes)",
+    "type": "single",
+    "question": "Sur les catégories à règles adaptées (foot réduit), les adversaires doivent être au moins à 2 mètres de laquelle de ces remises en jeu ?",
+    "image": null,
+    "options": [
+      { "id": "a", "text": "Balle à terre" },
+      { "id": "b", "text": "Touche" },
+      { "id": "c", "text": "Coup de pied de 6 mètres" },
+      { "id": "d", "text": "Corner" }
+    ],
+    "correct": ["b"],
+    "explanation": "Sur les catégories à règles adaptées (foot réduit), la distance de replacement des adversaires est réduite ; elle est fixée à 2 mètres sur une remise en touche."
+  },
+  {
+    "id": "q12",
+    "category": "Rôle de l'arbitre",
+    "type": "multiple",
+    "question": "Le coup de sifflet de l'arbitre est obligatoire pour reprendre le jeu, sinon l'action doit être recommencée. Pour laquelle ou lesquelles de ces reprises de jeu est-ce le cas ?",
+    "image": null,
+    "options": [
+      { "id": "a", "text": "Coup d'envoi" },
+      { "id": "b", "text": "Penalty" },
+      { "id": "c", "text": "Coup de pied de 6 mètres" },
+      { "id": "d", "text": "Corner" }
+    ],
+    "correct": ["a", "b"],
+    "explanation": "L'arbitre doit obligatoirement siffler pour autoriser la reprise du jeu lors d'un coup d'envoi (début de match, de mi-temps, ou après un but) et lors de l'exécution d'un penalty. Si l'action est jouée sans ce coup de sifflet, l'arbitre la fait recommencer. Le corner et le coup de pied de 6 mètres ne nécessitent pas de coup de sifflet."
+  },
+  {
+    "id": "q13",
+    "category": "Coup d'envoi et remise en jeu",
+    "type": "single",
+    "question": "Si un but est marqué directement, sans qu'aucun autre joueur ne touche le ballon, sur laquelle de ces reprises de jeu est-il valable ?",
+    "image": null,
+    "options": [
+      { "id": "a", "text": "Touche" },
+      { "id": "b", "text": "Balle à terre" },
+      { "id": "c", "text": "Coup d'envoi" },
+      { "id": "d", "text": "Penalty" }
+    ],
+    "correct": ["c"],
+    "explanation": "Depuis la révision des Lois du Jeu, un but peut être marqué directement sur un coup d'envoi. Un but ne peut en revanche jamais être marqué directement sur une remise en touche, ni sur une balle à terre qui entre directement dans le but adverse (Loi 8)."
+  },
+  {
+    "id": "q14",
+    "category": "Penalty",
+    "type": "single",
+    "question": "Le ballon doit être joué vers l'avant, sinon l'arbitre arrête le jeu et accorde un coup franc indirect à l'équipe adverse. Cette règle s'applique à laquelle de ces situations ?",
+    "image": null,
+    "options": [
+      { "id": "a", "text": "Coup d'envoi" },
+      { "id": "b", "text": "Penalty" },
+      { "id": "c", "text": "Coup de pied de 6 mètres" },
+      { "id": "d", "text": "Corner" }
+    ],
+    "correct": ["b"],
+    "explanation": "Lors d'un penalty, le tireur doit obligatoirement jouer le ballon vers l'avant. S'il ne respecte pas cette règle, l'arbitre arrête le jeu et accorde un coup franc indirect à l'équipe adverse, à exécuter à l'endroit où l'infraction a eu lieu (Loi 14)."
   }
 ]
