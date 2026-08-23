@@ -1,25 +1,50 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import fffLogo from '../assets/fff-logo.png'
 import district75Logo from '../assets/district75-logo.png'
 import { computeCountTiers } from '../utils/tiers.js'
 
+const SECONDS_PER_QUESTION = 60
+
 export default function Home({
-  totalQuestions,
+  allQuestions,
   onStart,
   resumable,
   resumeIndex,
   onResume,
   onReset,
   onViewAnswers,
+  onViewHistory,
 }) {
-  const tiers = computeCountTiers(totalQuestions)
-  const [count, setCount] = useState(totalQuestions)
+  const totalQuestions = allQuestions.length
+  const categories = useMemo(() => [...new Set(allQuestions.map((q) => q.category))], [allQuestions])
+
+  const [category, setCategory] = useState('all')
+  const filteredTotal = useMemo(
+    () =>
+      category === 'all'
+        ? totalQuestions
+        : allQuestions.filter((q) => q.category === category).length,
+    [allQuestions, category, totalQuestions],
+  )
+
+  const tiers = useMemo(() => computeCountTiers(filteredTotal), [filteredTotal])
+  const [count, setCount] = useState(filteredTotal)
+  const [timed, setTimed] = useState(false)
+
+  function handleCategoryChange(next) {
+    setCategory(next)
+    const nextTotal =
+      next === 'all' ? totalQuestions : allQuestions.filter((q) => q.category === next).length
+    setCount(nextTotal)
+  }
 
   function handleReset() {
     if (window.confirm('Réinitialiser toute la progression de ce quiz ?')) {
       onReset()
     }
   }
+
+  const timedMinutes = Math.round((count * SECONDS_PER_QUESTION) / 60)
 
   return (
     <div className="screen home-screen">
@@ -51,6 +76,20 @@ export default function Home({
               et explication détaillée après chaque réponse.
             </p>
 
+            <span className="field-label">Catégorie</span>
+            <select
+              className="select-input"
+              value={category}
+              onChange={(e) => handleCategoryChange(e.target.value)}
+            >
+              <option value="all">Toutes les catégories</option>
+              {categories.map((c) => (
+                <option key={c} value={c}>
+                  {c}
+                </option>
+              ))}
+            </select>
+
             <span className="field-label">Nombre de questions</span>
             <div className="count-options" role="group" aria-label="Nombre de questions">
               {tiers.map((tier) => (
@@ -60,12 +99,24 @@ export default function Home({
                   className={`chip ${count === tier ? 'chip-active' : ''}`}
                   onClick={() => setCount(tier)}
                 >
-                  {tier === totalQuestions ? `Toutes (${tier})` : tier}
+                  {tier === filteredTotal ? `Toutes (${tier})` : tier}
                 </button>
               ))}
             </div>
 
-            <button type="button" className="btn btn-primary btn-start" onClick={() => onStart(count)}>
+            <button
+              type="button"
+              className={`chip chip-wide ${timed ? 'chip-active' : ''}`}
+              onClick={() => setTimed((v) => !v)}
+            >
+              ⏱ Mode chrono {timed ? `activé (≈ ${timedMinutes} min)` : 'désactivé'}
+            </button>
+
+            <button
+              type="button"
+              className="btn btn-primary btn-start"
+              onClick={() => onStart({ count, category, timeLimitSeconds: timed ? count * SECONDS_PER_QUESTION : null })}
+            >
               Commencer le quiz
             </button>
           </>
@@ -73,9 +124,14 @@ export default function Home({
       </div>
 
       {!resumable && (
-        <button type="button" className="link-button" onClick={onViewAnswers}>
-          Voir toutes les questions et réponses
-        </button>
+        <div className="home-links">
+          <button type="button" className="link-button" onClick={onViewAnswers}>
+            Voir toutes les questions et réponses
+          </button>
+          <button type="button" className="link-button" onClick={onViewHistory}>
+            Voir mon historique
+          </button>
+        </div>
       )}
 
       <p className="footer-note">

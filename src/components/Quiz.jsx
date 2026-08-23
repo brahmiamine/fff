@@ -1,6 +1,12 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import ProgressBar from './ProgressBar.jsx'
 import QuestionCard from './QuestionCard.jsx'
+
+function formatTime(totalSeconds) {
+  const m = Math.floor(totalSeconds / 60)
+  const s = totalSeconds % 60
+  return `${m}:${String(s).padStart(2, '0')}`
+}
 
 export default function Quiz({
   questions,
@@ -8,15 +14,36 @@ export default function Quiz({
   setCurrentIndex,
   answers,
   setAnswers,
+  timeLimitSeconds,
+  startedAt,
   onFinish,
   onAbort,
   onReset,
 }) {
   const [revealed, setRevealed] = useState(false)
+  const [now, setNow] = useState(Date.now())
+  const finishedRef = useRef(false)
 
   const question = questions[currentIndex]
   const selected = answers[question.id] || []
   const isLast = currentIndex === questions.length - 1
+
+  const remaining = timeLimitSeconds
+    ? Math.max(0, timeLimitSeconds - Math.floor((now - startedAt) / 1000))
+    : null
+
+  useEffect(() => {
+    if (!timeLimitSeconds) return undefined
+    const id = setInterval(() => setNow(Date.now()), 1000)
+    return () => clearInterval(id)
+  }, [timeLimitSeconds])
+
+  useEffect(() => {
+    if (timeLimitSeconds && remaining === 0 && !finishedRef.current) {
+      finishedRef.current = true
+      onFinish(answers)
+    }
+  }, [remaining, timeLimitSeconds, answers, onFinish])
 
   function toggleOption(optionId) {
     const current = answers[question.id] || []
@@ -69,6 +96,11 @@ export default function Quiz({
           <button type="button" className="btn-link" onClick={onAbort}>
             ← Quitter
           </button>
+          {timeLimitSeconds && (
+            <span className={`timer-badge ${remaining <= 30 ? 'timer-badge-low' : ''}`}>
+              ⏱ {formatTime(remaining)}
+            </span>
+          )}
           <button type="button" className="btn-link btn-reset" onClick={handleReset}>
             Réinitialiser
           </button>

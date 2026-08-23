@@ -4,7 +4,7 @@ import { computeScore } from '../utils/scoring.js'
 
 const BASE = import.meta.env.BASE_URL
 
-export default function Results({ questions, answers, passThreshold, onRestart }) {
+export default function Results({ questions, answers, passThreshold, onRestart, onReviewMistakes }) {
   const [showReview, setShowReview] = useState(false)
 
   const scored = questions.map((q) => ({
@@ -14,6 +14,7 @@ export default function Results({ questions, answers, passThreshold, onRestart }
   }))
   const goodCount = scored.filter((s) => s.correct).length
   const total = questions.length
+  const mistakeCount = total - goodCount
 
   const score = computeScore(questions, answers)
   const passed = score.total / 100 >= passThreshold
@@ -42,6 +43,12 @@ export default function Results({ questions, answers, passThreshold, onRestart }
           Nouveau quiz
         </button>
       </div>
+
+      {mistakeCount > 0 && (
+        <button type="button" className="btn btn-secondary btn-review-mistakes" onClick={onReviewMistakes}>
+          Réviser mes {mistakeCount} erreur{mistakeCount > 1 ? 's' : ''}
+        </button>
+      )}
 
       {showReview && (
         <div className="review-list">
