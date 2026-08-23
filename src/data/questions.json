@@ -3,7 +3,7 @@
     "id": "q01",
     "category": "Avantage et fautes",
     "type": "multiple",
-    "question": "Lors d'un match, un défenseur tacle un attaquant avec violence à l'entrée de la surface de réparation. L'attaquant parvient malgré tout à transmettre le ballon à un coéquipier qui se retrouve en excellente position de tir. L'arbitre laisse jouer (avantage) mais avant le tir un autre défenseur tacle le ballon qui part en corner. Décisions ?",
+    "question": "Lors d'un match, un défenseur tacle un attaquant avec violence juste à l'extérieur de la surface de réparation. L'attaquant parvient malgré tout à transmettre le ballon à un coéquipier qui se retrouve en excellente position de tir. L'arbitre laisse jouer (avantage) mais avant le tir un autre défenseur tacle le ballon qui part en corner. Décisions ?",
     "image": null,
     "options": [
       { "id": "a", "text": "Corner, l'arbitre ayant donné un avantage" },
@@ -16,7 +16,7 @@
       { "id": "h", "text": "Rapport" }
     ],
     "correct": ["b", "e", "g", "h"],
-    "explanation": "L'avantage escompté ne s'étant pas concrétisé, l'arbitre revient à la faute initiale. Le tacle avec violence à l'entrée de la surface est sanctionné comme faute grossière : exclusion, coup franc direct au bénéfice de l'équipe attaquante à l'endroit de la faute, et rapport obligatoire pour toute exclusion."
+    "explanation": "L'avantage escompté ne s'étant pas concrétisé immédiatement ou dans les secondes suivantes, l'arbitre revient à la faute initiale. Le tacle violent, commis juste à l'extérieur de la surface de réparation en disputant le ballon, constitue une faute grossière : exclusion du défenseur, coup franc direct à l'endroit de la faute et rapport."
   },
   {
     "id": "q02",
@@ -27,16 +27,16 @@
     "options": [
       { "id": "a", "text": "Les joueurs peuvent porter des maillots sans manches." },
       { "id": "b", "text": "Les joueurs doivent porter des protège-tibias recouverts par les chaussettes." },
-      { "id": "c", "text": "Les tip-tops peuvent être d'une couleur différente de la chaussette." },
-      { "id": "d", "text": "Le brassard de capitaine doit être d'une seule couleur avec une inscription d'une autre couleur." },
+      { "id": "c", "text": "Les tip-tops peuvent être d'une couleur différente de la partie de la chaussette qu'ils couvrent." },
+      { "id": "d", "text": "Le capitaine doit porter le brassard fourni ou autorisé par l'organisateur de la compétition, ou un brassard d'une seule couleur pouvant comporter « capitaine », sa traduction ou la lettre « C », avec une inscription d'une seule couleur." },
       { "id": "e", "text": "La couleur des maillots de gardien peut être en partie de la couleur de l'équipe adverse." },
       { "id": "f", "text": "Les deux gardiens peuvent porter un maillot identique, s'ils n'en ont pas d'autre." },
-      { "id": "g", "text": "Si un joueur porte un sous-maillot, les manches doivent être de couleur identique aux manches du maillot." },
+      { "id": "g", "text": "La couleur du sous-maillot doit être celle de la couleur principale des manches du maillot, ou reprendre à l'identique le motif ou les couleurs de ces manches." },
       { "id": "h", "text": "Si une équipe joue avec des shorts jaunes à liseré vert, certains joueurs peuvent porter des cuissards jaunes et d'autres verts." },
       { "id": "i", "text": "Les arbitres doivent accorder un but, si le buteur au cours de l'action perd sa chaussure." }
     ],
     "correct": ["b", "d", "f", "g", "i"],
-    "explanation": "Sont conformes à la Loi 4 : le port de protège-tibias recouverts par les chaussettes, un brassard de capitaine d'une seule couleur avec inscription d'une autre couleur, la possibilité pour les deux gardiens de porter un maillot identique s'ils n'en ont pas d'autre, l'obligation d'avoir des manches de sous-maillot identiques à celles du maillot, et le fait qu'un but est valable même si le buteur perd sa chaussure pendant l'action."
+    "explanation": "La Loi 4 impose un maillot avec manches, des protège-tibias recouverts par les chaussettes et des matériaux extérieurs sur les chaussettes de la même couleur que la partie couverte. Le capitaine porte le brassard fourni ou autorisé par la compétition, ou un brassard unicolore conforme. Le sous-maillot doit reprendre la couleur principale des manches ou leur motif/couleurs à l'identique. Les deux gardiens peuvent exceptionnellement porter la même couleur s'ils n'ont pas d'autre maillot. Un but reste valable si le buteur a perdu accidentellement une chaussure pendant l'action."
   },
   {
     "id": "q03",
@@ -49,15 +49,15 @@
       { "id": "b", "text": "But accordé" },
       { "id": "c", "text": "Sous le principe de l'avantage" },
       { "id": "d", "text": "Le joueur 4B sera averti pour CAS" },
-      { "id": "e", "text": "En cas d'avantage, l'arbitre doit réduire la sanction disciplinaire" },
+      { "id": "e", "text": "En cas d'avantage, l'arbitre doit toujours réduire la sanction disciplinaire" },
       { "id": "f", "text": "Le joueur 4B est exclu pour faute grossière" },
-      { "id": "g", "text": "Le joueur 4B est exclu pour avoir craché sur un adversaire" },
+      { "id": "g", "text": "Le joueur 4B est exclu pour avoir craché sur/vers un adversaire" },
       { "id": "h", "text": "Rapport" },
       { "id": "i", "text": "Coup d'envoi pour l'équipe B" },
       { "id": "j", "text": "Coup franc direct ou penalty selon l'endroit de la faute" }
     ],
     "correct": ["b", "c", "g", "h", "i"],
-    "explanation": "Cracher sur un adversaire est un acte de brutalité, sanctionné par une exclusion, quelle que soit l'issue de l'action. Le but étant marqué malgré tout, l'arbitre applique l'avantage : but accordé, reprise par un coup d'envoi de l'équipe B, exclusion du joueur 4B et rapport obligatoire. L'application de l'avantage ne réduit jamais la sanction disciplinaire."
+    "explanation": "Cracher sur/vers quelqu'un est une infraction spécifiquement passible d'exclusion selon la Loi 12. Comme le joueur 9A marque immédiatement, l'arbitre applique l'avantage : but accordé, exclusion du joueur 4B au premier arrêt, rapport, puis coup d'envoi pour l'équipe B. Dans cette situation, l'application de l'avantage ne supprime ni ne réduit l'exclusion prévue pour le crachat."
   },
   {
     "id": "q04",
@@ -188,11 +188,11 @@
     "image": null,
     "options": [
       { "id": "a", "text": "Arrêt du jeu" },
-      { "id": "b", "text": "Coup franc direct à refaire" },
+      { "id": "b", "text": "Coup franc à refaire" },
       { "id": "c", "text": "Avertissement au joueur 6B pour avoir retardé la reprise du jeu." }
     ],
     "correct": ["a", "b", "c"],
-    "explanation": "Un adversaire qui empêche délibérément l'exécution rapide d'un coup franc doit être averti pour avoir retardé la reprise du jeu. L'arbitre arrête le jeu et fait exécuter à nouveau le coup franc. Cette situation est différente de celle où un adversaire encore à moins de 9,15 m se replace normalement et intercepte un coup franc joué rapidement."
+    "explanation": "Un adversaire qui empêche délibérément l'exécution rapide d'un coup franc doit être averti pour avoir retardé la reprise du jeu. L'arbitre arrête le jeu et fait exécuter à nouveau le coup franc initial, qu'il soit direct ou indirect. Cette situation est différente de celle où un adversaire encore à moins de 9,15 m se replace normalement et intercepte un coup franc joué rapidement."
   },
   {
     "id": "q11",
@@ -286,16 +286,16 @@
     "id": "q17",
     "category": "Hors-jeu",
     "type": "multiple",
-    "question": "Il n'y a pas de hors-jeu sur :",
+    "question": "Il n'y a pas d'infraction de hors-jeu lorsqu'un joueur reçoit directement le ballon sur :",
     "image": null,
     "options": [
       { "id": "a", "text": "Coup franc direct" },
-      { "id": "b", "text": "Penalty" },
+      { "id": "b", "text": "Rentrée de touche" },
       { "id": "c", "text": "Corner" },
       { "id": "d", "text": "6 mètres (coup de pied de but)" }
     ],
     "correct": ["b", "c", "d"],
-    "explanation": "Sur un penalty, les coéquipiers du tireur doivent se trouver derrière le point de penalty et donc derrière le ballon au moment du tir : ils ne peuvent pas être en position de hors-jeu à cet instant. La Loi 11 prévoit par ailleurs qu'il n'y a pas d'infraction de hors-jeu lorsqu'un joueur reçoit directement le ballon sur un corner ou un coup de pied de but."
+    "explanation": "La Loi 11 prévoit expressément qu'il n'y a pas d'infraction de hors-jeu lorsqu'un joueur reçoit directement le ballon sur un coup de pied de but, une rentrée de touche ou un corner. Cette exception ne s'applique pas à un coup franc direct."
   },
   {
     "id": "q18",
