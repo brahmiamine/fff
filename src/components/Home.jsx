@@ -24,7 +24,7 @@ export default function Home({ totalQuestions, onStart }) {
 
       <p className="footer-note">
         Questions extraites du test théorique officiel de la Commission Départementale de
-        l'Arbitrage (CDA) — District Parisien de Football, saison 2025/2026. À but d'entraînement.
+        l'Arbitrage (CDA) — District Parisien de Football, saison 2026/2027. À but d'entraînement.
       </p>
     </div>
   )

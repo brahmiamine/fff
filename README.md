@@ -2,7 +2,7 @@
 
 Application web d'entraînement au test théorique de la **CDA (Commission Départementale d'Arbitrage)** du District de Paris de Football, à destination des arbitres. Interface simple, pensée pour mobile, avec des questions à choix unique ou multiple, avec correction et explication.
 
-Les questions reprennent le contenu de l'examen théorique officiel « Test théorique — Corrigé » de la CDA, District Parisien de Football, saison 2025/2026 (fourni par l'utilisateur), adapté au format quiz interactif.
+Les questions reprennent le contenu de l'examen théorique officiel « Test théorique — Corrigé » de la CDA, District Parisien de Football, saison 2026/2027 (fourni par l'utilisateur), adapté au format quiz interactif.
 
 ⚠️ Les questions sont fournies à titre d'entraînement et ne remplacent pas la documentation officielle de la FFF / du District de Paris.
 
