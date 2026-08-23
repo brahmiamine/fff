@@ -1,512 +1,197 @@
 [
   {
     "id": "q01",
-    "category": "Terrain de jeu",
-    "type": "single",
-    "question": "Quelle est la largeur réglementaire d'un but de football (distance entre les poteaux) ?",
+    "category": "Avantage et fautes",
+    "type": "multiple",
+    "question": "Lors d'un match, un défenseur tacle un attaquant avec violence à l'entrée de la surface de réparation. L'attaquant parvient malgré tout à transmettre le ballon à un coéquipier qui se retrouve en excellente position de tir. L'arbitre laisse jouer (avantage) mais avant le tir un autre défenseur tacle le ballon qui part en corner. Décisions ?",
     "image": null,
     "options": [
-      { "id": "a", "text": "6,40 m" },
-      { "id": "b", "text": "7,32 m" },
-      { "id": "c", "text": "8,00 m" },
-      { "id": "d", "text": "9,15 m" }
+      { "id": "a", "text": "Corner, l'arbitre ayant donné un avantage" },
+      { "id": "b", "text": "L'avantage ne peut pas être pris en compte" },
+      { "id": "c", "text": "Exclusion pour anéantissement d'une occasion nette de marquer" },
+      { "id": "d", "text": "Avertissement pour comportement antisportif (CAS)" },
+      { "id": "e", "text": "Exclusion pour faute grossière" },
+      { "id": "f", "text": "Penalty" },
+      { "id": "g", "text": "L'arbitre revient à la faute et siffle coup franc au bénéfice de l'équipe attaquante" },
+      { "id": "h", "text": "Rapport" }
     ],
-    "correct": ["b"],
-    "explanation": "Le but mesure 7,32 m entre les poteaux et la barre transversale est à 2,44 m du sol (Loi 1)."
+    "correct": ["b", "e", "g", "h"],
+    "explanation": "L'avantage escompté ne s'étant pas concrétisé (le ballon finit en corner et non en occasion de but), l'arbitre revient à la faute initiale. Le tacle avec violence à l'entrée de la surface est sanctionné comme faute grossière : exclusion, coup franc direct au bénéfice de l'équipe attaquante à l'endroit de la faute, et rapport obligatoire pour toute exclusion."
   },
   {
     "id": "q02",
-    "category": "Terrain de jeu",
-    "type": "single",
-    "question": "À quelle distance du but la surface de réparation s'étend-elle depuis la ligne de but ?",
-    "image": "images/diagrams/surface-reparation.svg",
+    "category": "Équipement des joueurs",
+    "type": "multiple",
+    "question": "Parmi les affirmations suivantes, lesquelles sont conformes à la Loi 4 (équipement des joueurs) ?",
+    "image": null,
     "options": [
-      { "id": "a", "text": "5,5 m" },
-      { "id": "b", "text": "9,15 m" },
-      { "id": "c", "text": "16,5 m" },
-      { "id": "d", "text": "18 m" }
+      { "id": "a", "text": "Les joueurs peuvent porter des maillots sans manches." },
+      { "id": "b", "text": "Les joueurs doivent porter des protège-tibias recouverts par les chaussettes." },
+      { "id": "c", "text": "Les tip-tops peuvent être d'une couleur différente de la chaussette." },
+      { "id": "d", "text": "Le brassard de capitaine doit être d'une seule couleur avec une inscription d'une autre couleur." },
+      { "id": "e", "text": "La couleur des maillots de gardien peut être en partie de la couleur de l'équipe adverse." },
+      { "id": "f", "text": "Les deux gardiens peuvent porter un maillot identique, s'ils n'en ont pas d'autre." },
+      { "id": "g", "text": "Si un joueur porte un sous-maillot, les manches doivent être de couleur identique aux manches du maillot." },
+      { "id": "h", "text": "Si une équipe joue avec des shorts jaunes à liseré vert, certains joueurs peuvent porter des cuissards jaunes et d'autres verts." },
+      { "id": "i", "text": "Les arbitres doivent accorder un but, si le buteur au cours de l'action perd sa chaussure." }
     ],
-    "correct": ["c"],
-    "explanation": "La surface de réparation s'étend à 16,5 m de chaque poteau et de la ligne de but. La surface de but, plus petite, s'étend à 5,5 m (Loi 1)."
+    "correct": ["b", "d", "f", "g", "i"],
+    "explanation": "Sont conformes à la Loi 4 : le port de protège-tibias recouverts par les chaussettes, un brassard de capitaine d'une seule couleur avec inscription d'une autre couleur, la possibilité pour les deux gardiens de porter un maillot identique s'ils n'en ont pas d'autre, l'obligation d'avoir des manches de sous-maillot identiques à celles du maillot, et le fait qu'un but est valable même si le buteur perd sa chaussure pendant l'action."
   },
   {
     "id": "q03",
-    "category": "Terrain de jeu",
+    "category": "Fautes et comportement antisportif",
     "type": "multiple",
-    "question": "Parmi les éléments suivants, lesquels font partie du tracé obligatoire d'un terrain de football ?",
-    "image": "images/diagrams/terrain-dimensions.svg",
+    "question": "Le joueur 9A développe une action nette de marquer un but, il est à la lutte avec le défenseur 4B, ce dernier lui crache à la figure. Le 9A dans le même instant tire et marque. Décisions ?",
+    "image": null,
     "options": [
-      { "id": "a", "text": "Le rond central (rayon 9,15 m)" },
-      { "id": "b", "text": "L'arc de coin (rayon 1 m)" },
-      { "id": "c", "text": "Une ligne diagonale reliant les deux surfaces de réparation" },
-      { "id": "d", "text": "La surface de but" }
+      { "id": "a", "text": "But refusé" },
+      { "id": "b", "text": "But accordé" },
+      { "id": "c", "text": "Sous le principe de l'avantage" },
+      { "id": "d", "text": "Le joueur 4B sera averti pour CAS" },
+      { "id": "e", "text": "En cas d'avantage, l'arbitre doit réduire la sanction disciplinaire" },
+      { "id": "f", "text": "Le joueur 4B est exclu pour faute grossière" },
+      { "id": "g", "text": "Le joueur 4B est exclu pour avoir craché sur un adversaire" },
+      { "id": "h", "text": "Rapport" },
+      { "id": "i", "text": "Coup d'envoi pour l'équipe B" },
+      { "id": "j", "text": "Coup franc direct ou penalty selon l'endroit de la faute" }
     ],
-    "correct": ["a", "b", "d"],
-    "explanation": "Le terrain comprend notamment le rond central, les arcs de coin, la surface de réparation et la surface de but. Il n'existe pas de ligne diagonale reliant les surfaces de réparation."
+    "correct": ["b", "c", "g", "h", "i"],
+    "explanation": "Cracher sur un adversaire est un acte de brutalité, sanctionné par une exclusion, quelle que soit l'issue de l'action. Le but étant marqué malgré tout, l'arbitre applique l'avantage : but accordé, reprise par un coup d'envoi de l'équipe B, exclusion du joueur 4B et rapport obligatoire. L'application de l'avantage ne réduit jamais la sanction disciplinaire."
   },
   {
     "id": "q04",
-    "category": "Le ballon",
-    "type": "single",
-    "question": "Quelle est la circonférence réglementaire du ballon pour un match senior ?",
+    "category": "Les autres officiels",
+    "type": "multiple",
+    "question": "Loi 6 : parmi les affirmations suivantes, lesquelles sont conformes à la loi ?",
     "image": null,
     "options": [
-      { "id": "a", "text": "58 à 60 cm" },
-      { "id": "b", "text": "68 à 70 cm" },
-      { "id": "c", "text": "75 à 78 cm" },
-      { "id": "d", "text": "80 à 82 cm" }
+      { "id": "a", "text": "La loi s'intitule : les arbitres assistants" },
+      { "id": "b", "text": "L'arbitre assistant est chargé, sur un penalty, de vérifier si le gardien de but quitte sa ligne avant que le ballon n'ait été botté, et si le ballon a franchi la ligne de but." },
+      { "id": "c", "text": "Lors d'un penalty, l'arbitre assistant vient se poster à l'intersection de la ligne de but et de la ligne de la surface de but, perpendiculaire à celle-ci." },
+      { "id": "d", "text": "La loi 6 parle aussi des arbitres assistants supplémentaires, du quatrième arbitre et de l'arbitre de réserve, ainsi que des arbitres vidéo et assistant vidéo." },
+      { "id": "e", "text": "Tous ces arbitres sont dénommés arbitres de terrain" },
+      { "id": "f", "text": "L'arbitre principal peut relever les autres arbitres de leur fonction. Un rapport sera alors rédigé par l'arbitre principal." },
+      { "id": "g", "text": "L'arbitre assistant peut établir un rapport. Il n'a pas obligation d'en informer les autres arbitres." },
+      { "id": "h", "text": "Dans les compétitions de la Ligue de Paris, en cas d'absence d'un arbitre assistant, l'arbitre central fera un tirage au sort entre un bénévole de chaque club pour le suppléer." }
     ],
-    "correct": ["b"],
-    "explanation": "Le ballon doit avoir une circonférence de 68 à 70 cm et un poids de 410 à 450 g au coup d'envoi (Loi 2)."
+    "correct": ["b", "d", "f"],
+    "explanation": "La loi 6 s'intitule « les autres officiels ». Elle couvre les arbitres assistants (dont le rôle sur penalty), les arbitres assistants supplémentaires, le quatrième arbitre, l'arbitre de réserve et les arbitres vidéo. L'arbitre principal peut relever un autre officiel de sa fonction, à charge pour lui de rédiger un rapport."
   },
   {
     "id": "q05",
-    "category": "Le ballon",
-    "type": "single",
-    "question": "Que doit faire l'arbitre si le ballon éclate ou se dégonfle pendant qu'il est en jeu ?",
+    "category": "Penalty",
+    "type": "multiple",
+    "question": "Penalty : le joueur 10A s'élance et avant le tir le joueur 5A empiète dans la surface de réparation de l'équipe « B » sans toutefois influencer le gardien de but. Le tir est marqué. Décisions ?",
     "image": null,
     "options": [
-      { "id": "a", "text": "Accorder un coup franc indirect à l'équipe qui possédait le ballon" },
-      { "id": "b", "text": "Arrêter le jeu et le reprendre par une balle à terre" },
-      { "id": "c", "text": "Laisser le jeu continuer jusqu'à la prochaine sortie de balle" },
-      { "id": "d", "text": "Accorder un corner automatiquement" }
+      { "id": "a", "text": "But refusé" },
+      { "id": "b", "text": "But accordé" },
+      { "id": "c", "text": "Coup franc indirect à l'endroit où le joueur 5A empiète dans la surface de réparation." },
+      { "id": "d", "text": "Penalty à retirer" },
+      { "id": "e", "text": "Coup d'envoi consécutif" },
+      { "id": "f", "text": "Pas de sanction disciplinaire" },
+      { "id": "g", "text": "Avertissement pour CAS au joueur 5A" }
     ],
-    "correct": ["b"],
-    "explanation": "Le jeu est arrêté et repris par une balle à terre à l'endroit où se trouvait le ballon lorsqu'il a cessé d'être jouable (Loi 2 / Loi 8)."
+    "correct": ["b", "e", "f"],
+    "explanation": "L'empiètement d'un partenaire du tireur qui n'a aucune influence sur le gardien et sur le résultat du tir n'est pas sanctionné : le but est accordé, le jeu reprend par un coup d'envoi, et aucune sanction disciplinaire n'est requise."
   },
   {
     "id": "q06",
-    "category": "Les joueurs",
-    "type": "single",
-    "question": "Un match ne peut pas commencer si une des deux équipes compte moins de :",
+    "category": "Terrain de jeu",
+    "type": "multiple",
+    "question": "Concernant la praticabilité des terrains : quelles sont les prérogatives et devoirs de l'arbitre, ainsi que les conditions de dépôt d'une réserve liée au terrain ?",
     "image": null,
     "options": [
-      { "id": "a", "text": "5 joueurs" },
-      { "id": "b", "text": "6 joueurs" },
-      { "id": "c", "text": "7 joueurs" },
-      { "id": "d", "text": "9 joueurs" }
+      { "id": "a", "text": "Les arbitres doivent se présenter 1 heure avant le coup d'envoi pour vérifier la praticabilité du terrain." },
+      { "id": "b", "text": "En présence d'équipements non conformes (traçage absent ou insuffisant, dimensions des buts non réglementaires, absence de filets de but), l'arbitre exige la remise en état et, si nécessaire, accorde un délai de 45 minutes pour que le terrain et/ou les équipements soient remis en état." },
+      { "id": "c", "text": "Si cela ne peut être réalisé, le match n'aura pas lieu." },
+      { "id": "d", "text": "L'arbitre ne peut pas s'opposer au dépôt d'une réserve concernant la praticabilité du terrain, quel que soit le moment où elle est formulée." },
+      { "id": "e", "text": "Pour être recevables, les réserves doivent être déposées 45 minutes au moins avant l'heure officielle du coup d'envoi." }
     ],
-    "correct": ["c"],
-    "explanation": "Un match ne peut pas débuter ou se poursuivre si une équipe compte moins de 7 joueurs, sauf disposition contraire du règlement de la compétition (Loi 3)."
+    "correct": ["a", "b", "c", "d", "e"],
+    "explanation": "Les arbitres doivent contrôler la praticabilité 1 heure avant le coup d'envoi, exiger la remise en état des équipements non conformes en accordant si besoin un délai de 45 minutes, et le match n'a pas lieu si cela n'est pas possible. Une réserve sur la praticabilité du terrain ne peut jamais être refusée par l'arbitre, mais doit être déposée au moins 45 minutes avant l'heure officielle du coup d'envoi pour être recevable."
   },
   {
     "id": "q07",
-    "category": "Les joueurs",
-    "type": "single",
-    "question": "Comment un joueur remplaçant doit-il entrer sur le terrain lors d'un changement ?",
+    "category": "Penalty",
+    "type": "multiple",
+    "question": "Penalty pour l'équipe « A ». Le joueur 11A exécute le tir. Le gardien de but de l'équipe « B » commet avant le botté une infraction (il quitte sa ligne prématurément) et vient arrêter le tir du joueur de l'équipe « A ». Décisions ?",
     "image": null,
     "options": [
-      { "id": "a", "text": "N'importe où sur le terrain, dès l'arrêt de jeu" },
-      { "id": "b", "text": "Uniquement au milieu de terrain, pendant que le jeu se déroule" },
-      { "id": "c", "text": "Au niveau de la ligne médiane, une fois le remplacé sorti et avec l'autorisation de l'arbitre" },
-      { "id": "d", "text": "À l'endroit où se trouve le ballon" }
+      { "id": "a", "text": "ADJ (arrêt du jeu)" },
+      { "id": "b", "text": "MEG (mise en garde) du gardien de l'équipe « B » si c'est sa première infraction à la procédure du penalty" },
+      { "id": "c", "text": "AVT pour CAS (avertissement pour comportement antisportif) si le gardien de l'équipe « B » a récidivé" },
+      { "id": "d", "text": "PY à retirer (le penalty doit être retiré)" }
     ],
-    "correct": ["c"],
-    "explanation": "Le remplaçant entre au niveau de la ligne médiane, pendant un arrêt de jeu, après la sortie du joueur remplacé et avec l'autorisation de l'arbitre (Loi 3)."
+    "correct": ["a", "b", "c", "d"],
+    "explanation": "Lorsque le gardien quitte sa ligne avant le tir et que le penalty est manqué ou arrêté, l'arbitre arrête le jeu et fait retirer le penalty. Si c'est la première infraction du gardien à la procédure, une simple mise en garde suffit ; en cas de récidive, un avertissement pour comportement antisportif est donné."
   },
   {
     "id": "q08",
-    "category": "Équipement des joueurs",
+    "category": "Les joueurs",
     "type": "multiple",
-    "question": "Quels éléments font partie de l'équipement de base obligatoire d'un joueur ?",
+    "question": "Quelles sont les précisions de la Loi 3 si une équipe se retrouve à moins de 8 joueurs alors que le ballon est en jeu ?",
     "image": null,
     "options": [
-      { "id": "a", "text": "Un maillot avec manches" },
-      { "id": "b", "text": "Des protège-tibias" },
-      { "id": "c", "text": "Des gants de champ" },
-      { "id": "d", "text": "Des chaussures" }
+      { "id": "a", "text": "Si une équipe se retrouve avec moins de huit joueurs parce que l'un d'entre eux a délibérément quitté le terrain, l'arbitre n'est pas obligé d'arrêter le jeu et peut laisser jouer l'avantage." },
+      { "id": "b", "text": "En revanche, la partie ne peut pas reprendre après le premier arrêt de jeu si l'équipe ne compte pas au minimum huit joueurs." }
     ],
-    "correct": ["a", "b", "d"],
-    "explanation": "L'équipement de base comprend maillot, short, chaussettes, protège-tibias (couverts par les chaussettes) et chaussures. Les gants ne sont pas obligatoires pour un joueur de champ (Loi 4)."
+    "correct": ["a", "b"],
+    "explanation": "Un joueur qui quitte délibérément le terrain et fait passer son équipe sous les 8 joueurs n'oblige pas l'arbitre à arrêter immédiatement le jeu (l'avantage peut s'appliquer) ; en revanche, dès le prochain arrêt de jeu, la partie ne pourra pas reprendre si l'équipe ne compte pas au moins 8 joueurs."
   },
   {
-    "id": "q09",
-    "category": "Équipement des joueurs",
-    "type": "single",
-    "question": "Un joueur se présente avec des bijoux (bague, boucle d'oreille). Que doit faire l'arbitre ?",
-    "image": null,
-    "options": [
-      { "id": "a", "text": "Le laisser jouer s'il accepte de jouer prudemment" },
-      { "id": "b", "text": "Lui interdire de porter ces bijoux avant d'entrer sur le terrain" },
-      { "id": "c", "text": "Lui donner un carton jaune uniquement" },
-      { "id": "d", "text": "Recouvrir les bijoux avec du tape" }
-    ],
-    "correct": ["b"],
-    "explanation": "Le port de tout bijou est interdit et doit être retiré ; recouvrir un bijou avec du tape ou un autre matériau n'est pas suffisant (Loi 4)."
-  },
-  {
-    "id": "q10",
-    "category": "L'arbitre",
-    "type": "multiple",
-    "question": "Parmi ces affirmations sur les pouvoirs de l'arbitre, lesquelles sont exactes ?",
-    "image": null,
-    "options": [
-      { "id": "a", "text": "Il fait respecter les Lois du Jeu" },
-      { "id": "b", "text": "Ses décisions sur les faits liés au jeu sont définitives" },
-      { "id": "c", "text": "Il peut modifier une décision tant que le jeu n'a pas repris" },
-      { "id": "d", "text": "Il doit obligatoirement suivre l'avis de tous les capitaines" }
-    ],
-    "correct": ["a", "b", "c"],
-    "explanation": "L'arbitre fait autorité sur le terrain, ses décisions factuelles sont définitives, et il peut revenir sur une décision tant que le jeu n'a pas repris. Il n'est pas tenu de suivre l'avis des capitaines (Loi 5)."
-  },
-  {
-    "id": "q11",
-    "category": "Les autres officiels",
-    "type": "single",
-    "question": "Quel officiel signale en priorité une situation de hors-jeu ?",
-    "image": null,
-    "options": [
-      { "id": "a", "text": "Le quatrième arbitre" },
-      { "id": "b", "text": "L'arbitre assistant" },
-      { "id": "c", "text": "Le délégué du match" },
-      { "id": "d", "text": "Le capitaine de l'équipe en défense" }
-    ],
-    "correct": ["b"],
-    "explanation": "L'arbitre assistant, placé sur la ligne de touche, a notamment pour rôle de signaler les positions de hors-jeu à l'arbitre central (Loi 6)."
-  },
-  {
-    "id": "q12",
-    "category": "Durée du match",
-    "type": "single",
-    "question": "Un match senior à 11 contre 11 dure normalement :",
-    "image": null,
-    "options": [
-      { "id": "a", "text": "2 périodes de 40 minutes" },
-      { "id": "b", "text": "2 périodes de 45 minutes" },
-      { "id": "c", "text": "3 périodes de 30 minutes" },
-      { "id": "d", "text": "2 périodes de 50 minutes" }
-    ],
-    "correct": ["b"],
-    "explanation": "Un match se joue en deux mi-temps de 45 minutes, séparées d'une pause ne dépassant pas 15 minutes (Loi 7)."
-  },
-  {
-    "id": "q13",
-    "category": "Durée du match",
-    "type": "single",
-    "question": "Qui décide du temps additionnel à jouer à la fin de chaque mi-temps ?",
-    "image": null,
-    "options": [
-      { "id": "a", "text": "Le capitaine de l'équipe qui mène au score" },
-      { "id": "b", "text": "Le quatrième arbitre uniquement" },
-      { "id": "c", "text": "L'arbitre central" },
-      { "id": "d", "text": "Le délégué du club recevant" }
-    ],
-    "correct": ["c"],
-    "explanation": "C'est l'arbitre central qui décide du temps additionnel pour compenser le temps perdu (remplacements, blessures, pertes de temps, etc.) (Loi 7)."
-  },
-  {
-    "id": "q14",
-    "category": "Coup d'envoi et remise en jeu",
-    "type": "single",
-    "question": "Un but peut-il être marqué directement sur un coup d'envoi ?",
-    "image": null,
-    "options": [
-      { "id": "a", "text": "Non, jamais" },
-      { "id": "b", "text": "Oui, dans le but adverse uniquement" },
-      { "id": "c", "text": "Oui, mais seulement en seconde période" },
-      { "id": "d", "text": "Non, le ballon doit d'abord toucher un autre joueur" }
-    ],
-    "correct": ["b"],
-    "explanation": "Depuis la révision des Lois du Jeu, un but peut être marqué directement sur un coup d'envoi, mais uniquement dans le but de l'équipe adverse (Loi 8)."
-  },
-  {
-    "id": "q15",
-    "category": "Coup d'envoi et remise en jeu",
-    "type": "single",
-    "question": "Au moment du coup d'envoi, à quelle distance minimale du ballon les adversaires doivent-ils se tenir ?",
-    "image": null,
-    "options": [
-      { "id": "a", "text": "5 m" },
-      { "id": "b", "text": "7,32 m" },
-      { "id": "c", "text": "9,15 m" },
-      { "id": "d", "text": "11 m" }
-    ],
-    "correct": ["c"],
-    "explanation": "Comme pour tout coup franc, les adversaires doivent rester à 9,15 m du ballon jusqu'à ce qu'il soit en jeu (Loi 8)."
-  },
-  {
-    "id": "q16",
-    "category": "Ballon en jeu / hors jeu",
-    "type": "multiple",
-    "question": "Dans quel(s) cas le ballon reste-t-il en jeu ?",
-    "image": null,
-    "options": [
-      { "id": "a", "text": "Il rebondit sur un poteau et reste sur le terrain" },
-      { "id": "b", "text": "Il touche l'arbitre resté sur le terrain de jeu" },
-      { "id": "c", "text": "Il franchit entièrement la ligne de touche" },
-      { "id": "d", "text": "Il rebondit sur la barre transversale et reste sur le terrain" }
-    ],
-    "correct": ["a", "b", "d"],
-    "explanation": "Le ballon est hors jeu uniquement lorsqu'il franchit entièrement une ligne de but ou de touche, au sol ou en l'air, ou quand l'arbitre arrête le jeu (Loi 9)."
-  },
-  {
-    "id": "q17",
-    "category": "Résultat du match",
-    "type": "single",
-    "question": "Un but est valable lorsque le ballon a franchi entièrement la ligne de but :",
-    "image": null,
-    "options": [
-      { "id": "a", "text": "N'importe où entre les deux poteaux" },
-      { "id": "b", "text": "Entre les poteaux et sous la barre transversale, sans infraction" },
-      { "id": "c", "text": "Uniquement s'il a été touché en dernier par un attaquant" },
-      { "id": "d", "text": "Même si le ballon a été touché à la main par l'attaquant marqueur" }
-    ],
-    "correct": ["b"],
-    "explanation": "Un but est marqué quand le ballon franchit entièrement la ligne de but, entre les poteaux et sous la barre, à condition qu'aucune infraction n'ait été commise par l'équipe qui marque (Loi 10)."
-  },
-  {
-    "id": "q18",
-    "category": "Résultat du match",
-    "type": "single",
-    "question": "Lors d'une séance de tirs au but, que se passe-t-il si les deux équipes ont marqué le même nombre de buts après 5 tirs chacune ?",
-    "image": null,
-    "options": [
-      { "id": "a", "text": "Le match se termine par un match nul" },
-      { "id": "b", "text": "On poursuit avec des tirs supplémentaires, un par équipe, jusqu'à ce qu'une équipe ait marqué un but de plus que l'autre après un nombre égal de tirs" },
-      { "id": "c", "text": "L'équipe qui a le plus tiré au but gagne" },
-      { "id": "d", "text": "On rejoue une prolongation de 15 minutes" }
-    ],
-    "correct": ["b"],
-    "explanation": "Après les 5 premiers tirs, la séance continue en 'mort subite', un tir par équipe, jusqu'à ce qu'une équipe ait inscrit un but de plus après un nombre égal de tentatives (Loi 10)."
-  },
-  {
-    "id": "q19",
-    "category": "Hors-jeu",
-    "type": "single",
-    "question": "Sur ce schéma, un attaquant reçoit une passe. Dans quelles conditions serait-il en position de hors-jeu ?",
-    "image": "images/diagrams/hors-jeu-1.svg",
-    "options": [
-      { "id": "a", "text": "S'il est dans sa propre moitié de terrain au moment de la passe" },
-      { "id": "b", "text": "S'il est plus proche de la ligne de but adverse que le ballon et que l'avant-dernier adversaire" },
-      { "id": "c", "text": "S'il est aligné avec l'avant-dernier adversaire" },
-      { "id": "d", "text": "S'il reçoit le ballon directement d'une remise en touche" }
-    ],
-    "correct": ["b"],
-    "explanation": "Un joueur est en position de hors-jeu s'il se trouve, dans la moitié de terrain adverse, plus près de la ligne de but adverse que le ballon et que l'avant-dernier adversaire. Être aligné n'est pas en hors-jeu, et il n'y a jamais hors-jeu sur une remise en touche (Loi 11)."
-  },
-  {
-    "id": "q20",
-    "category": "Hors-jeu",
-    "type": "multiple",
-    "question": "Un joueur en position de hors-jeu n'est sanctionné que s'il est impliqué dans le jeu actif. Cela signifie qu'il :",
-    "image": null,
-    "options": [
-      { "id": "a", "text": "Joue le ballon ou le touche" },
-      { "id": "b", "text": "Gêne un adversaire" },
-      { "id": "c", "text": "Tire un avantage évident de sa position" },
-      { "id": "d", "text": "Se trouve simplement sur le terrain, sans intervenir" }
-    ],
-    "correct": ["a", "b", "c"],
-    "explanation": "Être en position de hors-jeu n'est pas en soi une infraction : il faut en plus jouer le ballon, gêner un adversaire, ou tirer avantage de la position (Loi 11)."
-  },
-  {
-    "id": "q21",
-    "category": "Hors-jeu",
-    "type": "single",
-    "question": "Un joueur ne peut jamais être en position de hors-jeu lorsqu'il reçoit le ballon directement sur :",
-    "image": null,
-    "options": [
-      { "id": "a", "text": "Un coup franc direct" },
-      { "id": "b", "text": "Une passe de son gardien de but" },
-      { "id": "c", "text": "Un renvoi aux six mètres (coup de pied de but), une remise en touche ou un corner" },
-      { "id": "d", "text": "Un centre depuis les côtés" }
-    ],
-    "correct": ["c"],
-    "explanation": "Il n'y a pas de hors-jeu possible sur une réception directe d'un coup de pied de but, d'une remise en touche ou d'un corner (Loi 11)."
-  },
-  {
-    "id": "q22",
+    "id": "q09a",
     "category": "Fautes et comportement antisportif",
     "type": "single",
-    "question": "Un joueur commet un tacle dangereux avec un excès d'engagement mais sans mettre en danger la sécurité de l'adversaire. Quelle sanction disciplinaire est appropriée ?",
-    "image": "images/diagrams/cartons.svg",
-    "options": [
-      { "id": "a", "text": "Aucun carton, seulement le coup franc" },
-      { "id": "b", "text": "Avertissement (carton jaune)" },
-      { "id": "c", "text": "Exclusion (carton rouge)" },
-      { "id": "d", "text": "Arrêt définitif du match" }
-    ],
-    "correct": ["b"],
-    "explanation": "Une faute commise avec imprudence (excès d'engagement, sans mise en danger de l'adversaire) est sanctionnée d'un avertissement. Une faute avec usage d'une force excessive ou mettant en danger la sécurité d'un adversaire entraîne l'exclusion (Loi 12)."
-  },
-  {
-    "id": "q23",
-    "category": "Fautes et comportement antisportif",
-    "type": "multiple",
-    "question": "Lesquelles de ces situations sont sanctionnées par un coup franc indirect (et non direct) ?",
+    "question": "Quelle est la définition exacte d'une « faute grossière » selon les Lois du Jeu ?",
     "image": null,
     "options": [
-      { "id": "a", "text": "Le gardien garde le ballon dans ses mains plus de 6 secondes avant de le relâcher" },
-      { "id": "b", "text": "Jouer de manière dangereuse sans contact" },
-      { "id": "c", "text": "Frapper ou tenter de frapper un adversaire" },
-      { "id": "d", "text": "Empêcher la progression d'un adversaire par obstruction, sans contact" }
-    ],
-    "correct": ["a", "b", "d"],
-    "explanation": "Le jeu dangereux sans contact, l'obstruction sans contact et certaines fautes techniques du gardien (comme garder le ballon trop longtemps) sont sanctionnés d'un coup franc indirect. Frapper un adversaire est sanctionné d'un coup franc direct (et d'une exclusion) (Loi 12)."
-  },
-  {
-    "id": "q24",
-    "category": "Fautes et comportement antisportif",
-    "type": "single",
-    "question": "Quelle faute entraîne obligatoirement une exclusion (carton rouge) ?",
-    "image": null,
-    "options": [
-      { "id": "a", "text": "Contester une décision de l'arbitre par des gestes" },
-      { "id": "b", "text": "Retarder la reprise du jeu" },
-      { "id": "c", "text": "Empêcher par une faute une occasion de but manifeste d'un adversaire se dirigeant vers son but" },
-      { "id": "d", "text": "Entrer sur le terrain sans autorisation" }
-    ],
-    "correct": ["c"],
-    "explanation": "Empêcher une occasion de but manifeste (DOGSO) par une faute sanctionnable d'un coup franc ou d'un penalty entraîne l'exclusion du joueur, sauf si la faute a lieu dans sa propre surface et qu'il tente de jouer le ballon (Loi 12)."
-  },
-  {
-    "id": "q25",
-    "category": "Coups francs",
-    "type": "single",
-    "question": "Comment l'arbitre signale-t-il un coup franc indirect ?",
-    "image": null,
-    "options": [
-      { "id": "a", "text": "En pointant du doigt vers le point de penalty" },
-      { "id": "b", "text": "En levant le bras au-dessus de la tête jusqu'à l'exécution et le premier contact du ballon" },
-      { "id": "c", "text": "En sifflant trois fois" },
-      { "id": "d", "text": "Il n'y a pas de signal particulier" }
-    ],
-    "correct": ["b"],
-    "explanation": "L'arbitre lève le bras pour signaler un coup franc indirect, et le maintient levé jusqu'à ce que le coup franc soit joué et que le ballon touche un autre joueur ou sorte du jeu (Loi 13)."
-  },
-  {
-    "id": "q26",
-    "category": "Coups francs",
-    "type": "single",
-    "question": "Sur un coup franc, à quelle distance minimale les adversaires doivent-ils se placer du ballon ?",
-    "image": null,
-    "options": [
-      { "id": "a", "text": "5,5 m" },
-      { "id": "b", "text": "9,15 m" },
-      { "id": "c", "text": "11 m" },
-      { "id": "d", "text": "16,5 m" }
-    ],
-    "correct": ["b"],
-    "explanation": "Les adversaires doivent se tenir à au moins 9,15 m (10 yards) du ballon jusqu'à ce qu'il soit en jeu (Loi 13)."
-  },
-  {
-    "id": "q27",
-    "category": "Penalty",
-    "type": "single",
-    "question": "Le point de penalty se situe à quelle distance du but ?",
-    "image": "images/diagrams/surface-reparation.svg",
-    "options": [
-      { "id": "a", "text": "9,15 m" },
-      { "id": "b", "text": "11 m" },
-      { "id": "c", "text": "16,5 m" },
-      { "id": "d", "text": "18 m" }
-    ],
-    "correct": ["b"],
-    "explanation": "Le point de penalty est situé à 11 m du milieu de la ligne de but (Loi 14)."
-  },
-  {
-    "id": "q28",
-    "category": "Penalty",
-    "type": "multiple",
-    "question": "Lors d'un tir de penalty, quelles règles s'appliquent au gardien de but ?",
-    "image": null,
-    "options": [
-      { "id": "a", "text": "Il doit avoir au moins une partie d'un pied sur la ligne de but ou à l'aplomb de celle-ci au moment du tir" },
-      { "id": "b", "text": "Il peut avancer de plusieurs mètres avant que le ballon soit botté" },
-      { "id": "c", "text": "Il ne doit pas toucher les poteaux, la barre ou le filet avant le tir" },
-      { "id": "d", "text": "Il doit faire face au tireur, sans comportement inapproprié" }
-    ],
-    "correct": ["a", "c", "d"],
-    "explanation": "Le gardien doit rester sur sa ligne (un pied dessus ou à l'aplomb) sans avancer avant que le ballon soit joué, faire face au tireur, et ne pas toucher les montants ni le filet avant le tir (Loi 14)."
-  },
-  {
-    "id": "q29",
-    "category": "Touche",
-    "type": "multiple",
-    "question": "Pour qu'une remise en touche soit valable, le joueur doit :",
-    "image": "images/diagrams/touche.svg",
-    "options": [
-      { "id": "a", "text": "Garder les deux pieds au sol, sur ou derrière la ligne de touche" },
-      { "id": "b", "text": "Lancer le ballon avec les deux mains, par-dessus la tête" },
-      { "id": "c", "text": "Faire face au terrain de jeu" },
-      { "id": "d", "text": "Effectuer la remise à l'endroit exact où le ballon est sorti" }
-    ],
-    "correct": ["a", "b", "c", "d"],
-    "explanation": "Toutes ces conditions sont nécessaires à une remise en touche réglementaire : pieds au sol sur/derrière la ligne, lancer à deux mains par-dessus la tête, face au terrain, depuis le point de sortie du ballon (Loi 15)."
-  },
-  {
-    "id": "q30",
-    "category": "Touche",
-    "type": "single",
-    "question": "Un but peut-il être marqué directement sur une remise en touche ?",
-    "image": null,
-    "options": [
-      { "id": "a", "text": "Oui, dans n'importe quel but" },
-      { "id": "b", "text": "Non, jamais" },
-      { "id": "c", "text": "Oui, uniquement dans le but adverse" },
-      { "id": "d", "text": "Oui, si le ballon touche un adversaire avant" }
-    ],
-    "correct": ["b"],
-    "explanation": "Un but ne peut jamais être marqué directement sur une remise en touche, ni dans le but adverse ni dans son propre but (Loi 15)."
-  },
-  {
-    "id": "q31",
-    "category": "Coup de pied de but",
-    "type": "single",
-    "question": "Depuis la dernière révision des Lois du Jeu, quand le ballon est-il considéré en jeu lors d'un coup de pied de but ?",
-    "image": null,
-    "options": [
-      { "id": "a", "text": "Dès qu'il est botté et bouge clairement, même s'il reste dans la surface de réparation" },
-      { "id": "b", "text": "Seulement lorsqu'il sort de la surface de réparation" },
-      { "id": "c", "text": "Seulement lorsqu'un adversaire le touche" },
-      { "id": "d", "text": "Seulement lorsqu'il franchit la ligne médiane" }
+      { "id": "a", "text": "Tacler ou disputer le ballon tout en mettant en danger l'intégrité physique d'un adversaire ou en agissant avec violence ou brutalité. Se rend coupable d'une faute grossière tout joueur qui se jette – avec une ou deux jambes en avant – pour disputer le ballon de face, de côté ou par derrière avec violence ou mise en danger de l'intégrité physique de l'adversaire." },
+      { "id": "b", "text": "Agir ou essayer d'agir avec violence ou brutalité envers un adversaire alors qu'ils ne disputent pas le ballon, ou envers un coéquipier, un officiel d'équipe, un spectateur ou toute autre personne, qu'il y ait eu contact ou non." }
     ],
     "correct": ["a"],
-    "explanation": "Le ballon est en jeu dès qu'il est botté et bouge clairement ; il n'est plus nécessaire qu'il sorte de la surface de réparation. Les adversaires doivent rester hors de la surface tant que le ballon n'est pas en jeu (Loi 16)."
+    "explanation": "La faute grossière concerne une action commise en disputant le ballon (tacle, charge) avec violence ou mise en danger de l'adversaire. L'option b décrit en réalité l'acte de brutalité, qui se produit hors disputes de balle."
   },
   {
-    "id": "q32",
-    "category": "Corner",
+    "id": "q09b",
+    "category": "Fautes et comportement antisportif",
     "type": "single",
-    "question": "Un corner est accordé lorsque :",
-    "image": "images/diagrams/corner.svg",
-    "options": [
-      { "id": "a", "text": "Le ballon franchit entièrement la ligne de but, touché en dernier par un défenseur, sans qu'un but ait été marqué" },
-      { "id": "b", "text": "Le ballon franchit la ligne de touche" },
-      { "id": "c", "text": "Le ballon franchit la ligne de but, touché en dernier par un attaquant" },
-      { "id": "d", "text": "Un joueur commet une faute dans sa propre surface de réparation" }
-    ],
-    "correct": ["a"],
-    "explanation": "Le corner est accordé à l'équipe attaquante quand le ballon sort entièrement par la ligne de but (en dehors des poteaux), ayant touché en dernier un joueur de l'équipe défendante, sans but marqué (Loi 17)."
-  },
-  {
-    "id": "q33",
-    "category": "Corner",
-    "type": "single",
-    "question": "Où le ballon doit-il être placé pour l'exécution d'un corner ?",
-    "image": "images/diagrams/corner.svg",
-    "options": [
-      { "id": "a", "text": "N'importe où dans la surface de but" },
-      { "id": "b", "text": "À l'intérieur de l'arc de coin le plus proche de l'endroit où le ballon est sorti" },
-      { "id": "c", "text": "Sur le point de penalty" },
-      { "id": "d", "text": "Sur la ligne médiane" }
-    ],
-    "correct": ["b"],
-    "explanation": "Le ballon est placé dans le quart de cercle (arc de coin, rayon 1 m) situé du côté par lequel le ballon est sorti (Loi 17)."
-  },
-  {
-    "id": "q34",
-    "category": "Rôle de l'arbitre",
-    "type": "single",
-    "question": "Lors d'une phase de jeu, un joueur fautif se retrouve dans une position où stopper le jeu désavantagerait l'équipe qui vient de subir la faute, qui garde une belle opportunité. Que doit faire l'arbitre ?",
+    "question": "Quelle est la définition exacte d'un « acte de brutalité » selon les Lois du Jeu ?",
     "image": null,
     "options": [
-      { "id": "a", "text": "Siffler immédiatement la faute dans tous les cas" },
-      { "id": "b", "text": "Appliquer la loi de l'avantage et laisser le jeu se poursuivre" },
-      { "id": "c", "text": "Arrêter le jeu et donner un carton jaune systématiquement" },
-      { "id": "d", "text": "Consulter obligatoirement l'arbitre assistant avant toute décision" }
+      { "id": "a", "text": "Tacler ou disputer le ballon tout en mettant en danger l'intégrité physique d'un adversaire ou en agissant avec violence ou brutalité. Se rend coupable d'une faute grossière tout joueur qui se jette – avec une ou deux jambes en avant – pour disputer le ballon de face, de côté ou par derrière avec violence ou mise en danger de l'intégrité physique de l'adversaire." },
+      { "id": "b", "text": "Agir ou essayer d'agir avec violence ou brutalité envers un adversaire alors qu'ils ne disputent pas le ballon, ou envers un coéquipier, un officiel d'équipe, un spectateur ou toute autre personne, qu'il y ait eu contact ou non." }
     ],
     "correct": ["b"],
-    "explanation": "L'arbitre peut laisser le jeu se poursuivre lorsque l'équipe non fautive en tire un bénéfice réel (loi de l'avantage), et sanctionner l'infraction initiale plus tard si l'avantage ne se concrétise pas immédiatement (Loi 5)."
+    "explanation": "L'acte de brutalité se caractérise par de la violence ou de la brutalité en dehors d'une disputes du ballon (envers un adversaire, un coéquipier, un officiel, un spectateur...), contact ou non. L'option a décrit la faute grossière, qui elle survient en disputant le ballon."
+  },
+  {
+    "id": "q10a",
+    "category": "Coups francs",
+    "type": "multiple",
+    "question": "29ème minute de jeu, l'équipe « A » obtient un coup franc dans le rond central. Le joueur 8A décide de jouer rapidement la remise en jeu. Le joueur 6B, qui se replaçait, à 6 mètres de la reprise de jeu, intercepte le ballon. Décisions ?",
+    "image": null,
+    "options": [
+      { "id": "a", "text": "RAS, laissez jouer." },
+      { "id": "b", "text": "Le joueur 8A a joué rapidement et a pris le risque de se voir intercepter." },
+      { "id": "c", "text": "L'arbitre n'interviendra pas." }
+    ],
+    "correct": ["a", "b", "c"],
+    "explanation": "Le joueur 6B se replaçait simplement (il ne cherchait pas délibérément à rester proche du ballon) : l'interception est donc régulière. Le joueur 8A a pris l'initiative de jouer rapidement sans attendre les 9,15 m réglementaires, il assume le risque d'interception. L'arbitre n'a pas à intervenir."
+  },
+  {
+    "id": "q10b",
+    "category": "Coups francs",
+    "type": "multiple",
+    "question": "29ème minute de jeu, l'équipe « A » obtient un coup franc dans le rond central. Le joueur 8A décide de jouer rapidement la remise en jeu. Le joueur 6B, qui a volontairement cherché à ne pas se mettre à distance, à 6 mètres de la reprise de jeu, intercepte le ballon. Décisions ?",
+    "image": null,
+    "options": [
+      { "id": "a", "text": "Arrêt du jeu" },
+      { "id": "b", "text": "Coup franc direct à refaire" },
+      { "id": "c", "text": "Avertissement pour ne pas avoir respecté la distance requise sur coup franc." }
+    ],
+    "correct": ["a", "b", "c"],
+    "explanation": "Contrairement au cas où le joueur se replace simplement, un joueur qui cherche volontairement à ne pas respecter les 9,15 m sur un coup franc doit être sanctionné : arrêt du jeu, coup franc à refaire, et avertissement pour ne pas avoir respecté la distance requise."
   }
 ]

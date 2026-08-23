@@ -1,9 +1,9 @@
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 import Home from './components/Home.jsx'
 import Quiz from './components/Quiz.jsx'
 import Results from './components/Results.jsx'
 import questionsData from './data/questions.json'
-import { pickQuestions } from './utils/shuffle.js'
+import { prepareQuestions } from './utils/shuffle.js'
 
 const PASS_THRESHOLD = 0.8
 
@@ -12,14 +12,8 @@ export default function App() {
   const [quizQuestions, setQuizQuestions] = useState([])
   const [answers, setAnswers] = useState({})
 
-  const categories = useMemo(
-    () => [...new Set(questionsData.map((q) => q.category))],
-    [],
-  )
-
-  function startQuiz({ category, count }) {
-    const selected = pickQuestions(questionsData, { category, count })
-    setQuizQuestions(selected)
+  function startQuiz() {
+    setQuizQuestions(prepareQuestions(questionsData))
     setAnswers({})
     setScreen('quiz')
   }
@@ -37,9 +31,7 @@ export default function App() {
 
   return (
     <div className="app-shell">
-      {screen === 'home' && (
-        <Home categories={categories} totalQuestions={questionsData.length} onStart={startQuiz} />
-      )}
+      {screen === 'home' && <Home totalQuestions={questionsData.length} onStart={startQuiz} />}
       {screen === 'quiz' && (
         <Quiz questions={quizQuestions} onFinish={finishQuiz} onAbort={restart} />
       )}

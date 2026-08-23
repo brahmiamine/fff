@@ -7,11 +7,6 @@ export function shuffle(array) {
   return result
 }
 
-export function pickQuestions(questions, { category, count }) {
-  const filtered = category && category !== 'all'
-    ? questions.filter((q) => q.category === category)
-    : questions
-  const shuffled = shuffle(filtered)
-  const size = count === 'all' ? shuffled.length : Math.min(count, shuffled.length)
-  return shuffled.slice(0, size).map((q) => ({ ...q, options: shuffle(q.options) }))
+export function prepareQuestions(questions) {
+  return questions.map((q) => ({ ...q, options: shuffle(q.options) }))
 }

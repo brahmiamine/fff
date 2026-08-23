@@ -1,13 +1,14 @@
 # Quiz Arbitrage — CDA District 75 Paris
 
-Application web d'entraînement au test théorique de la **CDA (Commission Départementale d'Arbitrage)** du District de Paris de Football, à destination des arbitres. Interface simple, pensée pour mobile, avec des questions à choix unique ou multiple, parfois illustrées, avec correction et explication.
+Application web d'entraînement au test théorique de la **CDA (Commission Départementale d'Arbitrage)** du District de Paris de Football, à destination des arbitres. Interface simple, pensée pour mobile, avec des questions à choix unique ou multiple, avec correction et explication.
+
+Les questions reprennent le contenu de l'examen théorique officiel « Test théorique — Corrigé » de la CDA, District Parisien de Football, saison 2025/2026 (fourni par l'utilisateur), adapté au format quiz interactif.
 
 ⚠️ Les questions sont fournies à titre d'entraînement et ne remplacent pas la documentation officielle de la FFF / du District de Paris.
 
 ## Fonctionnalités
 
 - Questions statiques stockées dans `src/data/questions.json` (choix unique ou multiple, images, explications)
-- Sélection d'une catégorie (Loi du Jeu) et du nombre de questions
 - Correction immédiate après chaque question, avec explication
 - Écran de résultats avec score, pourcentage et correction détaillée
 - Thème aux couleurs de la FFF (bleu, blanc, rouge, or), interface mobile-first
