@@ -197,6 +197,17 @@ body {
   gap: 6px;
 }
 
+.quiz-header-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.btn-reset {
+  color: var(--fff-gold-light);
+  opacity: 0.9;
+}
+
 .progress-wrap {
   display: flex;
   flex-direction: column;

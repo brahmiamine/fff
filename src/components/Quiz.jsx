@@ -2,28 +2,33 @@ import { useState } from 'react'
 import ProgressBar from './ProgressBar.jsx'
 import QuestionCard from './QuestionCard.jsx'
 
-export default function Quiz({ questions, onFinish, onAbort }) {
-  const [index, setIndex] = useState(0)
-  const [answers, setAnswers] = useState({})
+export default function Quiz({
+  questions,
+  currentIndex,
+  setCurrentIndex,
+  answers,
+  setAnswers,
+  onFinish,
+  onAbort,
+  onReset,
+}) {
   const [revealed, setRevealed] = useState(false)
 
-  const question = questions[index]
+  const question = questions[currentIndex]
   const selected = answers[question.id] || []
-  const isLast = index === questions.length - 1
+  const isLast = currentIndex === questions.length - 1
 
   function toggleOption(optionId) {
-    setAnswers((prev) => {
-      const current = prev[question.id] || []
-      let next
-      if (question.type === 'multiple') {
-        next = current.includes(optionId)
-          ? current.filter((id) => id !== optionId)
-          : [...current, optionId]
-      } else {
-        next = [optionId]
-      }
-      return { ...prev, [question.id]: next }
-    })
+    const current = answers[question.id] || []
+    let next
+    if (question.type === 'multiple') {
+      next = current.includes(optionId)
+        ? current.filter((id) => id !== optionId)
+        : [...current, optionId]
+    } else {
+      next = [optionId]
+    }
+    setAnswers({ ...answers, [question.id]: next })
   }
 
   function handleValidate() {
@@ -37,7 +42,7 @@ export default function Quiz({ questions, onFinish, onAbort }) {
       return
     }
     setRevealed(false)
-    setIndex((i) => i + 1)
+    setCurrentIndex(currentIndex + 1)
   }
 
   function handleSkip() {
@@ -48,16 +53,27 @@ export default function Quiz({ questions, onFinish, onAbort }) {
       return
     }
     setRevealed(false)
-    setIndex((i) => i + 1)
+    setCurrentIndex(currentIndex + 1)
+  }
+
+  function handleReset() {
+    if (window.confirm('Réinitialiser toute la progression de ce quiz ?')) {
+      onReset()
+    }
   }
 
   return (
     <div className="screen quiz-screen">
       <div className="quiz-header">
-        <button type="button" className="btn-link" onClick={onAbort}>
-          ← Quitter
-        </button>
-        <ProgressBar current={index + 1} total={questions.length} />
+        <div className="quiz-header-actions">
+          <button type="button" className="btn-link" onClick={onAbort}>
+            ← Quitter
+          </button>
+          <button type="button" className="btn-link btn-reset" onClick={handleReset}>
+            Réinitialiser
+          </button>
+        </div>
+        <ProgressBar current={currentIndex + 1} total={questions.length} />
       </div>
 
       <QuestionCard

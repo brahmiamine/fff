@@ -8,5 +8,5 @@ export function shuffle(array) {
 }
 
 export function prepareQuestions(questions) {
-  return questions.map((q) => ({ ...q, options: shuffle(q.options) }))
+  return shuffle(questions).map((q) => ({ ...q, options: shuffle(q.options) }))
 }
