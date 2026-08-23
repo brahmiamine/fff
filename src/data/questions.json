@@ -16,7 +16,7 @@
       { "id": "h", "text": "Rapport" }
     ],
     "correct": ["b", "e", "g", "h"],
-    "explanation": "L'avantage escompté ne s'étant pas concrétisé (le ballon finit en corner et non en occasion de but), l'arbitre revient à la faute initiale. Le tacle avec violence à l'entrée de la surface est sanctionné comme faute grossière : exclusion, coup franc direct au bénéfice de l'équipe attaquante à l'endroit de la faute, et rapport obligatoire pour toute exclusion."
+    "explanation": "L'avantage escompté ne s'étant pas concrétisé, l'arbitre revient à la faute initiale. Le tacle avec violence à l'entrée de la surface est sanctionné comme faute grossière : exclusion, coup franc direct au bénéfice de l'équipe attaquante à l'endroit de la faute, et rapport obligatoire pour toute exclusion."
   },
   {
     "id": "q02",
@@ -69,14 +69,14 @@
       { "id": "a", "text": "La loi s'intitule : les arbitres assistants" },
       { "id": "b", "text": "L'arbitre assistant est chargé, sur un penalty, de vérifier si le gardien de but quitte sa ligne avant que le ballon n'ait été botté, et si le ballon a franchi la ligne de but." },
       { "id": "c", "text": "Lors d'un penalty, l'arbitre assistant vient se poster à l'intersection de la ligne de but et de la ligne de la surface de but, perpendiculaire à celle-ci." },
-      { "id": "d", "text": "La loi 6 parle aussi des arbitres assistants supplémentaires, du quatrième arbitre et de l'arbitre de réserve, ainsi que des arbitres vidéo et assistant vidéo." },
+      { "id": "d", "text": "La Loi 6 parle aussi des arbitres assistants supplémentaires, du quatrième arbitre et de l'arbitre assistant de réserve, ainsi que des arbitres vidéo et arbitres assistants vidéo." },
       { "id": "e", "text": "Tous ces arbitres sont dénommés arbitres de terrain" },
       { "id": "f", "text": "L'arbitre principal peut relever les autres arbitres de leur fonction. Un rapport sera alors rédigé par l'arbitre principal." },
       { "id": "g", "text": "L'arbitre assistant peut établir un rapport. Il n'a pas obligation d'en informer les autres arbitres." },
       { "id": "h", "text": "Dans les compétitions de la Ligue de Paris, en cas d'absence d'un arbitre assistant, l'arbitre central fera un tirage au sort entre un bénévole de chaque club pour le suppléer." }
     ],
     "correct": ["b", "d", "f"],
-    "explanation": "La loi 6 s'intitule « les autres officiels ». Elle couvre les arbitres assistants (dont le rôle sur penalty), les arbitres assistants supplémentaires, le quatrième arbitre, l'arbitre de réserve et les arbitres vidéo. L'arbitre principal peut relever un autre officiel de sa fonction, à charge pour lui de rédiger un rapport."
+    "explanation": "La Loi 6 s'intitule « les autres officiels ». Elle couvre notamment les arbitres assistants, les arbitres assistants supplémentaires, le quatrième arbitre, l'arbitre assistant de réserve et les arbitres vidéo. L'arbitre principal peut relever un autre officiel de sa fonction et doit signaler les faits aux autorités compétentes."
   },
   {
     "id": "q05",
@@ -98,9 +98,9 @@
   },
   {
     "id": "q06",
-    "category": "Terrain de jeu",
+    "category": "Terrain de jeu — règlement de compétition",
     "type": "multiple",
-    "question": "Concernant la praticabilité des terrains : quelles sont les prérogatives et devoirs de l'arbitre, ainsi que les conditions de dépôt d'une réserve liée au terrain ?",
+    "question": "Concernant la praticabilité des terrains dans le cadre du règlement de compétition du District/Ligue : quelles sont les prérogatives et devoirs de l'arbitre, ainsi que les conditions de dépôt d'une réserve liée au terrain ?",
     "image": null,
     "options": [
       { "id": "a", "text": "Les arbitres doivent se présenter 1 heure avant le coup d'envoi pour vérifier la praticabilité du terrain." },
@@ -110,7 +110,7 @@
       { "id": "e", "text": "Pour être recevables, les réserves doivent être déposées 45 minutes au moins avant l'heure officielle du coup d'envoi." }
     ],
     "correct": ["a", "b", "c", "d", "e"],
-    "explanation": "Les arbitres doivent contrôler la praticabilité 1 heure avant le coup d'envoi, exiger la remise en état des équipements non conformes en accordant si besoin un délai de 45 minutes, et le match n'a pas lieu si cela n'est pas possible. Une réserve sur la praticabilité du terrain ne peut jamais être refusée par l'arbitre, mais doit être déposée au moins 45 minutes avant l'heure officielle du coup d'envoi pour être recevable."
+    "explanation": "Dans le cadre du règlement de compétition repris par le test CDA Paris, les arbitres contrôlent la praticabilité 1 heure avant le coup d'envoi, exigent la remise en état des équipements non conformes en accordant si besoin un délai de 45 minutes, et le match n'a pas lieu si cela n'est pas possible. Une réserve sur la praticabilité du terrain ne peut pas être refusée par l'arbitre, mais les conditions de recevabilité et les délais relèvent du règlement de la compétition et non de la seule Loi 1 IFAB."
   },
   {
     "id": "q07",
@@ -131,14 +131,14 @@
     "id": "q08",
     "category": "Les joueurs",
     "type": "multiple",
-    "question": "Quelles sont les précisions de la Loi 3 si une équipe se retrouve à moins de 8 joueurs alors que le ballon est en jeu ?",
+    "question": "Quelles sont les précisions de la Loi 3 si une équipe se retrouve à moins de 7 joueurs alors que le ballon est en jeu ?",
     "image": null,
     "options": [
-      { "id": "a", "text": "Si une équipe se retrouve avec moins de huit joueurs parce que l'un d'entre eux a délibérément quitté le terrain, l'arbitre n'est pas obligé d'arrêter le jeu et peut laisser jouer l'avantage." },
-      { "id": "b", "text": "En revanche, la partie ne peut pas reprendre après le premier arrêt de jeu si l'équipe ne compte pas au minimum huit joueurs." }
+      { "id": "a", "text": "Si une équipe se retrouve avec moins de sept joueurs parce que l'un d'entre eux a délibérément quitté le terrain, l'arbitre n'est pas obligé d'arrêter immédiatement le jeu et peut laisser jouer l'avantage." },
+      { "id": "b", "text": "En revanche, la partie ne peut pas reprendre après le premier arrêt de jeu si l'équipe ne compte pas au minimum sept joueurs." }
     ],
     "correct": ["a", "b"],
-    "explanation": "Un joueur qui quitte délibérément le terrain et fait passer son équipe sous les 8 joueurs n'oblige pas l'arbitre à arrêter immédiatement le jeu (l'avantage peut s'appliquer) ; en revanche, dès le prochain arrêt de jeu, la partie ne pourra pas reprendre si l'équipe ne compte pas au moins 8 joueurs."
+    "explanation": "La Loi 3 fixe à sept le nombre minimal de joueurs. Si un joueur quitte délibérément le terrain et fait passer son équipe sous ce seuil alors que le ballon est en jeu, l'arbitre peut appliquer l'avantage. Au premier arrêt de jeu, la partie ne peut pas reprendre tant que l'équipe ne compte pas au moins sept joueurs."
   },
   {
     "id": "q09a",
@@ -151,7 +151,7 @@
       { "id": "b", "text": "Agir ou essayer d'agir avec violence ou brutalité envers un adversaire alors qu'ils ne disputent pas le ballon, ou envers un coéquipier, un officiel d'équipe, un spectateur ou toute autre personne, qu'il y ait eu contact ou non." }
     ],
     "correct": ["a"],
-    "explanation": "La faute grossière concerne une action commise en disputant le ballon (tacle, charge) avec violence ou mise en danger de l'adversaire. L'option b décrit en réalité l'acte de brutalité, qui se produit hors disputes de balle."
+    "explanation": "La faute grossière concerne une action commise en disputant le ballon (tacle, charge) avec violence ou mise en danger de l'adversaire. L'option b décrit en réalité l'acte de brutalité, qui se produit hors d'une dispute du ballon."
   },
   {
     "id": "q09b",
@@ -164,7 +164,7 @@
       { "id": "b", "text": "Agir ou essayer d'agir avec violence ou brutalité envers un adversaire alors qu'ils ne disputent pas le ballon, ou envers un coéquipier, un officiel d'équipe, un spectateur ou toute autre personne, qu'il y ait eu contact ou non." }
     ],
     "correct": ["b"],
-    "explanation": "L'acte de brutalité se caractérise par de la violence ou de la brutalité en dehors d'une disputes du ballon (envers un adversaire, un coéquipier, un officiel, un spectateur...), contact ou non. L'option a décrit la faute grossière, qui elle survient en disputant le ballon."
+    "explanation": "L'acte de brutalité se caractérise par de la violence ou de la brutalité en dehors d'une dispute du ballon (envers un adversaire, un coéquipier, un officiel, un spectateur...), qu'il y ait contact ou non. L'option a décrit la faute grossière, qui survient en disputant le ballon."
   },
   {
     "id": "q10a",
@@ -178,36 +178,36 @@
       { "id": "c", "text": "L'arbitre n'interviendra pas." }
     ],
     "correct": ["a", "b", "c"],
-    "explanation": "Le joueur 6B se replaçait simplement (il ne cherchait pas délibérément à rester proche du ballon) : l'interception est donc régulière. Le joueur 8A a pris l'initiative de jouer rapidement sans attendre les 9,15 m réglementaires, il assume le risque d'interception. L'arbitre n'a pas à intervenir."
+    "explanation": "Le joueur 6B se replaçait simplement : l'interception est régulière. Le joueur 8A a pris l'initiative de jouer rapidement sans attendre que les adversaires soient à 9,15 m ; il assume le risque d'interception. L'arbitre n'a pas à intervenir."
   },
   {
     "id": "q10b",
     "category": "Coups francs",
     "type": "multiple",
-    "question": "29ème minute de jeu, l'équipe « A » obtient un coup franc dans le rond central. Le joueur 8A décide de jouer rapidement la remise en jeu. Le joueur 6B, qui a volontairement cherché à ne pas se mettre à distance, à 6 mètres de la reprise de jeu, intercepte le ballon. Décisions ?",
+    "question": "29ème minute de jeu, l'équipe « A » obtient un coup franc dans le rond central. Le joueur 6B se place volontairement à proximité du ballon afin d'empêcher l'exécution rapide du coup franc. Malgré cela, le joueur 8A tente la remise en jeu et le joueur 6B intercepte le ballon à 6 mètres. Décisions ?",
     "image": null,
     "options": [
       { "id": "a", "text": "Arrêt du jeu" },
       { "id": "b", "text": "Coup franc direct à refaire" },
-      { "id": "c", "text": "Avertissement pour ne pas avoir respecté la distance requise sur coup franc." }
+      { "id": "c", "text": "Avertissement au joueur 6B pour avoir retardé la reprise du jeu." }
     ],
     "correct": ["a", "b", "c"],
-    "explanation": "Contrairement au cas où le joueur se replace simplement, un joueur qui cherche volontairement à ne pas respecter les 9,15 m sur un coup franc doit être sanctionné : arrêt du jeu, coup franc à refaire, et avertissement pour ne pas avoir respecté la distance requise."
+    "explanation": "Un adversaire qui empêche délibérément l'exécution rapide d'un coup franc doit être averti pour avoir retardé la reprise du jeu. L'arbitre arrête le jeu et fait exécuter à nouveau le coup franc. Cette situation est différente de celle où un adversaire encore à moins de 9,15 m se replace normalement et intercepte un coup franc joué rapidement."
   },
   {
     "id": "q11",
-    "category": "Remises en jeu (catégories jeunes)",
+    "category": "Rentrée de touche",
     "type": "single",
-    "question": "Sur les catégories à règles adaptées (foot réduit), les adversaires doivent être au moins à 2 mètres de laquelle de ces remises en jeu ?",
+    "question": "Pour laquelle de ces reprises de jeu les adversaires doivent-ils se tenir à au moins 2 mètres de l'endroit où elle est effectuée ?",
     "image": null,
     "options": [
       { "id": "a", "text": "Balle à terre" },
       { "id": "b", "text": "Touche" },
-      { "id": "c", "text": "Coup de pied de 6 mètres" },
+      { "id": "c", "text": "Coup de pied de but" },
       { "id": "d", "text": "Corner" }
     ],
     "correct": ["b"],
-    "explanation": "Sur les catégories à règles adaptées (foot réduit), la distance de replacement des adversaires est réduite ; elle est fixée à 2 mètres sur une remise en touche."
+    "explanation": "La Loi 15 impose à tous les adversaires de se tenir à au moins 2 mètres du point de la ligne de touche où la rentrée de touche doit être effectuée. Cette règle n'est pas limitée aux catégories de foot réduit."
   },
   {
     "id": "q12",
@@ -218,17 +218,17 @@
     "options": [
       { "id": "a", "text": "Coup d'envoi" },
       { "id": "b", "text": "Penalty" },
-      { "id": "c", "text": "Coup de pied de 6 mètres" },
+      { "id": "c", "text": "Coup de pied de but" },
       { "id": "d", "text": "Corner" }
     ],
     "correct": ["a", "b"],
-    "explanation": "L'arbitre doit obligatoirement siffler pour autoriser la reprise du jeu lors d'un coup d'envoi (début de match, de mi-temps, ou après un but) et lors de l'exécution d'un penalty. Si l'action est jouée sans ce coup de sifflet, l'arbitre la fait recommencer. Le corner et le coup de pied de 6 mètres ne nécessitent pas de coup de sifflet."
+    "explanation": "L'arbitre doit obligatoirement siffler pour autoriser la reprise du jeu lors d'un coup d'envoi (début de match, de mi-temps ou après un but) et lors de l'exécution d'un penalty. Si l'action est jouée sans ce coup de sifflet, l'arbitre la fait recommencer. Le corner et le coup de pied de but ne nécessitent pas de coup de sifflet."
   },
   {
     "id": "q13",
-    "category": "Coup d'envoi et remise en jeu",
-    "type": "single",
-    "question": "Si un but est marqué directement, sans qu'aucun autre joueur ne touche le ballon, sur laquelle de ces reprises de jeu est-il valable ?",
+    "category": "Coup d'envoi et penalty",
+    "type": "multiple",
+    "question": "Parmi ces reprises de jeu, lesquelles permettent de marquer directement dans le but adverse sans qu'un autre joueur ne touche le ballon ?",
     "image": null,
     "options": [
       { "id": "a", "text": "Touche" },
@@ -236,8 +236,8 @@
       { "id": "c", "text": "Coup d'envoi" },
       { "id": "d", "text": "Penalty" }
     ],
-    "correct": ["c"],
-    "explanation": "Depuis la révision des Lois du Jeu, un but peut être marqué directement sur un coup d'envoi. Un but ne peut en revanche jamais être marqué directement sur une remise en touche, ni sur une balle à terre qui entre directement dans le but adverse (Loi 8)."
+    "correct": ["c", "d"],
+    "explanation": "Un but peut être marqué directement dans le but adverse sur un coup d'envoi et sur un penalty. En revanche, un but ne peut pas être marqué directement sur une rentrée de touche. Lors d'une balle à terre, le ballon doit toucher au moins deux joueurs avant qu'un but puisse être marqué."
   },
   {
     "id": "q14",
@@ -248,7 +248,7 @@
     "options": [
       { "id": "a", "text": "Coup d'envoi" },
       { "id": "b", "text": "Penalty" },
-      { "id": "c", "text": "Coup de pied de 6 mètres" },
+      { "id": "c", "text": "Coup de pied de but" },
       { "id": "d", "text": "Corner" }
     ],
     "correct": ["b"],
