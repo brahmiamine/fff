@@ -4,13 +4,15 @@ import Quiz from './components/Quiz.jsx'
 import Results from './components/Results.jsx'
 import AnswerKey from './components/AnswerKey.jsx'
 import History from './components/History.jsx'
-import questionsData from './data/questions.json'
+import baseQuestionsData from './data/questions.json'
+import remisesEnJeuQuestions from './data/remisesEnJeuQuestions.json'
 import { prepareQuestions, shuffle } from './utils/shuffle.js'
 import { loadProgress, saveProgress, clearProgress } from './utils/storage.js'
 import { loadHistory, addHistoryEntry, clearHistory } from './utils/history.js'
 import { computeScore } from './utils/scoring.js'
 import { isAnswerCorrect } from './components/QuestionCard.jsx'
 
+const questionsData = [...baseQuestionsData, ...remisesEnJeuQuestions]
 const PASS_THRESHOLD = 0.8
 
 function freshState() {
