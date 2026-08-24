@@ -3,7 +3,7 @@
     "id": "q01",
     "category": "Avantage et fautes",
     "type": "multiple",
-    "question": "Lors d'un match, un défenseur tacle un attaquant avec violence juste à l'extérieur de la surface de réparation. L'attaquant parvient malgré tout à transmettre le ballon à un coéquipier qui se retrouve en excellente position de tir. L'arbitre laisse jouer (avantage) mais avant le tir un autre défenseur tacle le ballon qui part en corner. Décisions ?",
+    "question": "Lors d'un match, un défenseur tacle avec violence un attaquant en disputant le ballon juste à l'extérieur de la surface de réparation. L'attaquant parvient malgré tout à transmettre le ballon à un coéquipier qui se retrouve en excellente position de tir. L'arbitre laisse jouer (avantage) mais avant le tir un autre défenseur tacle le ballon qui part en corner. Décisions ?",
     "image": null,
     "options": [
       { "id": "a", "text": "Corner, l'arbitre ayant donné un avantage" },
@@ -129,16 +129,16 @@
   },
   {
     "id": "q08",
-    "category": "Les joueurs",
+    "category": "Les joueurs — règlement District 75",
     "type": "multiple",
-    "question": "Quelles sont les précisions de la Loi 3 si une équipe se retrouve à moins de 7 joueurs alors que le ballon est en jeu ?",
+    "question": "Dans les compétitions à 11 du District Parisien de Football, quelles sont les précisions à appliquer si une équipe se retrouve à moins de 8 joueurs alors que le ballon est en jeu ?",
     "image": null,
     "options": [
-      { "id": "a", "text": "Si une équipe se retrouve avec moins de sept joueurs parce que l'un d'entre eux a délibérément quitté le terrain, l'arbitre n'est pas obligé d'arrêter immédiatement le jeu et peut laisser jouer l'avantage." },
-      { "id": "b", "text": "En revanche, la partie ne peut pas reprendre après le premier arrêt de jeu si l'équipe ne compte pas au minimum sept joueurs." }
+      { "id": "a", "text": "Si une équipe se retrouve avec moins de huit joueurs parce que l'un d'entre eux a délibérément quitté le terrain, l'arbitre n'est pas obligé d'arrêter immédiatement le jeu et peut laisser jouer l'avantage." },
+      { "id": "b", "text": "En revanche, la partie ne peut pas reprendre après le premier arrêt de jeu si l'équipe ne compte pas au minimum huit joueurs." }
     ],
     "correct": ["a", "b"],
-    "explanation": "La Loi 3 fixe à sept le nombre minimal de joueurs. Si un joueur quitte délibérément le terrain et fait passer son équipe sous ce seuil alors que le ballon est en jeu, l'arbitre peut appliquer l'avantage. Au premier arrêt de jeu, la partie ne peut pas reprendre tant que l'équipe ne compte pas au moins sept joueurs."
+    "explanation": "Pour les compétitions à 11 du District 75 et dans le corrigé CDA Paris, le seuil réglementaire retenu est de huit joueurs. Si une équipe passe sous ce seuil parce qu'un joueur quitte délibérément le terrain alors que le ballon est en jeu, l'arbitre peut laisser jouer l'avantage ; au premier arrêt, la rencontre ne reprend pas si l'équipe ne compte pas au moins huit joueurs. À distinguer de la Loi 3 IFAB générale, qui fixe le seuil minimal à sept joueurs."
   },
   {
     "id": "q09a",
