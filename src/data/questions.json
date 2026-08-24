@@ -663,5 +663,122 @@
     ],
     "correct": ["a"],
     "explanation": "Lors d’un penalty, le gardien de but de l’équipe qui défend est obligatoirement concerné par la procédure. Un coup de pied de but, en revanche, peut être exécuté par n’importe quel joueur de l’équipe qui défend."
+  },
+  {
+    "id": "remise01",
+    "category": "Remises en jeu",
+    "type": "single",
+    "question": "Pour quelle remise en jeu les adversaires doivent-ils se trouver à au moins 2 mètres du point où elle est effectuée ?",
+    "image": null,
+    "options": [
+      { "id": "a", "text": "Balle à terre" },
+      { "id": "b", "text": "Rentrée de touche" },
+      { "id": "c", "text": "Coup de pied de but (6 mètres)" },
+      { "id": "d", "text": "Corner" }
+    ],
+    "correct": ["b"],
+    "explanation": "Lors d’une rentrée de touche, tous les adversaires doivent se trouver à au moins 2 mètres du point de la ligne de touche où elle doit être effectuée (Loi 15)."
+  },
+  {
+    "id": "remise02",
+    "category": "Remises en jeu",
+    "type": "multiple",
+    "question": "Pour quelles reprises de jeu le coup de sifflet de l’arbitre est-il nécessaire pour autoriser la reprise ?",
+    "image": null,
+    "options": [
+      { "id": "a", "text": "Coup d’envoi" },
+      { "id": "b", "text": "Penalty" },
+      { "id": "c", "text": "Coup de pied de but (6 mètres)" },
+      { "id": "d", "text": "Corner" }
+    ],
+    "correct": ["a", "b"],
+    "explanation": "Le sifflet est nécessaire pour le coup d’envoi et pour la reprise du jeu sur penalty. Il n’est normalement pas nécessaire pour un coup de pied de but ou un corner."
+  },
+  {
+    "id": "remise03",
+    "category": "Remises en jeu",
+    "type": "multiple",
+    "question": "Sur quelles reprises un but peut-il être marqué directement dans le but adverse ?",
+    "image": null,
+    "options": [
+      { "id": "a", "text": "Coup franc direct" },
+      { "id": "b", "text": "Balle à terre" },
+      { "id": "c", "text": "Coup d’envoi" },
+      { "id": "d", "text": "Penalty" },
+      { "id": "e", "text": "Coup de pied de but (6 mètres)" },
+      { "id": "f", "text": "Corner" }
+    ],
+    "correct": ["a", "c", "d", "e", "f"],
+    "explanation": "Un but peut être marqué directement dans le but adverse sur coup franc direct, coup d’envoi, penalty, coup de pied de but et corner. Sur balle à terre, le ballon doit toucher au moins deux joueurs avant qu’un but puisse être marqué."
+  },
+  {
+    "id": "remise04",
+    "category": "Remises en jeu",
+    "type": "single",
+    "question": "Pour quelle reprise le ballon doit-il obligatoirement être botté vers l’avant ?",
+    "image": null,
+    "options": [
+      { "id": "a", "text": "Coup d’envoi" },
+      { "id": "b", "text": "Penalty" },
+      { "id": "c", "text": "Coup de pied de but (6 mètres)" }
+    ],
+    "correct": ["b"],
+    "explanation": "Le tireur d’un penalty doit botter le ballon vers l’avant. Si le penalty est tiré vers l’arrière, le jeu est interrompu et reprend par un coup franc indirect pour l’équipe adverse. La formulation de l’ancienne diapositive indiquant qu’il fallait systématiquement faire retirer le penalty n’est plus correcte en 2026/27."
+  },
+  {
+    "id": "remise05",
+    "category": "Remises en jeu",
+    "type": "multiple",
+    "question": "Lorsqu’une remise en jeu est accordée à l’équipe qui défend dans sa propre surface de réparation, pour lesquelles de ces reprises les adversaires doivent-ils normalement se trouver en dehors de la surface jusqu’à ce que le ballon soit en jeu ?",
+    "image": null,
+    "options": [
+      { "id": "a", "text": "Coup franc direct" },
+      { "id": "b", "text": "Coup franc indirect" },
+      { "id": "c", "text": "Balle à terre" },
+      { "id": "d", "text": "Coup de pied de but (6 mètres)" }
+    ],
+    "correct": ["a", "b", "d"],
+    "explanation": "Pour un coup franc direct ou indirect accordé à la défense dans sa surface, les adversaires doivent être hors de la surface de réparation. La même règle s’applique au coup de pied de but. Sur balle à terre, les autres joueurs doivent simplement rester à au moins 4 mètres du ballon."
+  },
+  {
+    "id": "remise06",
+    "category": "Remises en jeu",
+    "type": "single",
+    "question": "L’exécutant saute au moment où il lâche le ballon et la remise en jeu est alors accordée à l’équipe adverse. De quelle remise en jeu s’agit-il ?",
+    "image": null,
+    "options": [
+      { "id": "a", "text": "Balle à terre" },
+      { "id": "b", "text": "Rentrée de touche" }
+    ],
+    "correct": ["b"],
+    "explanation": "Lors d’une rentrée de touche, l’exécutant doit notamment avoir au moins une partie de chacun de ses deux pieds sur la ligne de touche ou à l’extérieur du terrain au moment de lancer le ballon. Une exécution incorrecte entraîne une rentrée de touche pour l’équipe adverse."
+  },
+  {
+    "id": "horsjeu-reprise",
+    "category": "Hors-jeu",
+    "type": "single",
+    "question": "Quelle est la reprise du jeu lorsqu’un joueur est sanctionné pour une infraction de hors-jeu ?",
+    "image": null,
+    "options": [
+      { "id": "a", "text": "Coup franc direct" },
+      { "id": "b", "text": "Coup franc indirect" },
+      { "id": "c", "text": "Balle à terre" },
+      { "id": "d", "text": "Penalty" }
+    ],
+    "correct": ["b"],
+    "explanation": "En cas d’infraction de hors-jeu, l’arbitre accorde un coup franc indirect à l’endroit où l’infraction a été commise, y compris si elle a lieu dans la propre moitié de terrain du joueur (Loi 11)."
+  },
+  {
+    "id": "remise09",
+    "category": "Remises en jeu",
+    "type": "single",
+    "question": "Une infraction est commise à l’intérieur de la surface de but de l’équipe qui défend et la reprise est en faveur de l’équipe attaquante. Quel type de coup franc doit être exécuté depuis le point le plus proche sur la ligne de la surface de but parallèle à la ligne de but ?",
+    "image": null,
+    "options": [
+      { "id": "a", "text": "Coup franc direct" },
+      { "id": "b", "text": "Coup franc indirect" }
+    ],
+    "correct": ["b"],
+    "explanation": "Un coup franc indirect accordé à l’équipe attaquante pour une infraction commise à l’intérieur de la surface de but adverse est exécuté depuis le point le plus proche sur la ligne de la surface de but parallèle à la ligne de but (Loi 13)."
   }
 ]
