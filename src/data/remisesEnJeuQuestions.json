@@ -1,5 +1,148 @@
 [
   {
+    "id": "remise07",
+    "category": "Remises en jeu",
+    "type": "multiple",
+    "question": "Il n’y a pas d’infraction de hors-jeu lorsqu’un joueur reçoit directement le ballon sur quelles remises en jeu ?",
+    "image": null,
+    "options": [
+      { "id": "a", "text": "Coup franc direct" },
+      { "id": "b", "text": "Coup d’envoi" },
+      { "id": "c", "text": "Penalty" },
+      { "id": "d", "text": "Rentrée de touche" },
+      { "id": "e", "text": "Coup de pied de but (6 mètres)" },
+      { "id": "f", "text": "Corner" }
+    ],
+    "correct": ["d", "e", "f"],
+    "explanation": "Il n’y a pas d’infraction de hors-jeu lorsqu’un joueur reçoit directement le ballon sur une rentrée de touche, un coup de pied de but ou un corner."
+  },
+  {
+    "id": "remise08",
+    "category": "Remises en jeu",
+    "type": "single",
+    "question": "Pour quelle remise en jeu les autres joueurs doivent-ils se trouver à au moins 4 mètres du ballon ?",
+    "image": null,
+    "options": [
+      { "id": "a", "text": "Coup franc direct" },
+      { "id": "b", "text": "Coup franc indirect" },
+      { "id": "c", "text": "Balle à terre" },
+      { "id": "d", "text": "Rentrée de touche" },
+      { "id": "e", "text": "Corner" }
+    ],
+    "correct": ["c"],
+    "explanation": "Lors d’une balle à terre, tous les autres joueurs des deux équipes doivent rester à au moins 4 mètres du ballon jusqu’à ce que celui-ci soit en jeu."
+  },
+  {
+    "id": "remise10",
+    "category": "Remises en jeu",
+    "type": "single",
+    "question": "Le ballon n’entre pas sur le terrain et la remise en jeu doit être refaite par la même équipe. De quelle remise en jeu s’agit-il ?",
+    "image": null,
+    "options": [
+      { "id": "a", "text": "Rentrée de touche" },
+      { "id": "b", "text": "Corner" }
+    ],
+    "correct": ["a"],
+    "explanation": "Si une rentrée de touche correctement exécutée touche le sol avant d’entrer sur le terrain, elle est refaite par la même équipe au même endroit."
+  },
+  {
+    "id": "remise11",
+    "category": "Remises en jeu",
+    "type": "multiple",
+    "question": "Pour lesquelles de ces reprises les adversaires doivent-ils se trouver à au moins 9,15 mètres, selon les conditions prévues par la Loi ?",
+    "image": null,
+    "options": [
+      { "id": "a", "text": "Coup franc direct" },
+      { "id": "b", "text": "Coup franc indirect" },
+      { "id": "c", "text": "Coup d’envoi" },
+      { "id": "d", "text": "Penalty" },
+      { "id": "e", "text": "Coup de pied de but (6 mètres)" },
+      { "id": "f", "text": "Corner" }
+    ],
+    "correct": ["a", "b", "c", "d", "f"],
+    "explanation": "La distance de 9,15 m s’applique aux coups francs, au coup d’envoi, au penalty pour les joueurs autres que le tireur et le gardien, ainsi qu’au corner. Sur un coup de pied de but, les adversaires doivent être hors de la surface de réparation jusqu’à ce que le ballon soit en jeu."
+  },
+  {
+    "id": "remise12",
+    "category": "Remises en jeu",
+    "type": "single",
+    "question": "Pour quelle remise en jeu un joueur peut-il toucher deux fois de suite le ballon sans qu’une autre personne ne le touche entre-temps ?",
+    "image": null,
+    "options": [
+      { "id": "a", "text": "Balle à terre" },
+      { "id": "b", "text": "Coup d’envoi" },
+      { "id": "c", "text": "Penalty" },
+      { "id": "d", "text": "Rentrée de touche" },
+      { "id": "e", "text": "Coup de pied de but (6 mètres)" },
+      { "id": "f", "text": "Corner" }
+    ],
+    "correct": ["a"],
+    "explanation": "Lors d’une balle à terre, le ballon est en jeu lorsqu’il touche le sol. Le joueur qui le reçoit peut ensuite continuer à le jouer. Les autres reprises comportent une règle interdisant à l’exécutant de retoucher le ballon avant qu’un autre joueur ne l’ait touché."
+  },
+  {
+    "id": "remise13",
+    "category": "Remises en jeu",
+    "type": "single",
+    "question": "Pour quelle remise en jeu l’arbitre lève-t-il le bras à la verticale ?",
+    "image": null,
+    "options": [
+      { "id": "a", "text": "Coup franc direct" },
+      { "id": "b", "text": "Coup franc indirect" },
+      { "id": "c", "text": "Coup d’envoi" }
+    ],
+    "correct": ["b"],
+    "explanation": "L’arbitre signale un coup franc indirect en levant le bras au-dessus de la tête et maintient ce signal jusqu’à ce que le ballon touche un autre joueur, sorte du jeu ou qu’un but direct soit impossible."
+  },
+  {
+    "id": "remise14",
+    "category": "Remises en jeu",
+    "type": "multiple",
+    "question": "Pour quelles remises en jeu le ballon peut-il être placé à n’importe quel endroit d’une surface prévue par la Loi, y compris sur sa ligne ?",
+    "image": null,
+    "options": [
+      { "id": "a", "text": "Coup d’envoi" },
+      { "id": "b", "text": "Penalty" },
+      { "id": "c", "text": "Rentrée de touche" },
+      { "id": "d", "text": "Coup de pied de but (6 mètres)" },
+      { "id": "e", "text": "Corner" }
+    ],
+    "correct": ["d", "e"],
+    "explanation": "Un coup de pied de but peut être exécuté depuis n’importe quel point de la surface de but. Pour un corner, le ballon doit être placé dans la surface de coin la plus proche, les lignes faisant partie de cette surface."
+  },
+  {
+    "id": "remise16",
+    "category": "Remises en jeu",
+    "type": "multiple",
+    "question": "Pour lesquelles de ces reprises le ballon doit-il être immobile au moment de l’exécution ?",
+    "image": null,
+    "options": [
+      { "id": "a", "text": "Coup franc direct" },
+      { "id": "b", "text": "Coup franc indirect" },
+      { "id": "c", "text": "Coup d’envoi" },
+      { "id": "d", "text": "Penalty" },
+      { "id": "e", "text": "Coup de pied de but (6 mètres)" },
+      { "id": "f", "text": "Corner" }
+    ],
+    "correct": ["a", "b", "c", "d", "e", "f"],
+    "explanation": "Le ballon doit être immobile pour l’exécution d’un coup franc direct ou indirect, d’un coup d’envoi, d’un penalty, d’un coup de pied de but et d’un corner."
+  },
+  {
+    "id": "remise17",
+    "category": "Remises en jeu",
+    "type": "single",
+    "question": "Un coup franc indirect est tiré directement dans le but adverse sans toucher un autre joueur. Quelle est la reprise du jeu ?",
+    "image": null,
+    "options": [
+      { "id": "a", "text": "Coup franc direct" },
+      { "id": "b", "text": "Coup franc indirect" },
+      { "id": "c", "text": "Balle à terre" },
+      { "id": "d", "text": "Coup d’envoi" },
+      { "id": "e", "text": "Coup de pied de but (6 mètres)" }
+    ],
+    "correct": ["e"],
+    "explanation": "Un but ne peut pas être marqué directement sur un coup franc indirect. Si le ballon entre directement dans le but adverse, le jeu reprend par un coup de pied de but."
+  },
+  {
     "id": "remise19",
     "category": "Remises en jeu",
     "type": "single",
