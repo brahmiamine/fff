@@ -21,6 +21,7 @@ Les questions reprennent le contenu du test théorique corrigé CDA Paris, saiso
 - Quiz dédiés aux points faibles, erreurs passées et favoris
 - Historique, meilleur score, moyenne récente et évolution des derniers quiz
 - Statistiques par catégorie et par question : vues, erreurs et maîtrise
+- **Navigation mobile en bas** pour accéder rapidement à Accueil, Progression et Questions
 - Métadonnées pédagogiques normalisées : loi, difficulté, source, saison, spécificité District/Ligue, tags et point à retenir
 - Liste complète des questions/réponses
 - PWA installable et fonctionnement hors ligne
