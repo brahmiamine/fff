@@ -132,6 +132,7 @@ export function selectFavoriteQuestions(questions, state, count) {
 
 export function computeLearningSummary(questions, state) {
   const current = normalizeLearningState(state)
+  const memorized = new Set(current.memorized)
   const perQuestion = questions.map((question) => {
     const stat = current.questions[question.id] || {}
     return {
@@ -160,7 +161,7 @@ export function computeLearningSummary(questions, state) {
     .sort((a, b) => a.rate - b.rate)
 
   const seenQuestions = perQuestion.filter((item) => item.seenCount > 0)
-  const mistakeCount = perQuestion.filter((item) => item.lastResult === false).length
+  const mistakeCount = perQuestion.filter((item) => item.lastResult === false && !memorized.has(item.id)).length
 
   return {
     totalQuestions: questions.length,

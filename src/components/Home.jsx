@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import fffLogo from '../assets/fff-logo.png'
 import district75Logo from '../assets/district75-logo.png'
+import Terrain from './Terrain.jsx'
 import { computeCountTiers } from '../utils/tiers.js'
 
 const SECONDS_PER_QUESTION = 60
@@ -23,6 +24,7 @@ export default function Home({
   resumeMode,
   onResume,
   onReset,
+  onViewAnswers,
   learningSummary,
   memorizedIds,
 }) {
@@ -48,10 +50,6 @@ export default function Home({
   useEffect(() => {
     setCount(filteredTotal)
   }, [filteredTotal])
-
-  function handleCategoryChange(next) {
-    setCategory(next)
-  }
 
   function handleReset() {
     if (window.confirm('Réinitialiser le quiz en cours ?')) onReset()
@@ -86,13 +84,13 @@ export default function Home({
           <div className="card dashboard-card">
             <div><strong>{learningSummary.seenQuestions}</strong><span>questions vues</span></div>
             <div><strong>{learningSummary.masteredQuestions}</strong><span>maîtrisées</span></div>
-            <div><strong>{learningSummary.mistakeCount}</strong><span>avec erreurs</span></div>
+            <div><strong>{learningSummary.mistakeCount}</strong><span>erreurs actives</span></div>
             <div><strong>{learningSummary.memorizedCount}</strong><span>mémorisées</span></div>
           </div>
 
           {noQuestionsAvailable && (
             <div className="card setup-card">
-              <p className="setup-text">Toutes les questions sont mémorisées. Réactive-en depuis l’onglet « Mémorisées » pour recommencer à les voir dans les quiz.</p>
+              <p className="setup-text">Toutes les questions sont mémorisées. Réactive-en depuis l’onglet « Mémoriser » pour recommencer à les voir dans les quiz.</p>
             </div>
           )}
 
@@ -104,14 +102,12 @@ export default function Home({
               <PresetButton title="⏱ Examen blanc" detail={`${standardCount} questions · ${standardCount} min`} disabled={standardCount === 0} onClick={() => onStart({ count: standardCount, preset: 'mock', mode: 'exam', timeLimitSeconds: standardCount * SECONDS_PER_QUESTION })} />
               <PresetButton title="🧠 Adaptatif" detail="priorise tes besoins" disabled={standardCount === 0} onClick={() => onStart({ count: standardCount, preset: 'adaptive' })} />
               <PresetButton title="📉 Points faibles" detail="catégories à renforcer" disabled={standardCount === 0} onClick={() => onStart({ count: standardCount, preset: 'weak' })} />
-              <PresetButton title="❌ Mes erreurs" detail={`${learningSummary.mistakeCount} question${learningSummary.mistakeCount > 1 ? 's' : ''}`} disabled={learningSummary.mistakeCount === 0 || noQuestionsAvailable} onClick={() => onStart({ count: Math.min(20, learningSummary.mistakeCount), preset: 'mistakes' })} />
-              <PresetButton title="⭐ Favoris" detail={`${learningSummary.favoriteCount} question${learningSummary.favoriteCount > 1 ? 's' : ''}`} disabled={learningSummary.favoriteCount === 0 || noQuestionsAvailable} onClick={() => onStart({ count: Math.min(20, learningSummary.favoriteCount), preset: 'favorites' })} />
             </div>
           </div>
 
           <div className="card setup-card">
             <p className="field-label">Quiz personnalisé</p>
-            <select className="select-input" value={category} onChange={(e) => handleCategoryChange(e.target.value)}>
+            <select className="select-input" value={category} onChange={(e) => setCategory(e.target.value)}>
               <option value="all">Toutes les catégories</option>
               {categories.map((c) => <option key={c} value={c}>{c}</option>)}
             </select>
@@ -140,7 +136,17 @@ export default function Home({
         </>
       )}
 
+      <Terrain />
+
       <p className="footer-note">Questions issues du test théorique CDA — District Parisien de Football, saison 2026/2027. À but d'entraînement.</p>
+
+      <button type="button" className="home-questions-link" onClick={onViewAnswers}>
+        <span>
+          <strong>Toutes les questions</strong>
+          <small>Consulter les questions et les bonnes réponses</small>
+        </span>
+        <span className="home-questions-arrow" aria-hidden="true">→</span>
+      </button>
     </div>
   )
 }

@@ -11,32 +11,8 @@ const NAV_ITEMS = [
     ),
   },
   {
-    screen: 'history',
-    label: 'Progression',
-    icon: (
-      <>
-        <path d="M4 19V9" />
-        <path d="M10 19V5" />
-        <path d="M16 19v-7" />
-        <path d="M22 19H2" />
-      </>
-    ),
-  },
-  {
-    screen: 'answers',
-    label: 'Questions',
-    icon: (
-      <>
-        <path d="M5 4h11a3 3 0 0 1 3 3v13H7a2 2 0 0 1-2-2V4Z" />
-        <path d="M7 20V7a3 3 0 0 1 3-3" />
-        <path d="M10 9h6" />
-        <path d="M10 13h5" />
-      </>
-    ),
-  },
-  {
     screen: 'memorized',
-    label: 'Mémorisées',
+    label: 'Mémoriser',
     icon: (
       <>
         <path d="M6 4h12v16l-6-3-6 3V4Z" />
@@ -45,14 +21,31 @@ const NAV_ITEMS = [
     ),
   },
   {
-    screen: 'terrain',
-    label: 'Terrain',
+    screen: 'favorites',
+    label: 'Favoris',
+    icon: (
+      <path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2-4.5-4.4 6.2-.9L12 3Z" />
+    ),
+  },
+  {
+    screen: 'mistakes',
+    label: 'Erreurs',
     icon: (
       <>
-        <rect x="3" y="5" width="18" height="14" rx="1.5" />
-        <path d="M12 5v14" />
-        <circle cx="12" cy="12" r="2.5" />
-        <path d="M3 9h3v6H3M21 9h-3v6h3" />
+        <circle cx="12" cy="12" r="9" />
+        <path d="m9 9 6 6M15 9l-6 6" />
+      </>
+    ),
+  },
+  {
+    screen: 'statistics',
+    label: 'Statistiques',
+    icon: (
+      <>
+        <path d="M4 19V9" />
+        <path d="M10 19V5" />
+        <path d="M16 19v-7" />
+        <path d="M22 19H2" />
       </>
     ),
   },

@@ -1,6 +1,6 @@
 import { computeCategoryStats } from '../utils/history.js'
 
-export default function History({ history, learningSummary, onBack, onClear, onResetLearning }) {
+export default function History({ history, learningSummary, onClear, onResetLearning }) {
   const categoryStats = computeCategoryStats(history)
   const recent = history.slice(0, 8).reverse()
   const best = history.length ? Math.max(...history.map((entry) => entry.scoreTotal || 0)) : 0
@@ -13,14 +13,13 @@ export default function History({ history, learningSummary, onBack, onClear, onR
   }
 
   function handleResetLearning() {
-    if (window.confirm("Réinitialiser les favoris et les statistiques par question ?")) onResetLearning()
+    if (window.confirm("Réinitialiser les favoris, les questions mémorisées et les statistiques par question ?")) onResetLearning()
   }
 
   return (
     <div className="screen history-screen">
-      <div className="quiz-header"><button type="button" className="btn-link" onClick={onBack}>← Retour</button></div>
-      <h1 className="app-title">Ma progression</h1>
-      <p className="app-subtitle">Historique, maîtrise et priorités de révision</p>
+      <h1 className="app-title">Statistiques</h1>
+      <p className="app-subtitle">Résultats, maîtrise et progression</p>
 
       <div className="stats-grid">
         <div className="card stat-card"><strong>{best}</strong><span>meilleur /100</span></div>
@@ -75,7 +74,7 @@ export default function History({ history, learningSummary, onBack, onClear, onR
         ))}
       </div>
 
-      {history.length === 0 && <p className="setup-text">Termine un quiz pour commencer à suivre ta progression.</p>}
+      {history.length === 0 && <p className="setup-text">Termine un quiz pour commencer à suivre tes statistiques.</p>}
       {history.length > 0 && <button type="button" className="link-button" onClick={handleClear}>Effacer l'historique</button>}
       <button type="button" className="link-button danger-link" onClick={handleResetLearning}>Réinitialiser l'apprentissage intelligent</button>
     </div>

@@ -1,0 +1,315 @@
+.dashboard-card {
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.dashboard-card > div {
+  min-height: 58px;
+  justify-content: center;
+}
+
+.bottom-nav {
+  grid-template-columns: repeat(5, 1fr);
+  gap: 2px;
+  padding-inline: 5px;
+}
+
+.bottom-nav-item {
+  min-height: 56px;
+  padding: 5px 2px;
+  font-size: 0.64rem;
+}
+
+.bottom-nav-icon {
+  width: 22px;
+  height: 22px;
+}
+
+.collection-screen,
+.history-screen,
+.memorized-screen {
+  padding-top: 28px;
+}
+
+.collection-heading {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 2px;
+}
+
+.collection-start-button {
+  margin-bottom: 2px;
+}
+
+.collection-empty {
+  text-align: center;
+  padding: 28px 18px;
+}
+
+.collection-empty strong {
+  color: var(--fff-blue-dark);
+  font-size: 1rem;
+}
+
+.collection-empty p {
+  margin: 7px 0 0;
+  color: var(--gray-600);
+  font-size: 0.88rem;
+  line-height: 1.45;
+}
+
+.collection-success-empty strong {
+  color: var(--success);
+}
+
+.collection-item {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.collection-item-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.collection-muted-badge {
+  background: var(--success-bg);
+  color: #0d5c30;
+}
+
+.collection-note {
+  margin: 0;
+  color: var(--gray-600);
+  font-size: 0.8rem;
+  line-height: 1.4;
+}
+
+.collection-remove-button {
+  align-self: flex-start;
+  border: 0;
+  background: transparent;
+  color: var(--fff-blue);
+  padding: 5px 0;
+  font: inherit;
+  font-size: 0.84rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.collection-remove-button:focus-visible,
+.home-questions-link:focus-visible {
+  outline: 2px solid var(--fff-blue-light);
+  outline-offset: 3px;
+}
+
+.mistake-item {
+  gap: 9px;
+}
+
+.mistake-count {
+  color: var(--fff-red);
+  font-size: 0.76rem;
+  font-weight: 800;
+}
+
+.mistake-progress {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding-top: 9px;
+  border-top: 1px solid var(--gray-100);
+  color: var(--gray-600);
+  font-size: 0.8rem;
+}
+
+.mistake-progress strong {
+  color: var(--fff-blue);
+}
+
+.home-terrain-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.home-section-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 0 2px;
+}
+
+.home-section-heading h2 {
+  margin: 0;
+  color: var(--fff-blue-dark);
+  font-size: 1.08rem;
+  line-height: 1.25;
+}
+
+.home-section-heading p {
+  margin: 3px 0 0;
+  color: var(--gray-600);
+  font-size: 0.8rem;
+}
+
+.home-section-chip {
+  flex: none;
+  border-radius: 999px;
+  background: var(--fff-blue);
+  color: var(--white);
+  padding: 5px 9px;
+  font-size: 0.68rem;
+  font-weight: 800;
+}
+
+.terrain-card {
+  padding: 12px;
+  gap: 12px;
+}
+
+.terrain-image-stage {
+  width: 100%;
+  height: auto;
+  max-height: 430px;
+  aspect-ratio: 900 / 620;
+  overflow: auto;
+  border-radius: 12px;
+  background: #0f5f32;
+  overscroll-behavior: contain;
+  touch-action: pan-x pan-y pinch-zoom;
+}
+
+.terrain-diagram-wrap {
+  min-width: 100%;
+}
+
+.terrain-diagram {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.terrain-svg-bg {
+  fill: #17713a;
+}
+
+.terrain-svg-lines {
+  fill: none;
+  stroke: #ffffff;
+  stroke-width: 4;
+  vector-effect: non-scaling-stroke;
+}
+
+.terrain-svg-lines .terrain-svg-dot {
+  fill: #ffffff;
+  stroke: none;
+}
+
+.terrain-svg-dimension,
+.terrain-svg-labels {
+  fill: #ffffff;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  font-weight: 800;
+}
+
+.terrain-svg-dimension {
+  font-size: 22px;
+}
+
+.terrain-svg-labels {
+  font-size: 18px;
+}
+
+.terrain-hint {
+  font-size: 0.76rem;
+}
+
+.terrain-reference-block {
+  padding-top: 12px;
+  border-top: 1px solid var(--gray-100);
+}
+
+.terrain-reference-block h3 {
+  margin: 0 0 10px;
+  color: var(--fff-blue-dark);
+  font-size: 0.92rem;
+}
+
+.terrain-reference-grid {
+  gap: 10px 14px;
+}
+
+.terrain-reference-grid span {
+  min-width: 0;
+}
+
+.home-questions-link {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  border: 1.5px solid var(--gray-300);
+  border-radius: var(--radius-md);
+  background: var(--white);
+  color: var(--fff-blue-dark);
+  padding: 14px 16px;
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
+}
+
+.home-questions-link > span:first-child {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.home-questions-link strong {
+  color: var(--fff-blue);
+  font-size: 0.92rem;
+}
+
+.home-questions-link small {
+  color: var(--gray-600);
+  font-size: 0.75rem;
+  line-height: 1.35;
+}
+
+.home-questions-arrow {
+  flex: none;
+  color: var(--fff-red);
+  font-size: 1.25rem;
+  font-weight: 800;
+}
+
+@media (max-width: 360px) {
+  .bottom-nav {
+    padding-inline: 3px;
+  }
+
+  .bottom-nav-item {
+    font-size: 0.56rem;
+  }
+
+  .bottom-nav-icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .terrain-svg-dimension {
+    font-size: 19px;
+  }
+
+  .terrain-svg-labels {
+    font-size: 16px;
+  }
+}
