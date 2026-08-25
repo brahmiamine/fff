@@ -1,4 +1,5 @@
 const COUNT_OPTIONS = [10, 20, 30, 'all']
+const QUESTION_TIME_OPTIONS = [30, 45, 60]
 
 function ToggleSetting({ checked, onChange, label, description }) {
   return (
@@ -23,11 +24,17 @@ export default function Settings({
   historyCount,
   learningSummary,
 }) {
+  const customQuestionTime = !QUESTION_TIME_OPTIONS.includes(settings.questionTimeSeconds)
+
   function handleResetAll() {
     const confirmed = window.confirm(
       'Réinitialiser toutes les données ? Les quiz en cours, statistiques, favoris, erreurs, questions mémorisées et paramètres seront effacés.',
     )
     if (confirmed) onResetAll()
+  }
+
+  function selectCustomQuestionTime() {
+    if (!customQuestionTime) onChange({ questionTimeSeconds: 90 })
   }
 
   return (
@@ -88,6 +95,52 @@ export default function Settings({
           label="Chrono par défaut"
           description="Active automatiquement le chrono dans le quiz personnalisé."
         />
+
+        <div className="settings-field settings-field-stacked">
+          <span>
+            <strong>Temps par question</strong>
+            <small>Utilisé pour calculer la durée totale des quiz chronométrés et de l’examen blanc.</small>
+          </span>
+          <div className="settings-segmented" role="group" aria-label="Temps par question">
+            {QUESTION_TIME_OPTIONS.map((seconds) => (
+              <button
+                type="button"
+                key={seconds}
+                className={settings.questionTimeSeconds === seconds ? 'settings-segment-active' : ''}
+                onClick={() => onChange({ questionTimeSeconds: seconds })}
+              >
+                {seconds} s
+              </button>
+            ))}
+            <button
+              type="button"
+              className={customQuestionTime ? 'settings-segment-active' : ''}
+              onClick={selectCustomQuestionTime}
+            >
+              Personnalisé
+            </button>
+          </div>
+
+          {customQuestionTime && (
+            <label className="settings-field">
+              <span>
+                <strong>Durée personnalisée</strong>
+                <small>Entre 10 et 300 secondes par question.</small>
+              </span>
+              <input
+                className="settings-select"
+                type="number"
+                min="10"
+                max="300"
+                step="1"
+                inputMode="numeric"
+                value={settings.questionTimeSeconds}
+                onChange={(event) => onChange({ questionTimeSeconds: Number(event.target.value) })}
+                aria-label="Durée personnalisée en secondes"
+              />
+            </label>
+          )}
+        </div>
       </section>
 
       <section className="card settings-card" aria-labelledby="settings-correction-title">
