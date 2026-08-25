@@ -4,6 +4,7 @@ import App from './App.jsx'
 import './styles/index.css'
 import './styles/learning.css'
 import './styles/memorized.css'
+import './styles/navigation.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
