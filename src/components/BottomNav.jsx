@@ -3,7 +3,11 @@ const NAV_ITEMS = [
     screen: 'home',
     label: 'Accueil',
     icon: (
-      <path d="M3 10.8 12 3l9 7.8v9.7a.5.5 0 0 1-.5.5H15v-6H9v6H3.5a.5.5 0 0 1-.5-.5v-9.7Z" />
+      <>
+        <path d="m3 10.8 9-7.8 9 7.8" />
+        <path d="M5 9.5V21h14V9.5" />
+        <path d="M9 21v-6h6v6" />
+      </>
     ),
   },
   {
