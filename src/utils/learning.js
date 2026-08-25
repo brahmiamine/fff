@@ -3,7 +3,7 @@ import { isAnswerCorrect } from './answers.js'
 const LEARNING_KEY = 'cda-quiz-learning-v1'
 
 export function emptyLearningState() {
-  return { version: 1, favorites: [], questions: {} }
+  return { version: 1, favorites: [], memorized: [], questions: {} }
 }
 
 export function normalizeLearningState(value) {
@@ -11,6 +11,7 @@ export function normalizeLearningState(value) {
   return {
     version: 1,
     favorites: Array.isArray(value.favorites) ? [...new Set(value.favorites.filter(Boolean))] : [],
+    memorized: Array.isArray(value.memorized) ? [...new Set(value.memorized.filter(Boolean))] : [],
     questions: value.questions && typeof value.questions === 'object' ? value.questions : {},
   }
 }
@@ -46,6 +47,19 @@ export function toggleFavorite(state, questionId) {
   if (favorites.has(questionId)) favorites.delete(questionId)
   else favorites.add(questionId)
   return { ...current, favorites: [...favorites] }
+}
+
+export function toggleMemorized(state, questionId) {
+  const current = normalizeLearningState(state)
+  const memorized = new Set(current.memorized)
+  if (memorized.has(questionId)) memorized.delete(questionId)
+  else memorized.add(questionId)
+  return { ...current, memorized: [...memorized] }
+}
+
+export function excludeMemorizedQuestions(questions, state) {
+  const memorized = new Set(normalizeLearningState(state).memorized)
+  return questions.filter((question) => !memorized.has(question.id))
 }
 
 export function recordQuizAttempts(state, questions, answers, now = Date.now()) {
@@ -154,6 +168,7 @@ export function computeLearningSummary(questions, state) {
     masteredQuestions: seenQuestions.filter((item) => item.mastery >= 0.8 && item.seenCount >= 2).length,
     mistakeCount,
     favoriteCount: current.favorites.length,
+    memorizedCount: current.memorized.length,
     categories,
     perQuestion,
   }
