@@ -35,6 +35,16 @@ const NAV_ITEMS = [
     ),
   },
   {
+    screen: 'memorized',
+    label: 'Mémorisées',
+    icon: (
+      <>
+        <path d="M6 4h12v16l-6-3-6 3V4Z" />
+        <path d="m9 10 2 2 4-4" />
+      </>
+    ),
+  },
+  {
     screen: 'terrain',
     label: 'Terrain',
     icon: (
