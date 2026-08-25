@@ -1,6 +1,6 @@
 const BASE = import.meta.env.BASE_URL
 
-export default function MemorizedQuestions({ questions, memorizedIds, onToggleMemorized }) {
+export default function MemorizedQuestions({ questions, memorizedIds, onToggleMemorized, showExplanations = true }) {
   const memorized = new Set(memorizedIds)
   const items = questions.filter((question) => memorized.has(question.id))
 
@@ -38,7 +38,7 @@ export default function MemorizedQuestions({ questions, memorizedIds, onToggleMe
                 })}
               </ul>
 
-              {question.explanation && <p className="review-explanation">{question.explanation}</p>}
+              {showExplanations && question.explanation && <p className="review-explanation">{question.explanation}</p>}
 
               <button
                 type="button"
