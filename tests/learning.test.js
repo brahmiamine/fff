@@ -5,6 +5,8 @@ import { getRemainingSeconds, pauseTimedState, resumeTimedState } from '../src/u
 import {
   computeLearningSummary,
   excludeMemorizedQuestions,
+  markQuestionsValidated,
+  normalizeLearningState,
   recordQuizAttempts,
   selectAdaptiveQuestions,
   selectMistakeQuestions,
@@ -45,6 +47,32 @@ test('recordQuizAttempts updates mastery and recent result without scheduling fi
   assert.equal('dueAt' in state.questions.a, false)
   assert.equal('intervalDays' in state.questions.a, false)
   assert.equal('streak' in state.questions.a, false)
+})
+
+test('validated questions are counted once even after repeated validation', () => {
+  let state = markQuestionsValidated(undefined, 'a')
+  state = markQuestionsValidated(state, 'a')
+  state = markQuestionsValidated(state, ['a', 'b'])
+
+  assert.deepEqual(state.validated.sort(), ['a', 'b'])
+  const summary = computeLearningSummary(questions, state)
+  assert.equal(summary.validatedQuestions, 2)
+  assert.equal(summary.neverValidatedCount, 1)
+  assert.equal(summary.perQuestion.find((item) => item.id === 'a').validated, true)
+  assert.equal(summary.perQuestion.find((item) => item.id === 'c').validated, false)
+})
+
+test('legacy learning data migrates attempted questions to validated ids', () => {
+  const state = normalizeLearningState({
+    favorites: [],
+    memorized: [],
+    questions: {
+      a: { seenCount: 2 },
+      b: { seenCount: 0 },
+    },
+  })
+
+  assert.deepEqual(state.validated, ['a'])
 })
 
 test('adaptive selection prioritizes unseen and weak/recently wrong questions', () => {

@@ -49,11 +49,13 @@ const NAV_ITEMS = [
   },
 ]
 
+const SETTINGS_SUBPAGES = new Set(['statistics', 'unvalidated'])
+
 export default function BottomNav({ activeScreen, onNavigate }) {
   return (
     <nav className="bottom-nav" aria-label="Navigation principale">
       {NAV_ITEMS.map((item) => {
-        const active = activeScreen === item.screen || (item.screen === 'settings' && activeScreen === 'statistics')
+        const active = activeScreen === item.screen || (item.screen === 'settings' && SETTINGS_SUBPAGES.has(activeScreen))
         return (
           <button
             type="button"

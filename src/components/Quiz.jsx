@@ -39,6 +39,7 @@ export default function Quiz({
   onFinish,
   onAbort,
   onReset,
+  onValidate,
   favoriteIds,
   onToggleFavorite,
   memorizedIds,
@@ -78,7 +79,9 @@ export default function Quiz({
   }
 
   function handleValidate() {
-    if (selected.length > 0) setRevealed(true)
+    if (selected.length === 0) return
+    onValidate(question.id)
+    setRevealed(true)
   }
 
   function goTo(index) {
