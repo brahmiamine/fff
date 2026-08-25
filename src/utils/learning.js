@@ -118,10 +118,10 @@ export function selectWeakQuestions(questions, state, count) {
 }
 
 export function selectMistakeQuestions(questions, state, count) {
-  const filtered = questions.filter((question) => (statFor(state, question.id)?.wrongCount || 0) > 0)
+  const filtered = questions.filter((question) => statFor(state, question.id)?.lastResult === false)
   return takeTop(filtered, count, (question) => {
     const stat = statFor(state, question.id)
-    return (stat.wrongCount || 0) * 10 + (stat.lastResult === false ? 50 : 0) + (1 - (stat.mastery || 0)) * 30
+    return (stat.wrongCount || 0) * 10 + (1 - (stat.mastery || 0)) * 30
   })
 }
 
@@ -160,7 +160,7 @@ export function computeLearningSummary(questions, state) {
     .sort((a, b) => a.rate - b.rate)
 
   const seenQuestions = perQuestion.filter((item) => item.seenCount > 0)
-  const mistakeCount = perQuestion.filter((item) => item.wrongCount > 0).length
+  const mistakeCount = perQuestion.filter((item) => item.lastResult === false).length
 
   return {
     totalQuestions: questions.length,
