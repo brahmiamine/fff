@@ -2,7 +2,16 @@ import { isAnswerCorrect } from '../utils/answers.js'
 
 const BASE = import.meta.env.BASE_URL
 
-export default function QuestionCard({ question, selected, revealed, onToggleOption, isFavorite, onToggleFavorite }) {
+export default function QuestionCard({
+  question,
+  selected,
+  revealed,
+  onToggleOption,
+  isFavorite,
+  onToggleFavorite,
+  isMemorized,
+  onToggleMemorized,
+}) {
   const isMultiple = question.type === 'multiple'
 
   function optionState(optionId) {
@@ -22,9 +31,20 @@ export default function QuestionCard({ question, selected, revealed, onToggleOpt
           <span className="badge badge-type">{isMultiple ? 'Choix multiple' : 'Choix unique'}</span>
           {question.law && <span className="badge badge-law">{question.law}</span>}
         </div>
-        <button type="button" className={`favorite-button ${isFavorite ? 'favorite-active' : ''}`} aria-label={isFavorite ? 'Retirer des favoris' : 'Ajouter aux favoris'} aria-pressed={isFavorite} onClick={onToggleFavorite}>
-          {isFavorite ? '★' : '☆'}
-        </button>
+        <div className="question-learning-actions">
+          <button
+            type="button"
+            className={`memorized-button ${isMemorized ? 'memorized-active' : ''}`}
+            aria-label={isMemorized ? 'Retirer des questions mémorisées' : 'Marquer comme mémorisée'}
+            aria-pressed={isMemorized}
+            onClick={onToggleMemorized}
+          >
+            {isMemorized ? '✓ Mémorisée' : 'Mémoriser'}
+          </button>
+          <button type="button" className={`favorite-button ${isFavorite ? 'favorite-active' : ''}`} aria-label={isFavorite ? 'Retirer des favoris' : 'Ajouter aux favoris'} aria-pressed={isFavorite} onClick={onToggleFavorite}>
+            {isFavorite ? '★' : '☆'}
+          </button>
+        </div>
       </div>
 
       <h2 className="question-text">{question.question}</h2>
