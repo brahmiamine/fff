@@ -1,8 +1,7 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo } from 'react'
 import fffLogo from '../assets/fff-logo.png'
 import district75Logo from '../assets/district75-logo.png'
 import Terrain from './Terrain.jsx'
-import { computeCountTiers } from '../utils/tiers.js'
 import { resolveDefaultQuestionCount } from '../utils/settings.js'
 
 const SECONDS_PER_QUESTION = 60
@@ -36,39 +35,25 @@ export default function Home({
     [allQuestions, memorizedSet],
   )
   const totalQuestions = availableQuestions.length
-  const categories = useMemo(() => [...new Set(allQuestions.map((q) => q.category))], [allQuestions])
-
-  const [category, setCategory] = useState('all')
-  const filteredTotal = useMemo(
-    () => (category === 'all' ? totalQuestions : availableQuestions.filter((q) => q.category === category).length),
-    [availableQuestions, category, totalQuestions],
-  )
-
-  const tiers = useMemo(() => computeCountTiers(filteredTotal), [filteredTotal])
-  const [count, setCount] = useState(() => resolveDefaultQuestionCount(settings.defaultQuestionCount, filteredTotal))
-  const [timed, setTimed] = useState(settings.defaultTimed)
-  const [mode, setMode] = useState(settings.defaultMode)
-
-  useEffect(() => {
-    setCount(resolveDefaultQuestionCount(settings.defaultQuestionCount, filteredTotal))
-  }, [filteredTotal, settings.defaultQuestionCount])
-
-  useEffect(() => {
-    setTimed(settings.defaultTimed)
-  }, [settings.defaultTimed])
-
-  useEffect(() => {
-    setMode(settings.defaultMode)
-  }, [settings.defaultMode])
 
   function handleReset() {
     if (window.confirm('Réinitialiser le quiz en cours ?')) onReset()
   }
 
-  const timedMinutes = Math.round((count * SECONDS_PER_QUESTION) / 60)
   const standardCount = resolveDefaultQuestionCount(settings.defaultQuestionCount, totalQuestions)
   const quickCount = Math.min(10, totalQuestions)
   const noQuestionsAvailable = totalQuestions === 0
+  const customTimeLimit = settings.defaultTimed ? standardCount * SECONDS_PER_QUESTION : null
+
+  function startCustomQuiz() {
+    onStart({
+      count: standardCount,
+      category: 'all',
+      mode: settings.defaultMode,
+      preset: 'custom',
+      timeLimitSeconds: customTimeLimit,
+    })
+  }
 
   return (
     <div className="screen home-screen">
@@ -115,31 +100,9 @@ export default function Home({
             </div>
           </div>
 
-          <div className="card setup-card">
+          <div className="card setup-card custom-quiz-card">
             <p className="field-label">Quiz personnalisé</p>
-            <select className="select-input" value={category} onChange={(e) => setCategory(e.target.value)}>
-              <option value="all">Toutes les catégories</option>
-              {categories.map((c) => <option key={c} value={c}>{c}</option>)}
-            </select>
-
-            <div className="count-options" role="group" aria-label="Nombre de questions">
-              {tiers.map((tier) => (
-                <button type="button" key={tier} className={`chip ${count === tier ? 'chip-active' : ''}`} onClick={() => setCount(tier)}>
-                  {tier === filteredTotal ? `Toutes (${tier})` : tier}
-                </button>
-              ))}
-            </div>
-
-            <div className="mode-toggle" role="group" aria-label="Mode du quiz">
-              <button type="button" className={`chip ${mode === 'training' ? 'chip-active' : ''}`} onClick={() => setMode('training')}>Entraînement</button>
-              <button type="button" className={`chip ${mode === 'exam' ? 'chip-active' : ''}`} onClick={() => setMode('exam')}>Examen</button>
-            </div>
-
-            <button type="button" className={`chip chip-wide ${timed ? 'chip-active' : ''}`} disabled={filteredTotal === 0} onClick={() => setTimed((value) => !value)}>
-              ⏱ Chrono {timed ? `activé (≈ ${timedMinutes} min)` : 'désactivé'}
-            </button>
-
-            <button type="button" className="btn btn-primary btn-start" disabled={filteredTotal === 0} onClick={() => onStart({ count, category, mode, preset: 'custom', timeLimitSeconds: timed ? count * SECONDS_PER_QUESTION : null })}>
+            <button type="button" className="btn btn-primary" disabled={noQuestionsAvailable} onClick={startCustomQuiz}>
               Commencer le quiz
             </button>
           </div>
