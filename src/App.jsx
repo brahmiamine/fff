@@ -5,8 +5,9 @@ import Results from './components/Results.jsx'
 import AnswerKey from './components/AnswerKey.jsx'
 import History from './components/History.jsx'
 import BottomNav from './components/BottomNav.jsx'
-import Terrain from './components/Terrain.jsx'
 import MemorizedQuestions from './components/MemorizedQuestions.jsx'
+import FavoriteQuestions from './components/FavoriteQuestions.jsx'
+import MistakeQuestions from './components/MistakeQuestions.jsx'
 import questionsData from './data/questions.json'
 import { prepareQuestions, shuffle } from './utils/shuffle.js'
 import { loadProgress, saveProgress, clearProgress } from './utils/storage.js'
@@ -33,7 +34,7 @@ import {
 
 const PASS_THRESHOLD = 0.8
 const QUESTIONS = enrichQuestions(questionsData)
-const NAV_SCREENS = new Set(['home', 'history', 'answers', 'memorized', 'terrain'])
+const NAV_SCREENS = new Set(['home', 'memorized', 'favorites', 'mistakes', 'statistics'])
 
 function freshState() {
   return {
@@ -97,7 +98,7 @@ export default function App() {
     const pool = excludeMemorizedQuestions(categoryPool, learning)
     const quizQuestions = prepareSelectedQuestions(pool, learning, count, preset)
     if (quizQuestions.length === 0) {
-      window.alert('Aucune question disponible : elles sont toutes marquées comme mémorisées pour cette sélection.')
+      window.alert('Aucune question disponible pour cette sélection.')
       return
     }
 
@@ -208,14 +209,6 @@ export default function App() {
     setState((current) => ({ ...current, screen }))
   }
 
-  function viewAnswers() {
-    navigateTo('answers')
-  }
-
-  function viewHistory() {
-    navigateTo('history')
-  }
-
   function backToHome() {
     navigateTo('home')
   }
@@ -253,6 +246,7 @@ export default function App() {
           resumeMode={state.mode}
           onResume={resumeQuiz}
           onReset={resetProgress}
+          onViewAnswers={() => navigateTo('answers')}
           learningSummary={learningSummary}
           memorizedIds={learning.memorized}
         />
@@ -288,11 +282,10 @@ export default function App() {
         />
       )}
       {state.screen === 'answers' && <AnswerKey questions={QUESTIONS} onBack={backToHome} />}
-      {state.screen === 'history' && (
+      {state.screen === 'statistics' && (
         <History
           history={history}
           learningSummary={learningSummary}
-          onBack={backToHome}
           onClear={handleClearHistory}
           onResetLearning={handleResetLearning}
         />
@@ -304,7 +297,23 @@ export default function App() {
           onToggleMemorized={handleToggleMemorized}
         />
       )}
-      {state.screen === 'terrain' && <Terrain />}
+      {state.screen === 'favorites' && (
+        <FavoriteQuestions
+          questions={QUESTIONS}
+          favoriteIds={learning.favorites}
+          memorizedIds={learning.memorized}
+          onToggleFavorite={handleToggleFavorite}
+          onStart={startQuiz}
+        />
+      )}
+      {state.screen === 'mistakes' && (
+        <MistakeQuestions
+          questions={QUESTIONS}
+          learningSummary={learningSummary}
+          memorizedIds={learning.memorized}
+          onStart={startQuiz}
+        />
+      )}
       {showBottomNav && <BottomNav activeScreen={state.screen} onNavigate={navigateTo} />}
     </div>
   )
