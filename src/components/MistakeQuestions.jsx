@@ -1,3 +1,5 @@
+import QuestionMedia from './QuestionMedia.jsx'
+
 export default function MistakeQuestions({ questions, learningSummary, memorizedIds, onStart }) {
   const memorized = new Set(memorizedIds)
   const questionById = new Map(questions.map((question) => [question.id, question]))
@@ -40,6 +42,7 @@ export default function MistakeQuestions({ questions, learningSummary, memorized
                 <span className="mistake-count">{item.wrongCount} erreur{item.wrongCount > 1 ? 's' : ''}</span>
               </div>
               <p className="review-question">{item.question}</p>
+              <QuestionMedia question={item.sourceQuestion} compact />
               <div className="mistake-progress" aria-label={`Maîtrise ${Math.round(item.mastery * 100)} %`}>
                 <span>Maîtrise</span>
                 <strong>{Math.round(item.mastery * 100)}%</strong>
