@@ -24,6 +24,8 @@ export default function Quiz({
   onReset,
   favoriteIds,
   onToggleFavorite,
+  memorizedIds,
+  onToggleMemorized,
 }) {
   const [revealed, setRevealed] = useState(false)
   const [now, setNow] = useState(Date.now())
@@ -106,6 +108,8 @@ export default function Quiz({
         onToggleOption={toggleOption}
         isFavorite={favoriteIds.includes(question.id)}
         onToggleFavorite={() => onToggleFavorite(question.id)}
+        isMemorized={memorizedIds.includes(question.id)}
+        onToggleMemorized={() => onToggleMemorized(question.id)}
       />
 
       <div className="quiz-actions">
