@@ -11,6 +11,7 @@ export default function QuestionCard({
   onToggleFavorite,
   isMemorized,
   onToggleMemorized,
+  showExplanations = true,
 }) {
   const isMultiple = question.type === 'multiple'
 
@@ -66,7 +67,7 @@ export default function QuestionCard({
       {revealed && (
         <div className={`feedback-box ${isAnswerCorrect(question, selected) ? 'feedback-ok' : 'feedback-ko'}`}>
           <p className="feedback-title">{isAnswerCorrect(question, selected) ? 'Bonne réponse !' : 'Réponse incorrecte'}</p>
-          {question.explanation && <p className="feedback-explanation">{question.explanation}</p>}
+          {showExplanations && question.explanation && <p className="feedback-explanation">{question.explanation}</p>}
           <div className="learning-note">
             {question.takeaway && <p><strong>💡 À retenir :</strong> {question.takeaway}</p>}
             <p><strong>📚 Référence :</strong> {question.source} · {question.season}</p>

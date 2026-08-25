@@ -26,6 +26,7 @@ export default function Quiz({
   onToggleFavorite,
   memorizedIds,
   onToggleMemorized,
+  showExplanations,
 }) {
   const [revealed, setRevealed] = useState(false)
   const [now, setNow] = useState(Date.now())
@@ -110,6 +111,7 @@ export default function Quiz({
         onToggleFavorite={() => onToggleFavorite(question.id)}
         isMemorized={memorizedIds.includes(question.id)}
         onToggleMemorized={() => onToggleMemorized(question.id)}
+        showExplanations={showExplanations}
       />
 
       <div className="quiz-actions">

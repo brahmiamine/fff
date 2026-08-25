@@ -38,14 +38,12 @@ const NAV_ITEMS = [
     ),
   },
   {
-    screen: 'statistics',
-    label: 'Statistiques',
+    screen: 'settings',
+    label: 'Paramètres',
     icon: (
       <>
-        <path d="M4 19V9" />
-        <path d="M10 19V5" />
-        <path d="M16 19v-7" />
-        <path d="M22 19H2" />
+        <circle cx="12" cy="12" r="3" />
+        <path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-2.8 2.8-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6V21h-4v-.1a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1L4.2 17l.1-.1a1.7 1.7 0 0 0 .3-1.9A1.7 1.7 0 0 0 3 14H3v-4h.1a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9L4.2 7 7 4.2l.1.1A1.7 1.7 0 0 0 9 4.6a1.7 1.7 0 0 0 1-1.6V3h4v.1a1.7 1.7 0 0 0 1 1.6 1.7 1.7 0 0 0 1.9-.3l.1-.1L19.8 7l-.1.1a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0 1.6 1h.1v4H21a1.7 1.7 0 0 0-1.6 1Z" />
       </>
     ),
   },
@@ -55,7 +53,7 @@ export default function BottomNav({ activeScreen, onNavigate }) {
   return (
     <nav className="bottom-nav" aria-label="Navigation principale">
       {NAV_ITEMS.map((item) => {
-        const active = activeScreen === item.screen
+        const active = activeScreen === item.screen || (item.screen === 'settings' && activeScreen === 'statistics')
         return (
           <button
             type="button"

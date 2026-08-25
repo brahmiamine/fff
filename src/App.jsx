@@ -8,6 +8,7 @@ import BottomNav from './components/BottomNav.jsx'
 import MemorizedQuestions from './components/MemorizedQuestions.jsx'
 import FavoriteQuestions from './components/FavoriteQuestions.jsx'
 import MistakeQuestions from './components/MistakeQuestions.jsx'
+import Settings from './components/Settings.jsx'
 import questionsData from './data/questions.json'
 import { prepareQuestions, shuffle } from './utils/shuffle.js'
 import { loadProgress, saveProgress, clearProgress } from './utils/storage.js'
@@ -31,10 +32,17 @@ import {
   toggleFavorite,
   toggleMemorized,
 } from './utils/learning.js'
+import {
+  clearSettings,
+  defaultSettings,
+  loadSettings,
+  normalizeSettings,
+  saveSettings,
+} from './utils/settings.js'
 
 const PASS_THRESHOLD = 0.8
 const QUESTIONS = enrichQuestions(questionsData)
-const NAV_SCREENS = new Set(['home', 'memorized', 'favorites', 'mistakes', 'statistics'])
+const NAV_SCREENS = new Set(['home', 'memorized', 'favorites', 'mistakes', 'settings', 'statistics'])
 
 function freshState() {
   return {
@@ -80,6 +88,7 @@ export default function App() {
   const [state, setState] = useState(initialState)
   const [history, setHistory] = useState(() => loadHistory())
   const [learning, setLearning] = useState(() => loadLearningState())
+  const [settings, setSettings] = useState(() => loadSettings())
 
   const learningSummary = useMemo(() => computeLearningSummary(QUESTIONS, learning), [learning])
 
@@ -92,6 +101,34 @@ export default function App() {
   useEffect(() => {
     saveLearningState(learning)
   }, [learning])
+
+  useEffect(() => {
+    saveSettings(settings)
+  }, [settings])
+
+  useEffect(() => {
+    const root = document.documentElement
+    const media = window.matchMedia?.('(prefers-color-scheme: dark)')
+
+    function applyTheme() {
+      const resolved = settings.theme === 'system'
+        ? media?.matches ? 'dark' : 'light'
+        : settings.theme
+      root.dataset.theme = resolved
+      root.style.colorScheme = resolved
+    }
+
+    applyTheme()
+    if (settings.theme !== 'system' || !media) return undefined
+
+    if (media.addEventListener) media.addEventListener('change', applyTheme)
+    else media.addListener?.(applyTheme)
+
+    return () => {
+      if (media.removeEventListener) media.removeEventListener('change', applyTheme)
+      else media.removeListener?.(applyTheme)
+    }
+  }, [settings.theme])
 
   function startQuiz({ count, category = 'all', timeLimitSeconds = null, mode = 'training', preset = 'custom' }) {
     const categoryPool = category !== 'all' ? QUESTIONS.filter((q) => q.category === category) : QUESTIONS
@@ -231,6 +268,21 @@ export default function App() {
     setLearning((current) => toggleMemorized(current, questionId))
   }
 
+  function handleSettingsChange(patch) {
+    setSettings((current) => normalizeSettings({ ...current, ...patch }))
+  }
+
+  function handleResetAllData() {
+    clearProgress()
+    clearHistory()
+    clearLearningState()
+    clearSettings()
+    setHistory([])
+    setLearning(emptyLearningState())
+    setSettings(defaultSettings())
+    setState(freshState())
+  }
+
   const resumable = state.quizQuestions.length > 0 && state.screen === 'home'
   const showBottomNav = NAV_SCREENS.has(state.screen)
 
@@ -249,6 +301,7 @@ export default function App() {
           onViewAnswers={() => navigateTo('answers')}
           learningSummary={learningSummary}
           memorizedIds={learning.memorized}
+          settings={settings}
         />
       )}
       {state.screen === 'quiz' && (
@@ -269,6 +322,7 @@ export default function App() {
           onToggleFavorite={handleToggleFavorite}
           memorizedIds={learning.memorized}
           onToggleMemorized={handleToggleMemorized}
+          showExplanations={settings.showExplanations}
         />
       )}
       {state.screen === 'results' && (
@@ -279,15 +333,33 @@ export default function App() {
           mode={state.mode}
           onRestart={resetProgress}
           onReviewMistakes={reviewMistakes}
+          showExplanations={settings.showExplanations}
         />
       )}
-      {state.screen === 'answers' && <AnswerKey questions={QUESTIONS} onBack={backToHome} />}
+      {state.screen === 'answers' && (
+        <AnswerKey
+          questions={QUESTIONS}
+          onBack={backToHome}
+          showExplanations={settings.showExplanations}
+        />
+      )}
       {state.screen === 'statistics' && (
         <History
           history={history}
           learningSummary={learningSummary}
+          onBack={() => navigateTo('settings')}
           onClear={handleClearHistory}
           onResetLearning={handleResetLearning}
+        />
+      )}
+      {state.screen === 'settings' && (
+        <Settings
+          settings={settings}
+          onChange={handleSettingsChange}
+          onViewStatistics={() => navigateTo('statistics')}
+          onResetAll={handleResetAllData}
+          historyCount={history.length}
+          learningSummary={learningSummary}
         />
       )}
       {state.screen === 'memorized' && (
@@ -295,6 +367,7 @@ export default function App() {
           questions={QUESTIONS}
           memorizedIds={learning.memorized}
           onToggleMemorized={handleToggleMemorized}
+          showExplanations={settings.showExplanations}
         />
       )}
       {state.screen === 'favorites' && (

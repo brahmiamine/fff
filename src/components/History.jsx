@@ -1,6 +1,6 @@
 import { computeCategoryStats } from '../utils/history.js'
 
-export default function History({ history, learningSummary, onClear, onResetLearning }) {
+export default function History({ history, learningSummary, onBack, onClear, onResetLearning }) {
   const categoryStats = computeCategoryStats(history)
   const recent = history.slice(0, 8).reverse()
   const best = history.length ? Math.max(...history.map((entry) => entry.scoreTotal || 0)) : 0
@@ -18,6 +18,11 @@ export default function History({ history, learningSummary, onClear, onResetLear
 
   return (
     <div className="screen history-screen">
+      {onBack && (
+        <div className="quiz-header">
+          <button type="button" className="btn-link" onClick={onBack}>← Paramètres</button>
+        </div>
+      )}
       <h1 className="app-title">Statistiques</h1>
       <p className="app-subtitle">Résultats, maîtrise et progression</p>
 

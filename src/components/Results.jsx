@@ -4,7 +4,7 @@ import { computeScore } from '../utils/scoring.js'
 
 const BASE = import.meta.env.BASE_URL
 
-export default function Results({ questions, answers, passThreshold, mode, onRestart, onReviewMistakes }) {
+export default function Results({ questions, answers, passThreshold, mode, onRestart, onReviewMistakes, showExplanations = true }) {
   const [showReview, setShowReview] = useState(mode === 'exam')
 
   const scored = questions.map((q) => ({ question: q, selected: answers[q.id] || [], correct: isAnswerCorrect(q, answers[q.id] || []) }))
@@ -63,7 +63,7 @@ export default function Results({ questions, answers, passThreshold, mode, onRes
               {question.image && <img src={`${BASE}${question.image}`} alt="" className="review-image" />}
               <p className="review-line"><span className="review-tag">Votre réponse : </span>{selected.length > 0 ? selected.map((id) => optionLabel(question, id)).join(', ') : 'Aucune réponse'}</p>
               {!correct && <p className="review-line"><span className="review-tag">Bonne réponse : </span>{question.correct.map((id) => optionLabel(question, id)).join(', ')}</p>}
-              {question.explanation && <p className="review-explanation">{question.explanation}</p>}
+              {showExplanations && question.explanation && <p className="review-explanation">{question.explanation}</p>}
               <div className="reference-note">📚 {question.source} · {question.season}{question.takeaway && <><br />💡 {question.takeaway}</>}</div>
             </div>
           ))}
