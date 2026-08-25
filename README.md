@@ -17,11 +17,10 @@ Les questions reprennent le contenu du test théorique corrigé CDA Paris, saiso
 - Score sur 100 avec crédit partiel pour les choix multiples
 - Révision immédiate des erreurs
 - **Favoris** par question et quiz dédié aux favoris
-- **Entraînement adaptatif** qui priorise questions non vues, faibles, dues et erreurs récentes
-- **Répétition espacée** avec échéances 1, 3, 7, 14 puis 30 jours selon la réussite consécutive
-- Quiz dédiés aux points faibles, erreurs passées et questions à réviser
+- **Entraînement adaptatif** qui priorise les questions non vues, les points faibles et les erreurs récentes
+- Quiz dédiés aux points faibles, erreurs passées et favoris
 - Historique, meilleur score, moyenne récente et évolution des derniers quiz
-- Statistiques par catégorie et par question : vues, erreurs, maîtrise, échéance de révision
+- Statistiques par catégorie et par question : vues, erreurs et maîtrise
 - Métadonnées pédagogiques normalisées : loi, difficulté, source, saison, spécificité District/Ligue, tags et point à retenir
 - Liste complète des questions/réponses
 - PWA installable et fonctionnement hors ligne
