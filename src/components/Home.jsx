@@ -23,8 +23,6 @@ export default function Home({
   resumeMode,
   onResume,
   onReset,
-  onViewAnswers,
-  onViewHistory,
   learningSummary,
 }) {
   const totalQuestions = allQuestions.length
@@ -123,13 +121,6 @@ export default function Home({
             </button>
           </div>
         </>
-      )}
-
-      {!resumable && (
-        <div className="home-links">
-          <button type="button" className="link-button" onClick={onViewHistory}>Progression & historique</button>
-          <button type="button" className="link-button" onClick={onViewAnswers}>Toutes les questions et réponses</button>
-        </div>
       )}
 
       <p className="footer-note">Questions issues du test théorique CDA — District Parisien de Football, saison 2026/2027. À but d'entraînement.</p>
