@@ -52,6 +52,7 @@ export default function Quiz({
 
   const question = questions[currentIndex]
   const selected = answers[question.id] || []
+  const isFirst = currentIndex === 0
   const isLast = currentIndex === questions.length - 1
   const isExam = mode === 'exam'
   const isMemorized = memorizedIds.includes(question.id)
@@ -105,7 +106,7 @@ export default function Quiz({
     <div className="screen quiz-screen">
       <div className="quiz-header">
         <div className="quiz-header-actions">
-          <button type="button" className="btn-link" onClick={onAbort}>← Mettre en pause</button>
+          <button type="button" className="btn-link" onClick={onAbort}>← {isFirst ? 'Retour' : 'Mettre en pause'}</button>
           {timeLimitSeconds && <span className={`timer-badge ${remaining <= 30 ? 'timer-badge-low' : ''}`}>⏱ {formatTime(remaining)}</span>}
           <button type="button" className="btn-link btn-reset" onClick={handleReset}>Réinitialiser</button>
         </div>
