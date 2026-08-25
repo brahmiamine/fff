@@ -3,6 +3,7 @@ import fffLogo from '../assets/fff-logo.png'
 import district75Logo from '../assets/district75-logo.png'
 import Terrain from './Terrain.jsx'
 import { computeCountTiers } from '../utils/tiers.js'
+import { resolveDefaultQuestionCount } from '../utils/settings.js'
 
 const SECONDS_PER_QUESTION = 60
 
@@ -27,6 +28,7 @@ export default function Home({
   onViewAnswers,
   learningSummary,
   memorizedIds,
+  settings,
 }) {
   const memorizedSet = useMemo(() => new Set(memorizedIds), [memorizedIds])
   const availableQuestions = useMemo(
@@ -43,20 +45,28 @@ export default function Home({
   )
 
   const tiers = useMemo(() => computeCountTiers(filteredTotal), [filteredTotal])
-  const [count, setCount] = useState(filteredTotal)
-  const [timed, setTimed] = useState(false)
-  const [mode, setMode] = useState('training')
+  const [count, setCount] = useState(() => resolveDefaultQuestionCount(settings.defaultQuestionCount, filteredTotal))
+  const [timed, setTimed] = useState(settings.defaultTimed)
+  const [mode, setMode] = useState(settings.defaultMode)
 
   useEffect(() => {
-    setCount(filteredTotal)
-  }, [filteredTotal])
+    setCount(resolveDefaultQuestionCount(settings.defaultQuestionCount, filteredTotal))
+  }, [filteredTotal, settings.defaultQuestionCount])
+
+  useEffect(() => {
+    setTimed(settings.defaultTimed)
+  }, [settings.defaultTimed])
+
+  useEffect(() => {
+    setMode(settings.defaultMode)
+  }, [settings.defaultMode])
 
   function handleReset() {
     if (window.confirm('Réinitialiser le quiz en cours ?')) onReset()
   }
 
   const timedMinutes = Math.round((count * SECONDS_PER_QUESTION) / 60)
-  const standardCount = Math.min(20, totalQuestions)
+  const standardCount = resolveDefaultQuestionCount(settings.defaultQuestionCount, totalQuestions)
   const quickCount = Math.min(10, totalQuestions)
   const noQuestionsAvailable = totalQuestions === 0
 
