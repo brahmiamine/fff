@@ -9,6 +9,23 @@ function formatTime(totalSeconds) {
   return `${m}:${String(s).padStart(2, '0')}`
 }
 
+function MemorizeButton({ active, onClick }) {
+  return (
+    <button
+      type="button"
+      className={`quiz-memorize-button ${active ? 'quiz-memorize-button-active' : ''}`}
+      onClick={onClick}
+      aria-label={active ? 'Retirer des questions mémorisées' : 'Mémoriser cette question'}
+      aria-pressed={active}
+      title={active ? 'Question mémorisée' : 'Mémoriser cette question'}
+    >
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M6 4.75A1.75 1.75 0 0 1 7.75 3h8.5A1.75 1.75 0 0 1 18 4.75V21l-6-3.35L6 21V4.75Z" />
+      </svg>
+    </button>
+  )
+}
+
 export default function Quiz({
   questions,
   currentIndex,
@@ -36,6 +53,7 @@ export default function Quiz({
   const selected = answers[question.id] || []
   const isLast = currentIndex === questions.length - 1
   const isExam = mode === 'exam'
+  const isMemorized = memorizedIds.includes(question.id)
   const remaining = timeLimitSeconds ? getRemainingSeconds(deadlineAt, remainingSeconds ?? timeLimitSeconds, now) : null
 
   useEffect(() => {
@@ -76,16 +94,6 @@ export default function Quiz({
     goTo(currentIndex + 1)
   }
 
-  function handleSkip() {
-    const nextAnswers = { ...answers, [question.id]: [] }
-    setAnswers(nextAnswers)
-    if (isLast) {
-      onFinish(nextAnswers)
-      return
-    }
-    goTo(currentIndex + 1)
-  }
-
   function handleReset() {
     if (window.confirm('Réinitialiser toute la progression de ce quiz ?')) onReset()
   }
@@ -109,24 +117,26 @@ export default function Quiz({
         onToggleOption={toggleOption}
         isFavorite={favoriteIds.includes(question.id)}
         onToggleFavorite={() => onToggleFavorite(question.id)}
-        isMemorized={memorizedIds.includes(question.id)}
-        onToggleMemorized={() => onToggleMemorized(question.id)}
         showExplanations={showExplanations}
       />
 
       <div className="quiz-actions">
         {isExam ? (
-          <div className="exam-actions">
+          <div className="exam-actions quiz-actions-with-memorize">
             <button type="button" className="btn btn-secondary" disabled={currentIndex === 0} onClick={() => goTo(currentIndex - 1)}>← Précédente</button>
+            <MemorizeButton active={isMemorized} onClick={() => onToggleMemorized(question.id)} />
             <button type="button" className="btn btn-primary" onClick={handleNext}>{isLast ? "Terminer l'examen" : 'Suivante →'}</button>
           </div>
         ) : !revealed ? (
-          <div className="quiz-actions-row">
+          <div className="quiz-actions-row quiz-actions-with-memorize">
             <button type="button" className="btn btn-primary" disabled={selected.length === 0} onClick={handleValidate}>Valider</button>
-            <button type="button" className="btn-skip" onClick={handleSkip}>Suivant →</button>
+            <MemorizeButton active={isMemorized} onClick={() => onToggleMemorized(question.id)} />
           </div>
         ) : (
-          <button type="button" className="btn btn-primary" onClick={handleNext}>{isLast ? 'Voir les résultats' : 'Question suivante'}</button>
+          <div className="quiz-actions-row quiz-actions-with-memorize">
+            <button type="button" className="btn btn-primary" onClick={handleNext}>{isLast ? 'Voir les résultats' : 'Question suivante'}</button>
+            <MemorizeButton active={isMemorized} onClick={() => onToggleMemorized(question.id)} />
+          </div>
         )}
       </div>
     </div>
