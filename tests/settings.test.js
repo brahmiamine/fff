@@ -1,12 +1,18 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import { defaultSettings, normalizeSettings, resolveDefaultQuestionCount } from '../src/utils/settings.js'
+import {
+  defaultSettings,
+  normalizeQuestionTimeSeconds,
+  normalizeSettings,
+  resolveDefaultQuestionCount,
+} from '../src/utils/settings.js'
 
 test('settings defaults stay stable and user values are normalized', () => {
   assert.deepEqual(defaultSettings(), {
     defaultQuestionCount: 20,
     defaultMode: 'training',
     defaultTimed: false,
+    questionTimeSeconds: 60,
     showExplanations: true,
     theme: 'system',
   })
@@ -15,15 +21,26 @@ test('settings defaults stay stable and user values are normalized', () => {
     defaultQuestionCount: '30',
     defaultMode: 'exam',
     defaultTimed: true,
+    questionTimeSeconds: 45,
     showExplanations: false,
     theme: 'dark',
   }), {
     defaultQuestionCount: 30,
     defaultMode: 'exam',
     defaultTimed: true,
+    questionTimeSeconds: 45,
     showExplanations: false,
     theme: 'dark',
   })
+})
+
+test('custom question time accepts practical values and rejects out-of-range values', () => {
+  assert.equal(normalizeQuestionTimeSeconds(30), 30)
+  assert.equal(normalizeQuestionTimeSeconds('75'), 75)
+  assert.equal(normalizeQuestionTimeSeconds(300), 300)
+  assert.equal(normalizeQuestionTimeSeconds(9), 60)
+  assert.equal(normalizeQuestionTimeSeconds(301), 60)
+  assert.equal(normalizeQuestionTimeSeconds('invalid'), 60)
 })
 
 test('invalid settings fall back safely without losing valid preferences', () => {
@@ -31,6 +48,7 @@ test('invalid settings fall back safely without losing valid preferences', () =>
     defaultQuestionCount: 99,
     defaultMode: 'invalid',
     defaultTimed: 'yes',
+    questionTimeSeconds: 999,
     showExplanations: true,
     theme: 'neon',
   })
@@ -38,6 +56,7 @@ test('invalid settings fall back safely without losing valid preferences', () =>
   assert.equal(settings.defaultQuestionCount, 20)
   assert.equal(settings.defaultMode, 'training')
   assert.equal(settings.defaultTimed, false)
+  assert.equal(settings.questionTimeSeconds, 60)
   assert.equal(settings.showExplanations, true)
   assert.equal(settings.theme, 'system')
 })
