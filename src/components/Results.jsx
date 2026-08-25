@@ -1,8 +1,7 @@
 import { useMemo, useState } from 'react'
 import { isAnswerCorrect } from '../utils/answers.js'
 import { computeScore } from '../utils/scoring.js'
-
-const BASE = import.meta.env.BASE_URL
+import QuestionMedia from './QuestionMedia.jsx'
 
 export default function Results({ questions, answers, passThreshold, mode, onRestart, onReviewMistakes, showExplanations = true }) {
   const [showReview, setShowReview] = useState(mode === 'exam')
@@ -60,7 +59,7 @@ export default function Results({ questions, answers, passThreshold, mode, onRes
             <div key={question.id} className={`card review-item ${correct ? 'review-ok' : 'review-ko'}`}>
               <p className="review-number">Question {index + 1} — {question.category}{question.law ? ` · ${question.law}` : ''}</p>
               <p className="review-question">{question.question}</p>
-              {question.image && <img src={`${BASE}${question.image}`} alt="" className="review-image" />}
+              <QuestionMedia question={question} compact />
               <p className="review-line"><span className="review-tag">Votre réponse : </span>{selected.length > 0 ? selected.map((id) => optionLabel(question, id)).join(', ') : 'Aucune réponse'}</p>
               {!correct && <p className="review-line"><span className="review-tag">Bonne réponse : </span>{question.correct.map((id) => optionLabel(question, id)).join(', ')}</p>}
               {showExplanations && question.explanation && <p className="review-explanation">{question.explanation}</p>}
