@@ -91,3 +91,14 @@ test('memorized questions stay excluded until explicitly restored', () => {
   assert.deepEqual(excludeMemorizedQuestions(questions, state).map((q) => q.id), ['a', 'b', 'c'])
   assert.equal(computeLearningSummary(questions, state).memorizedCount, 0)
 })
+
+test('memorized wrong questions are not counted as active errors', () => {
+  let state = recordQuizAttempts(undefined, [questions[1]], { b: ['2'] })
+  assert.equal(computeLearningSummary(questions, state).mistakeCount, 1)
+
+  state = toggleMemorized(state, 'b')
+  assert.equal(computeLearningSummary(questions, state).mistakeCount, 0)
+
+  state = toggleMemorized(state, 'b')
+  assert.equal(computeLearningSummary(questions, state).mistakeCount, 1)
+})
