@@ -1,29 +1,38 @@
 # Quiz Arbitrage — CDA District 75 Paris
 
-Application web d'entraînement au test théorique de la **CDA (Commission Départementale d'Arbitrage)** du District de Paris de Football, à destination des arbitres. Interface simple, pensée pour mobile, avec des questions à choix unique ou multiple, avec correction et explication.
+Application web/PWA d'entraînement au test théorique de la **CDA (Commission Départementale d'Arbitrage)** du District de Paris de Football. L'application est pensée mobile-first et fonctionne hors ligne après le premier chargement.
 
-Les questions reprennent le contenu de l'examen théorique officiel « Test théorique — Corrigé » de la CDA, District Parisien de Football, saison 2026/2027 (fourni par l'utilisateur), adapté au format quiz interactif.
-
-⚠️ Les questions sont fournies à titre d'entraînement et ne remplacent pas la documentation officielle de la FFF / du District de Paris.
+Les questions reprennent le contenu du test théorique corrigé CDA Paris, saison 2026/2027, adapté au format quiz interactif. Elles restent destinées à l'entraînement et ne remplacent pas la documentation officielle FFF/IFAB/District.
 
 ## Fonctionnalités
 
-- Questions statiques stockées dans `src/data/questions.json` (choix unique ou multiple, images, explications)
-- Choix du nombre de questions (3 lots calculés automatiquement) et filtre par catégorie avant de commencer
-- Mode chrono optionnel (1 min/question), avec soumission automatique à expiration du temps
-- Ordre des questions et des réponses mélangé à chaque quiz, figé pour toute la durée du test
-- Progression sauvegardée dans le navigateur : reprise automatique après un refresh ou une fermeture, réinitialisation possible à tout moment
-- Correction immédiate après chaque question, avec explication
-- Écran de résultats avec score sur 100 (barème choix unique/multiple/non répondu), et bouton pour réviser uniquement les erreurs
-- Historique des quiz passés avec suivi des catégories les plus faibles
-- Page listant l'intégralité des questions et réponses officielles
-- Installable comme application (PWA), fonctionne hors ligne une fois chargée
-- Thème aux couleurs de la FFF (bleu, blanc, rouge, or), interface mobile-first
+- Questions à choix unique ou multiple, images, explications et références pédagogiques
+- Quiz rapide, entraînement standard et quiz personnalisé par catégorie/nombre de questions
+- **Mode entraînement** avec correction immédiate
+- **Mode examen** sans correction pendant l'épreuve, navigation précédente/suivante et correction complète à la fin
+- Mode chrono optionnel (1 min/question) et examen blanc chronométré
+- Pause explicite du chrono : le temps restant est conservé et reprend correctement
+- Ordre des questions et réponses mélangé puis figé pendant le quiz
+- Sauvegarde locale et reprise automatique après refresh/fermeture
+- Score sur 100 avec crédit partiel pour les choix multiples
+- Révision immédiate des erreurs
+- **Favoris** par question et quiz dédié aux favoris
+- **Entraînement adaptatif** qui priorise questions non vues, faibles, dues et erreurs récentes
+- **Répétition espacée** avec échéances 1, 3, 7, 14 puis 30 jours selon la réussite consécutive
+- Quiz dédiés aux points faibles, erreurs passées et questions à réviser
+- Historique, meilleur score, moyenne récente et évolution des derniers quiz
+- Statistiques par catégorie et par question : vues, erreurs, maîtrise, échéance de révision
+- Métadonnées pédagogiques normalisées : loi, difficulté, source, saison, spécificité District/Ligue, tags et point à retenir
+- Liste complète des questions/réponses
+- PWA installable et fonctionnement hors ligne
+- Validation de `src/data/questions.json` avant build
+- Tests Node natifs exécutés sur chaque pull request
 
 ## Développement local
 
 ```bash
 npm install
+npm test
 npm run dev
 ```
 
@@ -34,41 +43,35 @@ npm run build
 npm run preview
 ```
 
-## Déploiement sur GitHub Pages
+## Déploiement GitHub Pages
 
-Le dépôt contient un workflow GitHub Actions (`.github/workflows/deploy.yml`) qui build et déploie automatiquement le contenu de `dist/` sur GitHub Pages à chaque push sur `main`.
+Le workflow `.github/workflows/deploy.yml` exécute les tests et le build sur les pull requests. Sur `main`, il déploie ensuite automatiquement `dist/` vers GitHub Pages.
 
-1. Sur GitHub, aller dans **Settings → Pages** et choisir la source **GitHub Actions**.
-2. Pousser sur la branche `main` : le site est déployé sur `https://<utilisateur>.github.io/fff/`.
+## Structure d'une question
 
-Si le dépôt ne s'appelle pas `fff`, adapter la valeur `base` dans `vite.config.js` (`base: '/nom-du-repo/'`).
-
-## Ajouter ou modifier des questions
-
-Chaque question de `src/data/questions.json` suit ce format :
+Les champs historiques restent compatibles. Des métadonnées pédagogiques facultatives peuvent être ajoutées directement au JSON ; lorsqu'elles sont absentes, l'application applique des valeurs par défaut et infère la loi lorsque le libellé le permet.
 
 ```json
 {
   "id": "q01",
-  "category": "Terrain de jeu",
-  "type": "single",
+  "category": "Penalty",
+  "subcategory": "Empiètement",
+  "type": "multiple",
   "question": "Texte de la question",
-  "image": "images/diagrams/exemple.svg",
-  "options": [
-    { "id": "a", "text": "Réponse A" },
-    { "id": "b", "text": "Réponse B" }
-  ],
-  "correct": ["b"],
-  "explanation": "Explication affichée après la réponse."
+  "image": null,
+  "options": [{ "id": "a", "text": "Réponse A" }],
+  "correct": ["a"],
+  "explanation": "Explication détaillée.",
+  "law": "Loi 14",
+  "difficulty": "standard",
+  "source": "CDA District 75 — test théorique corrigé",
+  "season": "2026/2027",
+  "districtSpecific": false,
+  "tags": ["penalty"],
+  "takeaway": "Point essentiel à mémoriser."
 }
 ```
 
-- `type` : `"single"` (choix unique) ou `"multiple"` (choix multiple)
-- `image` : chemin relatif dans `public/` (`null` si pas d'image)
-- `correct` : tableau des identifiants d'options correctes
-
-Un script de validation (`npm run validate`) vérifie l'intégrité du fichier avant chaque build (ids uniques, références correctes, choix unique = 1 seule bonne réponse, etc.) et fait échouer le build/déploiement si un problème est détecté.
-
 ## Stack technique
 
-React 18 + Vite, `vite-plugin-pwa` pour le mode hors-ligne, sans dépendance UI externe.
+React 18, Vite, `vite-plugin-pwa`, stockage local navigateur et tests `node:test`, sans dépendance UI externe.

@@ -1,6 +1,8 @@
+import { isAnswerCorrect } from '../utils/answers.js'
+
 const BASE = import.meta.env.BASE_URL
 
-export default function QuestionCard({ question, selected, revealed, onToggleOption }) {
+export default function QuestionCard({ question, selected, revealed, onToggleOption, isFavorite, onToggleFavorite }) {
   const isMultiple = question.type === 'multiple'
 
   function optionState(optionId) {
@@ -14,34 +16,27 @@ export default function QuestionCard({ question, selected, revealed, onToggleOpt
 
   return (
     <div className="card question-card">
-      <div className="question-meta">
-        <span className="badge">{question.category}</span>
-        <span className="badge badge-type">{isMultiple ? 'Choix multiple' : 'Choix unique'}</span>
+      <div className="question-topline">
+        <div className="question-meta">
+          <span className="badge">{question.category}</span>
+          <span className="badge badge-type">{isMultiple ? 'Choix multiple' : 'Choix unique'}</span>
+          {question.law && <span className="badge badge-law">{question.law}</span>}
+        </div>
+        <button type="button" className={`favorite-button ${isFavorite ? 'favorite-active' : ''}`} aria-label={isFavorite ? 'Retirer des favoris' : 'Ajouter aux favoris'} aria-pressed={isFavorite} onClick={onToggleFavorite}>
+          {isFavorite ? '★' : '☆'}
+        </button>
       </div>
 
       <h2 className="question-text">{question.question}</h2>
 
-      {question.image && (
-        <div className="question-image-wrap">
-          <img src={`${BASE}${question.image}`} alt="" className="question-image" />
-        </div>
-      )}
+      {question.image && <div className="question-image-wrap"><img src={`${BASE}${question.image}`} alt="" className="question-image" /></div>}
 
       <div className="options-list" role={isMultiple ? 'group' : 'radiogroup'}>
         {question.options.map((opt) => {
           const state = optionState(opt.id)
           return (
-            <button
-              type="button"
-              key={opt.id}
-              className={`option-btn${state ? ` option-${state}` : ''}`}
-              onClick={() => !revealed && onToggleOption(opt.id)}
-              disabled={revealed}
-              aria-pressed={selected.includes(opt.id)}
-            >
-              <span className={`option-marker ${isMultiple ? 'marker-square' : 'marker-round'}`}>
-                {selected.includes(opt.id) && <span className="option-marker-dot" />}
-              </span>
+            <button type="button" key={opt.id} className={`option-btn${state ? ` option-${state}` : ''}`} onClick={() => !revealed && onToggleOption(opt.id)} disabled={revealed} aria-pressed={selected.includes(opt.id)}>
+              <span className={`option-marker ${isMultiple ? 'marker-square' : 'marker-round'}`}>{selected.includes(opt.id) && <span className="option-marker-dot" />}</span>
               <span className="option-text">{opt.text}</span>
             </button>
           )
@@ -50,18 +45,16 @@ export default function QuestionCard({ question, selected, revealed, onToggleOpt
 
       {revealed && (
         <div className={`feedback-box ${isAnswerCorrect(question, selected) ? 'feedback-ok' : 'feedback-ko'}`}>
-          <p className="feedback-title">
-            {isAnswerCorrect(question, selected) ? 'Bonne réponse !' : 'Réponse incorrecte'}
-          </p>
+          <p className="feedback-title">{isAnswerCorrect(question, selected) ? 'Bonne réponse !' : 'Réponse incorrecte'}</p>
           {question.explanation && <p className="feedback-explanation">{question.explanation}</p>}
+          <div className="learning-note">
+            {question.takeaway && <p><strong>💡 À retenir :</strong> {question.takeaway}</p>}
+            <p><strong>📚 Référence :</strong> {question.source} · {question.season}</p>
+            {question.law && <p><strong>⚖️ Loi concernée :</strong> {question.law}</p>}
+            {question.districtSpecific && <p><strong>🏙 Spécificité :</strong> règlement District/Ligue</p>}
+          </div>
         </div>
       )}
     </div>
   )
-}
-
-export function isAnswerCorrect(question, selected) {
-  const correct = [...question.correct].sort()
-  const chosen = [...selected].sort()
-  return correct.length === chosen.length && correct.every((id, i) => id === chosen[i])
 }
