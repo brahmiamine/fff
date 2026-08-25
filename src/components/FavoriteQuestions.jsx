@@ -1,4 +1,4 @@
-const BASE = import.meta.env.BASE_URL
+import QuestionMedia from './QuestionMedia.jsx'
 
 export default function FavoriteQuestions({ questions, favoriteIds, memorizedIds, onToggleFavorite, onStart }) {
   const favorites = new Set(favoriteIds)
@@ -41,7 +41,7 @@ export default function FavoriteQuestions({ questions, favoriteIds, memorizedIds
                   {isMemorized && <span className="badge collection-muted-badge">Mémorisée</span>}
                 </div>
                 <p className="review-question">{question.question}</p>
-                {question.image && <img src={`${BASE}${question.image}`} alt="" className="review-image" loading="lazy" />}
+                <QuestionMedia question={question} compact />
                 {isMemorized && <p className="collection-note">Cette question reste dans tes favoris mais ne sera pas proposée dans les quiz.</p>}
                 <button type="button" className="collection-remove-button" onClick={() => onToggleFavorite(question.id)}>
                   ★ Retirer des favoris

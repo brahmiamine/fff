@@ -1,4 +1,4 @@
-const BASE = import.meta.env.BASE_URL
+import QuestionMedia from './QuestionMedia.jsx'
 
 export default function MemorizedQuestions({ questions, memorizedIds, onToggleMemorized, showExplanations = true }) {
   const memorized = new Set(memorizedIds)
@@ -25,7 +25,7 @@ export default function MemorizedQuestions({ questions, memorizedIds, onToggleMe
               <p className="review-number">Question mémorisée {index + 1} — {question.category}</p>
               <p className="review-question">{question.question}</p>
 
-              {question.image && <img src={`${BASE}${question.image}`} alt="" className="review-image" />}
+              <QuestionMedia question={question} compact />
 
               <ul className="answerkey-options">
                 {question.options.map((option) => {

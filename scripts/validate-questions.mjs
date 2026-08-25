@@ -3,6 +3,7 @@
 import { readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import path from 'node:path'
+import { isSafeMediaReference } from '../src/utils/media.js'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const filePath = path.join(__dirname, '..', 'src', 'data', 'questions.json')
@@ -42,6 +43,11 @@ questions.forEach((q, index) => {
   if (!q.explanation || typeof q.explanation !== 'string') errors.push(`${where}: missing "explanation"`)
   if (q.image !== null && q.image !== undefined && typeof q.image !== 'string') {
     errors.push(`${where}: "image" must be null or a string path`)
+  }
+  if (q.video !== null && q.video !== undefined) {
+    if (typeof q.video !== 'string' || !isSafeMediaReference(q.video)) {
+      errors.push(`${where}: "video" must be null or a safe http(s) URL / local path`)
+    }
   }
 
   if (!Array.isArray(q.options) || q.options.length < 2) {

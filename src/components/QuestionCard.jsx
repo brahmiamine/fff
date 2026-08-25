@@ -1,6 +1,5 @@
 import { isAnswerCorrect } from '../utils/answers.js'
-
-const BASE = import.meta.env.BASE_URL
+import QuestionMedia from './QuestionMedia.jsx'
 
 export default function QuestionCard({
   question,
@@ -50,7 +49,7 @@ export default function QuestionCard({
 
       <h2 className="question-text">{question.question}</h2>
 
-      {question.image && <div className="question-image-wrap"><img src={`${BASE}${question.image}`} alt="" className="question-image" /></div>}
+      <QuestionMedia question={question} />
 
       <div className="options-list" role={isMultiple ? 'group' : 'radiogroup'}>
         {question.options.map((opt) => {

@@ -6,7 +6,8 @@ Les questions reprennent le contenu du test théorique corrigé CDA Paris, saiso
 
 ## Fonctionnalités
 
-- Questions à choix unique ou multiple, images, explications et références pédagogiques
+- Questions à choix unique ou multiple, images ou vidéos, explications et références pédagogiques
+- Vidéos par URL : YouTube (watch, youtu.be, Shorts, embed) ou fichier vidéo direct/local lu dans le player HTML5
 - Quiz rapide, entraînement standard et quiz personnalisé par catégorie/nombre de questions
 - **Mode entraînement** avec correction immédiate
 - **Mode examen** sans correction pendant l'épreuve, navigation précédente/suivante et correction complète à la fin
@@ -52,6 +53,8 @@ Le workflow `.github/workflows/deploy.yml` exécute les tests et le build sur le
 
 Les champs historiques restent compatibles. Des métadonnées pédagogiques facultatives peuvent être ajoutées directement au JSON ; lorsqu'elles sont absentes, l'application applique des valeurs par défaut et infère la loi lorsque le libellé le permet.
 
+Le champ facultatif `video` accepte une URL YouTube, une URL HTTP(S) vers un fichier vidéo lisible par le navigateur, ou un chemin local tel que `videos/faute.mp4`. `image` et `video` peuvent être utilisés séparément ou ensemble.
+
 ```json
 {
   "id": "q01",
@@ -59,7 +62,8 @@ Les champs historiques restent compatibles. Des métadonnées pédagogiques facu
   "subcategory": "Empiètement",
   "type": "multiple",
   "question": "Texte de la question",
-  "image": null,
+  "image": "images/penalty.webp",
+  "video": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
   "options": [{ "id": "a", "text": "Réponse A" }],
   "correct": ["a"],
   "explanation": "Explication détaillée.",
