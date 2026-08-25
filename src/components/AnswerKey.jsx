@@ -1,4 +1,4 @@
-const BASE = import.meta.env.BASE_URL
+import QuestionMedia from './QuestionMedia.jsx'
 
 export default function AnswerKey({ questions, onBack, showExplanations = true }) {
   return (
@@ -20,7 +20,7 @@ export default function AnswerKey({ questions, onBack, showExplanations = true }
             </p>
             <p className="review-question">{q.question}</p>
 
-            {q.image && <img src={`${BASE}${q.image}`} alt="" className="review-image" />}
+            <QuestionMedia question={q} compact />
 
             <ul className="answerkey-options">
               {q.options.map((opt) => {
