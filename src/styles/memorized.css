@@ -9,24 +9,57 @@
   gap: 6px;
 }
 
-.memorized-button {
-  min-height: 32px;
-  border: 1.5px solid var(--gray-300);
-  border-radius: 999px;
-  background: var(--off-white);
-  color: var(--fff-blue);
-  padding: 5px 9px;
-  font: inherit;
-  font-size: 0.72rem;
-  font-weight: 800;
-  cursor: pointer;
-  white-space: nowrap;
+.quiz-actions-with-memorize {
+  align-items: stretch;
+  gap: 10px;
 }
 
-.memorized-active {
+.quiz-memorize-button {
+  flex: 0 0 50px;
+  width: 50px;
+  min-height: 50px;
+  border: 1.5px solid var(--gray-300);
+  border-radius: var(--radius-md);
+  background: var(--off-white);
+  color: var(--fff-blue);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease, transform 180ms ease;
+}
+
+.quiz-memorize-button svg {
+  width: 23px;
+  height: 23px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.quiz-memorize-button:hover {
+  border-color: var(--fff-blue);
+}
+
+.quiz-memorize-button:active {
+  transform: scale(0.96);
+}
+
+.quiz-memorize-button:focus-visible {
+  outline: 3px solid var(--fff-gold);
+  outline-offset: 2px;
+}
+
+.quiz-memorize-button-active {
   border-color: var(--success);
   background: var(--success-bg);
   color: #0d5c30;
+}
+
+.quiz-memorize-button-active svg {
+  fill: currentColor;
 }
 
 .memorized-screen {
@@ -69,18 +102,15 @@
   grid-template-columns: repeat(5, 1fr);
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .quiz-memorize-button {
+    transition: none;
+  }
+}
+
 @media (max-width: 390px) {
   .dashboard-card {
     grid-template-columns: repeat(2, 1fr);
-  }
-
-  .question-topline {
-    flex-direction: column;
-  }
-
-  .question-learning-actions {
-    width: 100%;
-    justify-content: flex-end;
   }
 
   .bottom-nav-item {

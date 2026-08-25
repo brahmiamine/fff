@@ -8,8 +8,6 @@ export default function QuestionCard({
   onToggleOption,
   isFavorite,
   onToggleFavorite,
-  isMemorized,
-  onToggleMemorized,
   showExplanations = true,
 }) {
   const isMultiple = question.type === 'multiple'
@@ -32,15 +30,6 @@ export default function QuestionCard({
           {question.law && <span className="badge badge-law">{question.law}</span>}
         </div>
         <div className="question-learning-actions">
-          <button
-            type="button"
-            className={`memorized-button ${isMemorized ? 'memorized-active' : ''}`}
-            aria-label={isMemorized ? 'Retirer des questions mémorisées' : 'Marquer comme mémorisée'}
-            aria-pressed={isMemorized}
-            onClick={onToggleMemorized}
-          >
-            {isMemorized ? '✓ Mémorisée' : 'Mémoriser'}
-          </button>
           <button type="button" className={`favorite-button ${isFavorite ? 'favorite-active' : ''}`} aria-label={isFavorite ? 'Retirer des favoris' : 'Ajouter aux favoris'} aria-pressed={isFavorite} onClick={onToggleFavorite}>
             {isFavorite ? '★' : '☆'}
           </button>
