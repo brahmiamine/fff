@@ -85,7 +85,7 @@ export default function Home({
       ) : (
         <>
           <div className="card dashboard-card">
-            <div><strong>{learningSummary.seenQuestions}</strong><span>questions vues</span></div>
+            <div><strong>{learningSummary.validatedQuestions}</strong><span>questions répondues</span></div>
             <div><strong>{learningSummary.masteredQuestions}</strong><span>maîtrisées</span></div>
             <div><strong>{learningSummary.mistakeCount}</strong><span>erreurs actives</span></div>
             <div><strong>{learningSummary.memorizedCount}</strong><span>mémorisées</span></div>
