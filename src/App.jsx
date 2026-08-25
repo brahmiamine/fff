@@ -4,6 +4,7 @@ import Quiz from './components/Quiz.jsx'
 import Results from './components/Results.jsx'
 import AnswerKey from './components/AnswerKey.jsx'
 import History from './components/History.jsx'
+import BottomNav from './components/BottomNav.jsx'
 import questionsData from './data/questions.json'
 import { prepareQuestions, shuffle } from './utils/shuffle.js'
 import { loadProgress, saveProgress, clearProgress } from './utils/storage.js'
@@ -28,6 +29,7 @@ import {
 
 const PASS_THRESHOLD = 0.8
 const QUESTIONS = enrichQuestions(questionsData)
+const NAV_SCREENS = new Set(['home', 'history', 'answers'])
 
 function freshState() {
   return {
@@ -177,16 +179,20 @@ export default function App() {
     setState((current) => ({ ...current, answers: nextAnswers }))
   }
 
+  function navigateTo(screen) {
+    setState((current) => ({ ...current, screen }))
+  }
+
   function viewAnswers() {
-    setState((current) => ({ ...current, screen: 'answers' }))
+    navigateTo('answers')
   }
 
   function viewHistory() {
-    setState((current) => ({ ...current, screen: 'history' }))
+    navigateTo('history')
   }
 
   function backToHome() {
-    setState((current) => ({ ...current, screen: 'home' }))
+    navigateTo('home')
   }
 
   function handleClearHistory() {
@@ -204,9 +210,10 @@ export default function App() {
   }
 
   const resumable = state.quizQuestions.length > 0 && state.screen === 'home'
+  const showBottomNav = NAV_SCREENS.has(state.screen)
 
   return (
-    <div className="app-shell">
+    <div className={`app-shell ${showBottomNav ? 'has-bottom-nav' : ''}`}>
       {state.screen === 'home' && (
         <Home
           allQuestions={QUESTIONS}
@@ -217,8 +224,6 @@ export default function App() {
           resumeMode={state.mode}
           onResume={resumeQuiz}
           onReset={resetProgress}
-          onViewAnswers={viewAnswers}
-          onViewHistory={viewHistory}
           learningSummary={learningSummary}
         />
       )}
@@ -260,6 +265,7 @@ export default function App() {
           onResetLearning={handleResetLearning}
         />
       )}
+      {showBottomNav && <BottomNav activeScreen={state.screen} onNavigate={navigateTo} />}
     </div>
   )
 }
