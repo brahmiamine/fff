@@ -20,7 +20,6 @@ import {
   recordQuizAttempts,
   saveLearningState,
   selectAdaptiveQuestions,
-  selectDueQuestions,
   selectFavoriteQuestions,
   selectMistakeQuestions,
   selectWeakQuestions,
@@ -64,7 +63,6 @@ function prepareSelectedQuestions(pool, learning, count, preset) {
   if (preset === 'adaptive') selected = selectAdaptiveQuestions(pool, learning, size)
   else if (preset === 'weak') selected = selectWeakQuestions(pool, learning, size)
   else if (preset === 'mistakes') selected = selectMistakeQuestions(pool, learning, size)
-  else if (preset === 'due') selected = selectDueQuestions(pool, learning, size)
   else if (preset === 'favorites') selected = selectFavoriteQuestions(pool, learning, size)
   else return prepareQuestions(pool).slice(0, size)
 
