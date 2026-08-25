@@ -281,10 +281,6 @@
   transition: color 180ms ease, background-color 180ms ease;
 }
 
-.bottom-nav-item:hover {
-  background: var(--off-white);
-}
-
 .bottom-nav-item:focus-visible {
   outline: 2px solid var(--fff-blue-light);
   outline-offset: -2px;
@@ -298,6 +294,16 @@
 .bottom-nav-icon {
   width: 23px;
   height: 23px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .bottom-nav-item:hover {
+    background: var(--off-white);
+  }
+
+  .bottom-nav-item-active:hover {
+    background: #fff1f2;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
