@@ -5,6 +5,7 @@ import Results from './components/Results.jsx'
 import AnswerKey from './components/AnswerKey.jsx'
 import History from './components/History.jsx'
 import BottomNav from './components/BottomNav.jsx'
+import Terrain from './components/Terrain.jsx'
 import questionsData from './data/questions.json'
 import { prepareQuestions, shuffle } from './utils/shuffle.js'
 import { loadProgress, saveProgress, clearProgress } from './utils/storage.js'
@@ -29,7 +30,7 @@ import {
 
 const PASS_THRESHOLD = 0.8
 const QUESTIONS = enrichQuestions(questionsData)
-const NAV_SCREENS = new Set(['home', 'history', 'answers'])
+const NAV_SCREENS = new Set(['home', 'history', 'answers', 'terrain'])
 
 function freshState() {
   return {
@@ -265,6 +266,7 @@ export default function App() {
           onResetLearning={handleResetLearning}
         />
       )}
+      {state.screen === 'terrain' && <Terrain />}
       {showBottomNav && <BottomNav activeScreen={state.screen} onNavigate={navigateTo} />}
     </div>
   )
