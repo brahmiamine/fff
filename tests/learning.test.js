@@ -7,6 +7,7 @@ import {
   excludeMemorizedQuestions,
   recordQuizAttempts,
   selectAdaptiveQuestions,
+  selectMistakeQuestions,
   toggleFavorite,
   toggleMemorized,
 } from '../src/utils/learning.js'
@@ -67,6 +68,18 @@ test('summary and favorites expose actionable progress counts without due dates'
   assert.equal(summary.favoriteCount, 1)
   assert.equal(summary.memorizedCount, 0)
   assert.equal('dueCount' in summary, false)
+})
+
+test('correct answer removes a question from current mistakes while keeping its history', () => {
+  let state = recordQuizAttempts(undefined, [questions[0]], { a: ['2'] })
+  assert.deepEqual(selectMistakeQuestions(questions, state, 20).map((q) => q.id), ['a'])
+  assert.equal(computeLearningSummary(questions, state).mistakeCount, 1)
+
+  state = recordQuizAttempts(state, [questions[0]], { a: ['1'] })
+  assert.equal(state.questions.a.wrongCount, 1)
+  assert.equal(state.questions.a.lastResult, true)
+  assert.deepEqual(selectMistakeQuestions(questions, state, 20).map((q) => q.id), [])
+  assert.equal(computeLearningSummary(questions, state).mistakeCount, 0)
 })
 
 test('memorized questions stay excluded until explicitly restored', () => {
