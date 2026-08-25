@@ -4,7 +4,13 @@ import district75Logo from '../assets/district75-logo.png'
 import Terrain from './Terrain.jsx'
 import { resolveDefaultQuestionCount } from '../utils/settings.js'
 
-const SECONDS_PER_QUESTION = 60
+function formatDuration(totalSeconds) {
+  const minutes = Math.floor(totalSeconds / 60)
+  const seconds = totalSeconds % 60
+  if (minutes === 0) return `${seconds} s`
+  if (seconds === 0) return `${minutes} min`
+  return `${minutes} min ${seconds} s`
+}
 
 function PresetButton({ title, detail, disabled, onClick }) {
   return (
@@ -43,7 +49,9 @@ export default function Home({
   const standardCount = resolveDefaultQuestionCount(settings.defaultQuestionCount, totalQuestions)
   const quickCount = Math.min(10, totalQuestions)
   const noQuestionsAvailable = totalQuestions === 0
-  const customTimeLimit = settings.defaultTimed ? standardCount * SECONDS_PER_QUESTION : null
+  const questionTimeSeconds = settings.questionTimeSeconds
+  const examTimeLimit = standardCount * questionTimeSeconds
+  const customTimeLimit = settings.defaultTimed ? examTimeLimit : null
 
   function startCustomQuiz() {
     onStart({
@@ -94,7 +102,7 @@ export default function Home({
             <div className="preset-grid">
               <PresetButton title="⚡ Quiz rapide" detail={`${quickCount} questions`} disabled={quickCount === 0} onClick={() => onStart({ count: quickCount, preset: 'quick' })} />
               <PresetButton title="🎯 Entraînement" detail={`${standardCount} questions`} disabled={standardCount === 0} onClick={() => onStart({ count: standardCount, preset: 'training' })} />
-              <PresetButton title="⏱ Examen blanc" detail={`${standardCount} questions · ${standardCount} min`} disabled={standardCount === 0} onClick={() => onStart({ count: standardCount, preset: 'mock', mode: 'exam', timeLimitSeconds: standardCount * SECONDS_PER_QUESTION })} />
+              <PresetButton title="⏱ Examen blanc" detail={`${standardCount} questions · ${formatDuration(examTimeLimit)}`} disabled={standardCount === 0} onClick={() => onStart({ count: standardCount, preset: 'mock', mode: 'exam', timeLimitSeconds: examTimeLimit })} />
               <PresetButton title="🧠 Adaptatif" detail="priorise tes besoins" disabled={standardCount === 0} onClick={() => onStart({ count: standardCount, preset: 'adaptive' })} />
               <PresetButton title="📉 Points faibles" detail="catégories à renforcer" disabled={standardCount === 0} onClick={() => onStart({ count: standardCount, preset: 'weak' })} />
             </div>
