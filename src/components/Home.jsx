@@ -78,7 +78,7 @@ export default function Home({
           <div className="card dashboard-card">
             <div><strong>{learningSummary.seenQuestions}</strong><span>questions vues</span></div>
             <div><strong>{learningSummary.masteredQuestions}</strong><span>maîtrisées</span></div>
-            <div><strong>{learningSummary.dueCount}</strong><span>à revoir</span></div>
+            <div><strong>{learningSummary.mistakeCount}</strong><span>avec erreurs</span></div>
           </div>
 
           <div className="card setup-card">
@@ -89,7 +89,6 @@ export default function Home({
               <PresetButton title="⏱ Examen blanc" detail={`${standardCount} questions · ${standardCount} min`} onClick={() => onStart({ count: standardCount, preset: 'mock', mode: 'exam', timeLimitSeconds: standardCount * SECONDS_PER_QUESTION })} />
               <PresetButton title="🧠 Adaptatif" detail="priorise tes besoins" onClick={() => onStart({ count: standardCount, preset: 'adaptive' })} />
               <PresetButton title="📉 Points faibles" detail="catégories à renforcer" onClick={() => onStart({ count: standardCount, preset: 'weak' })} />
-              <PresetButton title="🗓 À réviser" detail={`${learningSummary.dueCount} disponible${learningSummary.dueCount > 1 ? 's' : ''}`} disabled={learningSummary.dueCount === 0} onClick={() => onStart({ count: Math.min(20, learningSummary.dueCount), preset: 'due' })} />
               <PresetButton title="❌ Mes erreurs" detail={`${learningSummary.mistakeCount} question${learningSummary.mistakeCount > 1 ? 's' : ''}`} disabled={learningSummary.mistakeCount === 0} onClick={() => onStart({ count: Math.min(20, learningSummary.mistakeCount), preset: 'mistakes' })} />
               <PresetButton title="⭐ Favoris" detail={`${learningSummary.favoriteCount} question${learningSummary.favoriteCount > 1 ? 's' : ''}`} disabled={learningSummary.favoriteCount === 0} onClick={() => onStart({ count: Math.min(20, learningSummary.favoriteCount), preset: 'favorites' })} />
             </div>
