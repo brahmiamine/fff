@@ -1,7 +1,6 @@
 import { isAnswerCorrect } from './answers.js'
 
 const LEARNING_KEY = 'cda-quiz-learning-v1'
-const DAY_MS = 24 * 60 * 60 * 1000
 
 export function emptyLearningState() {
   return { version: 1, favorites: [], questions: {} }
@@ -49,16 +48,6 @@ export function toggleFavorite(state, questionId) {
   return { ...current, favorites: [...favorites] }
 }
 
-export function nextIntervalDays(previous = {}, correct) {
-  if (!correct) return 1
-  const streak = (previous.streak || 0) + 1
-  if (streak === 1) return 1
-  if (streak === 2) return 3
-  if (streak === 3) return 7
-  if (streak === 4) return 14
-  return 30
-}
-
 export function recordQuizAttempts(state, questions, answers, now = Date.now()) {
   const current = normalizeLearningState(state)
   const nextQuestions = { ...current.questions }
@@ -69,8 +58,6 @@ export function recordQuizAttempts(state, questions, answers, now = Date.now()) 
     const seenCount = (previous.seenCount || 0) + 1
     const correctCount = (previous.correctCount || 0) + (correct ? 1 : 0)
     const wrongCount = (previous.wrongCount || 0) + (correct ? 0 : 1)
-    const streak = correct ? (previous.streak || 0) + 1 : 0
-    const intervalDays = nextIntervalDays(previous, correct)
 
     nextQuestions[question.id] = {
       seenCount,
@@ -78,10 +65,7 @@ export function recordQuizAttempts(state, questions, answers, now = Date.now()) 
       wrongCount,
       lastSeen: new Date(now).toISOString(),
       lastResult: correct,
-      streak,
       mastery: seenCount ? correctCount / seenCount : 0,
-      intervalDays,
-      dueAt: new Date(now + intervalDays * DAY_MS).toISOString(),
     }
   })
 
@@ -92,12 +76,11 @@ function statFor(state, questionId) {
   return normalizeLearningState(state).questions[questionId] || null
 }
 
-function priorityFor(question, state, now) {
+function priorityFor(question, state) {
   const stat = statFor(state, question.id)
   if (!stat) return 80
   const mastery = Number.isFinite(stat.mastery) ? stat.mastery : 0
-  const due = !stat.dueAt || new Date(stat.dueAt).getTime() <= now
-  return (due ? 55 : 0) + (stat.lastResult === false ? 35 : 0) + (1 - mastery) * 45 + Math.max(0, 10 - (stat.seenCount || 0))
+  return (stat.lastResult === false ? 45 : 0) + (1 - mastery) * 45 + Math.max(0, 10 - (stat.seenCount || 0))
 }
 
 function takeTop(questions, count, score) {
@@ -108,8 +91,8 @@ function takeTop(questions, count, score) {
     .map((item) => item.question)
 }
 
-export function selectAdaptiveQuestions(questions, state, count, now = Date.now()) {
-  return takeTop(questions, count, (question) => priorityFor(question, state, now))
+export function selectAdaptiveQuestions(questions, state, count) {
+  return takeTop(questions, count, (question) => priorityFor(question, state))
 }
 
 export function selectWeakQuestions(questions, state, count) {
@@ -128,20 +111,12 @@ export function selectMistakeQuestions(questions, state, count) {
   })
 }
 
-export function selectDueQuestions(questions, state, count, now = Date.now()) {
-  const due = questions.filter((question) => {
-    const stat = statFor(state, question.id)
-    return stat && (!stat.dueAt || new Date(stat.dueAt).getTime() <= now)
-  })
-  return selectAdaptiveQuestions(due, state, count, now)
-}
-
 export function selectFavoriteQuestions(questions, state, count) {
   const favorites = new Set(normalizeLearningState(state).favorites)
   return questions.filter((question) => favorites.has(question.id)).slice(0, count)
 }
 
-export function computeLearningSummary(questions, state, now = Date.now()) {
+export function computeLearningSummary(questions, state) {
   const current = normalizeLearningState(state)
   const perQuestion = questions.map((question) => {
     const stat = current.questions[question.id] || {}
@@ -154,7 +129,7 @@ export function computeLearningSummary(questions, state, now = Date.now()) {
       wrongCount: stat.wrongCount || 0,
       mastery: stat.mastery || 0,
       lastResult: stat.lastResult,
-      due: Boolean(stat.seenCount) && (!stat.dueAt || new Date(stat.dueAt).getTime() <= now),
+      lastSeen: stat.lastSeen || null,
     }
   })
 
@@ -177,7 +152,6 @@ export function computeLearningSummary(questions, state, now = Date.now()) {
     totalQuestions: questions.length,
     seenQuestions: seenQuestions.length,
     masteredQuestions: seenQuestions.filter((item) => item.mastery >= 0.8 && item.seenCount >= 2).length,
-    dueCount: perQuestion.filter((item) => item.due).length,
     mistakeCount,
     favoriteCount: current.favorites.length,
     categories,
