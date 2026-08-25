@@ -4,9 +4,11 @@ import { isAnswerCorrect } from '../src/utils/answers.js'
 import { getRemainingSeconds, pauseTimedState, resumeTimedState } from '../src/utils/session.js'
 import {
   computeLearningSummary,
+  excludeMemorizedQuestions,
   recordQuizAttempts,
   selectAdaptiveQuestions,
   toggleFavorite,
+  toggleMemorized,
 } from '../src/utils/learning.js'
 
 const questions = [
@@ -63,5 +65,16 @@ test('summary and favorites expose actionable progress counts without due dates'
   assert.equal(summary.seenQuestions, 2)
   assert.equal(summary.mistakeCount, 1)
   assert.equal(summary.favoriteCount, 1)
+  assert.equal(summary.memorizedCount, 0)
   assert.equal('dueCount' in summary, false)
+})
+
+test('memorized questions stay excluded until explicitly restored', () => {
+  let state = toggleMemorized(undefined, 'b')
+  assert.deepEqual(excludeMemorizedQuestions(questions, state).map((q) => q.id), ['a', 'c'])
+  assert.equal(computeLearningSummary(questions, state).memorizedCount, 1)
+
+  state = toggleMemorized(state, 'b')
+  assert.deepEqual(excludeMemorizedQuestions(questions, state).map((q) => q.id), ['a', 'b', 'c'])
+  assert.equal(computeLearningSummary(questions, state).memorizedCount, 0)
 })

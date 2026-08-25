@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import fffLogo from '../assets/fff-logo.png'
 import district75Logo from '../assets/district75-logo.png'
 import { computeCountTiers } from '../utils/tiers.js'
@@ -24,14 +24,20 @@ export default function Home({
   onResume,
   onReset,
   learningSummary,
+  memorizedIds,
 }) {
-  const totalQuestions = allQuestions.length
+  const memorizedSet = useMemo(() => new Set(memorizedIds), [memorizedIds])
+  const availableQuestions = useMemo(
+    () => allQuestions.filter((question) => !memorizedSet.has(question.id)),
+    [allQuestions, memorizedSet],
+  )
+  const totalQuestions = availableQuestions.length
   const categories = useMemo(() => [...new Set(allQuestions.map((q) => q.category))], [allQuestions])
 
   const [category, setCategory] = useState('all')
   const filteredTotal = useMemo(
-    () => (category === 'all' ? totalQuestions : allQuestions.filter((q) => q.category === category).length),
-    [allQuestions, category, totalQuestions],
+    () => (category === 'all' ? totalQuestions : availableQuestions.filter((q) => q.category === category).length),
+    [availableQuestions, category, totalQuestions],
   )
 
   const tiers = useMemo(() => computeCountTiers(filteredTotal), [filteredTotal])
@@ -39,10 +45,12 @@ export default function Home({
   const [timed, setTimed] = useState(false)
   const [mode, setMode] = useState('training')
 
+  useEffect(() => {
+    setCount(filteredTotal)
+  }, [filteredTotal])
+
   function handleCategoryChange(next) {
     setCategory(next)
-    const nextTotal = next === 'all' ? totalQuestions : allQuestions.filter((q) => q.category === next).length
-    setCount(nextTotal)
   }
 
   function handleReset() {
@@ -51,6 +59,8 @@ export default function Home({
 
   const timedMinutes = Math.round((count * SECONDS_PER_QUESTION) / 60)
   const standardCount = Math.min(20, totalQuestions)
+  const quickCount = Math.min(10, totalQuestions)
+  const noQuestionsAvailable = totalQuestions === 0
 
   return (
     <div className="screen home-screen">
@@ -77,18 +87,25 @@ export default function Home({
             <div><strong>{learningSummary.seenQuestions}</strong><span>questions vues</span></div>
             <div><strong>{learningSummary.masteredQuestions}</strong><span>maîtrisées</span></div>
             <div><strong>{learningSummary.mistakeCount}</strong><span>avec erreurs</span></div>
+            <div><strong>{learningSummary.memorizedCount}</strong><span>mémorisées</span></div>
           </div>
+
+          {noQuestionsAvailable && (
+            <div className="card setup-card">
+              <p className="setup-text">Toutes les questions sont mémorisées. Réactive-en depuis l’onglet « Mémorisées » pour recommencer à les voir dans les quiz.</p>
+            </div>
+          )}
 
           <div className="card setup-card">
             <p className="field-label">Choisir un entraînement</p>
             <div className="preset-grid">
-              <PresetButton title="⚡ Quiz rapide" detail={`${Math.min(10, totalQuestions)} questions`} onClick={() => onStart({ count: Math.min(10, totalQuestions), preset: 'quick' })} />
-              <PresetButton title="🎯 Entraînement" detail={`${standardCount} questions`} onClick={() => onStart({ count: standardCount, preset: 'training' })} />
-              <PresetButton title="⏱ Examen blanc" detail={`${standardCount} questions · ${standardCount} min`} onClick={() => onStart({ count: standardCount, preset: 'mock', mode: 'exam', timeLimitSeconds: standardCount * SECONDS_PER_QUESTION })} />
-              <PresetButton title="🧠 Adaptatif" detail="priorise tes besoins" onClick={() => onStart({ count: standardCount, preset: 'adaptive' })} />
-              <PresetButton title="📉 Points faibles" detail="catégories à renforcer" onClick={() => onStart({ count: standardCount, preset: 'weak' })} />
-              <PresetButton title="❌ Mes erreurs" detail={`${learningSummary.mistakeCount} question${learningSummary.mistakeCount > 1 ? 's' : ''}`} disabled={learningSummary.mistakeCount === 0} onClick={() => onStart({ count: Math.min(20, learningSummary.mistakeCount), preset: 'mistakes' })} />
-              <PresetButton title="⭐ Favoris" detail={`${learningSummary.favoriteCount} question${learningSummary.favoriteCount > 1 ? 's' : ''}`} disabled={learningSummary.favoriteCount === 0} onClick={() => onStart({ count: Math.min(20, learningSummary.favoriteCount), preset: 'favorites' })} />
+              <PresetButton title="⚡ Quiz rapide" detail={`${quickCount} questions`} disabled={quickCount === 0} onClick={() => onStart({ count: quickCount, preset: 'quick' })} />
+              <PresetButton title="🎯 Entraînement" detail={`${standardCount} questions`} disabled={standardCount === 0} onClick={() => onStart({ count: standardCount, preset: 'training' })} />
+              <PresetButton title="⏱ Examen blanc" detail={`${standardCount} questions · ${standardCount} min`} disabled={standardCount === 0} onClick={() => onStart({ count: standardCount, preset: 'mock', mode: 'exam', timeLimitSeconds: standardCount * SECONDS_PER_QUESTION })} />
+              <PresetButton title="🧠 Adaptatif" detail="priorise tes besoins" disabled={standardCount === 0} onClick={() => onStart({ count: standardCount, preset: 'adaptive' })} />
+              <PresetButton title="📉 Points faibles" detail="catégories à renforcer" disabled={standardCount === 0} onClick={() => onStart({ count: standardCount, preset: 'weak' })} />
+              <PresetButton title="❌ Mes erreurs" detail={`${learningSummary.mistakeCount} question${learningSummary.mistakeCount > 1 ? 's' : ''}`} disabled={learningSummary.mistakeCount === 0 || noQuestionsAvailable} onClick={() => onStart({ count: Math.min(20, learningSummary.mistakeCount), preset: 'mistakes' })} />
+              <PresetButton title="⭐ Favoris" detail={`${learningSummary.favoriteCount} question${learningSummary.favoriteCount > 1 ? 's' : ''}`} disabled={learningSummary.favoriteCount === 0 || noQuestionsAvailable} onClick={() => onStart({ count: Math.min(20, learningSummary.favoriteCount), preset: 'favorites' })} />
             </div>
           </div>
 
@@ -112,11 +129,11 @@ export default function Home({
               <button type="button" className={`chip ${mode === 'exam' ? 'chip-active' : ''}`} onClick={() => setMode('exam')}>Examen</button>
             </div>
 
-            <button type="button" className={`chip chip-wide ${timed ? 'chip-active' : ''}`} onClick={() => setTimed((value) => !value)}>
+            <button type="button" className={`chip chip-wide ${timed ? 'chip-active' : ''}`} disabled={filteredTotal === 0} onClick={() => setTimed((value) => !value)}>
               ⏱ Chrono {timed ? `activé (≈ ${timedMinutes} min)` : 'désactivé'}
             </button>
 
-            <button type="button" className="btn btn-primary btn-start" onClick={() => onStart({ count, category, mode, preset: 'custom', timeLimitSeconds: timed ? count * SECONDS_PER_QUESTION : null })}>
+            <button type="button" className="btn btn-primary btn-start" disabled={filteredTotal === 0} onClick={() => onStart({ count, category, mode, preset: 'custom', timeLimitSeconds: timed ? count * SECONDS_PER_QUESTION : null })}>
               Commencer le quiz
             </button>
           </div>
