@@ -1,6 +1,6 @@
 const BASE = import.meta.env.BASE_URL
 
-export default function AnswerKey({ questions, onBack }) {
+export default function AnswerKey({ questions, onBack, showExplanations = true }) {
   return (
     <div className="screen answerkey-screen">
       <div className="quiz-header">
@@ -37,7 +37,7 @@ export default function AnswerKey({ questions, onBack }) {
               })}
             </ul>
 
-            {q.explanation && <p className="review-explanation">{q.explanation}</p>}
+            {showExplanations && q.explanation && <p className="review-explanation">{q.explanation}</p>}
           </div>
         ))}
       </div>
