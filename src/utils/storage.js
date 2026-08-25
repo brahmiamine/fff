@@ -1,5 +1,16 @@
 const STORAGE_KEY = 'cda-quiz-progress-v1'
 
+export function isResumableProgress(state) {
+  return Boolean(
+    state &&
+    Array.isArray(state.quizQuestions) &&
+    state.quizQuestions.length > 0 &&
+    Number.isInteger(state.currentIndex) &&
+    state.currentIndex >= 1 &&
+    state.currentIndex < state.quizQuestions.length
+  )
+}
+
 export function loadProgress(questionsData) {
   try {
     const raw = localStorage.getItem(STORAGE_KEY)
@@ -9,11 +20,8 @@ export function loadProgress(questionsData) {
       return null
     }
     if (!['home', 'quiz', 'results'].includes(parsed.screen)) return null
-    if (
-      typeof parsed.currentIndex !== 'number' ||
-      parsed.currentIndex < 0 ||
-      parsed.currentIndex >= parsed.quizQuestions.length
-    ) {
+    if (!isResumableProgress(parsed)) {
+      clearProgress()
       return null
     }
     if (typeof parsed.answers !== 'object' || parsed.answers === null) return null
@@ -33,6 +41,10 @@ export function loadProgress(questionsData) {
 
 export function saveProgress(state) {
   try {
+    if (!isResumableProgress(state)) {
+      localStorage.removeItem(STORAGE_KEY)
+      return
+    }
     localStorage.setItem(STORAGE_KEY, JSON.stringify(state))
   } catch {
     // localStorage unavailable (private browsing, quota) — progress just won't persist.
