@@ -13,7 +13,7 @@ export default function History({ history, learningSummary, onBack, onClear, onR
   }
 
   function handleResetLearning() {
-    if (window.confirm("Réinitialiser les favoris, la répétition espacée et les statistiques par question ?")) onResetLearning()
+    if (window.confirm("Réinitialiser les favoris et les statistiques par question ?")) onResetLearning()
   }
 
   return (
@@ -26,7 +26,7 @@ export default function History({ history, learningSummary, onBack, onClear, onR
         <div className="card stat-card"><strong>{best}</strong><span>meilleur /100</span></div>
         <div className="card stat-card"><strong>{average}</strong><span>moyenne récente</span></div>
         <div className="card stat-card"><strong>{learningSummary.masteredQuestions}</strong><span>maîtrisées</span></div>
-        <div className="card stat-card"><strong>{learningSummary.dueCount}</strong><span>à revoir</span></div>
+        <div className="card stat-card"><strong>{learningSummary.seenQuestions}</strong><span>questions vues</span></div>
       </div>
 
       {recent.length > 0 && (
