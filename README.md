@@ -21,10 +21,11 @@ Les questions reprennent le contenu du test théorique corrigé CDA Paris, saiso
 - Quiz dédiés aux points faibles, erreurs passées et favoris
 - Historique, meilleur score, moyenne récente et évolution des derniers quiz
 - Statistiques par catégorie et par question : vues, erreurs et maîtrise
-- **Barre de navigation mobile en bas** pour accéder rapidement à Accueil, Progression et Questions
+- **Barre de navigation mobile en bas** : Accueil, Progression, Questions et Terrain
+- **Écran Terrain** avec schéma des dimensions, zoom 100–250 %, déplacement dans l'image agrandie et repères Loi 1
 - Métadonnées pédagogiques normalisées : loi, difficulté, source, saison, spécificité District/Ligue, tags et point à retenir
 - Liste complète des questions/réponses
-- PWA installable et fonctionnement hors ligne
+- PWA installable et fonctionnement hors ligne, y compris le schéma du terrain
 - Validation de `src/data/questions.json` avant build
 - Tests Node natifs exécutés sur chaque pull request
 
