@@ -113,15 +113,6 @@
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .question-topline {
-    flex-direction: column;
-  }
-
-  .question-learning-actions {
-    width: 100%;
-    justify-content: flex-end;
-  }
-
   .bottom-nav-item {
     font-size: 0.6rem;
   }
