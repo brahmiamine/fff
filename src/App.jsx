@@ -9,6 +9,7 @@ import MemorizedQuestions from './components/MemorizedQuestions.jsx'
 import FavoriteQuestions from './components/FavoriteQuestions.jsx'
 import MistakeQuestions from './components/MistakeQuestions.jsx'
 import Settings from './components/Settings.jsx'
+import UnvalidatedQuestions from './components/UnvalidatedQuestions.jsx'
 import questionsData from './data/questions.json'
 import { prepareQuestions, shuffle } from './utils/shuffle.js'
 import { loadProgress, saveProgress, clearProgress } from './utils/storage.js'
@@ -23,6 +24,7 @@ import {
   emptyLearningState,
   excludeMemorizedQuestions,
   loadLearningState,
+  markQuestionsValidated,
   recordQuizAttempts,
   saveLearningState,
   selectAdaptiveQuestions,
@@ -42,7 +44,7 @@ import {
 
 const PASS_THRESHOLD = 0.8
 const QUESTIONS = enrichQuestions(questionsData)
-const NAV_SCREENS = new Set(['home', 'memorized', 'favorites', 'mistakes', 'settings', 'statistics'])
+const NAV_SCREENS = new Set(['home', 'memorized', 'favorites', 'mistakes', 'settings', 'statistics', 'unvalidated'])
 
 function freshState() {
   return {
@@ -212,7 +214,14 @@ export default function App() {
       preset: state.preset,
     })
     setHistory(loadHistory())
-    setLearning((current) => recordQuizAttempts(current, state.quizQuestions, finalAnswers))
+    setLearning((current) => {
+      const attempted = recordQuizAttempts(current, state.quizQuestions, finalAnswers)
+      if (state.mode !== 'exam') return attempted
+      const answeredIds = state.quizQuestions
+        .filter((question) => (finalAnswers[question.id] || []).length > 0)
+        .map((question) => question.id)
+      return markQuestionsValidated(attempted, answeredIds)
+    })
 
     setState((current) => ({
       ...current,
@@ -268,6 +277,10 @@ export default function App() {
     setLearning((current) => toggleMemorized(current, questionId))
   }
 
+  function handleQuestionValidated(questionId) {
+    setLearning((current) => markQuestionsValidated(current, questionId))
+  }
+
   function handleSettingsChange(patch) {
     setSettings((current) => normalizeSettings({ ...current, ...patch }))
   }
@@ -318,6 +331,7 @@ export default function App() {
           onFinish={finishQuiz}
           onAbort={pauseQuiz}
           onReset={resetProgress}
+          onValidate={handleQuestionValidated}
           favoriteIds={learning.favorites}
           onToggleFavorite={handleToggleFavorite}
           memorizedIds={learning.memorized}
@@ -352,11 +366,19 @@ export default function App() {
           onResetLearning={handleResetLearning}
         />
       )}
+      {state.screen === 'unvalidated' && (
+        <UnvalidatedQuestions
+          questions={QUESTIONS}
+          validatedIds={learning.validated}
+          onBack={() => navigateTo('settings')}
+        />
+      )}
       {state.screen === 'settings' && (
         <Settings
           settings={settings}
           onChange={handleSettingsChange}
           onViewStatistics={() => navigateTo('statistics')}
+          onViewUnvalidated={() => navigateTo('unvalidated')}
           onResetAll={handleResetAllData}
           historyCount={history.length}
           learningSummary={learningSummary}
