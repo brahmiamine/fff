@@ -6,6 +6,7 @@ import AnswerKey from './components/AnswerKey.jsx'
 import History from './components/History.jsx'
 import BottomNav from './components/BottomNav.jsx'
 import Terrain from './components/Terrain.jsx'
+import MemorizedQuestions from './components/MemorizedQuestions.jsx'
 import questionsData from './data/questions.json'
 import { prepareQuestions, shuffle } from './utils/shuffle.js'
 import { loadProgress, saveProgress, clearProgress } from './utils/storage.js'
@@ -18,6 +19,7 @@ import {
   clearLearningState,
   computeLearningSummary,
   emptyLearningState,
+  excludeMemorizedQuestions,
   loadLearningState,
   recordQuizAttempts,
   saveLearningState,
@@ -26,11 +28,12 @@ import {
   selectMistakeQuestions,
   selectWeakQuestions,
   toggleFavorite,
+  toggleMemorized,
 } from './utils/learning.js'
 
 const PASS_THRESHOLD = 0.8
 const QUESTIONS = enrichQuestions(questionsData)
-const NAV_SCREENS = new Set(['home', 'history', 'answers', 'terrain'])
+const NAV_SCREENS = new Set(['home', 'history', 'answers', 'memorized', 'terrain'])
 
 function freshState() {
   return {
@@ -90,9 +93,13 @@ export default function App() {
   }, [learning])
 
   function startQuiz({ count, category = 'all', timeLimitSeconds = null, mode = 'training', preset = 'custom' }) {
-    const pool = category !== 'all' ? QUESTIONS.filter((q) => q.category === category) : QUESTIONS
+    const categoryPool = category !== 'all' ? QUESTIONS.filter((q) => q.category === category) : QUESTIONS
+    const pool = excludeMemorizedQuestions(categoryPool, learning)
     const quizQuestions = prepareSelectedQuestions(pool, learning, count, preset)
-    if (quizQuestions.length === 0) return
+    if (quizQuestions.length === 0) {
+      window.alert('Aucune question disponible : elles sont toutes marquées comme mémorisées pour cette sélection.')
+      return
+    }
 
     const limit = timeLimitSeconds || null
     setState({
@@ -110,10 +117,11 @@ export default function App() {
 
   function reviewMistakes() {
     const wrong = state.quizQuestions.filter((q) => !isAnswerCorrect(q, state.answers[q.id] || []))
-    if (wrong.length === 0) return
+    const eligibleWrong = excludeMemorizedQuestions(wrong, learning)
+    if (eligibleWrong.length === 0) return
     setState({
       screen: 'quiz',
-      quizQuestions: shuffle(wrong).map((q) => ({ ...q, options: shuffle(q.options) })),
+      quizQuestions: shuffle(eligibleWrong).map((q) => ({ ...q, options: shuffle(q.options) })),
       answers: {},
       currentIndex: 0,
       timeLimitSeconds: null,
@@ -125,7 +133,23 @@ export default function App() {
   }
 
   function resumeQuiz() {
-    setState((current) => ({ ...resumeTimedState(current), screen: 'quiz' }))
+    const eligibleQuestions = excludeMemorizedQuestions(state.quizQuestions, learning)
+    if (eligibleQuestions.length === 0) {
+      clearProgress()
+      setState(freshState())
+      return
+    }
+
+    const currentQuestionId = state.quizQuestions[state.currentIndex]?.id
+    const matchingIndex = eligibleQuestions.findIndex((question) => question.id === currentQuestionId)
+    const nextIndex = matchingIndex >= 0 ? matchingIndex : Math.min(state.currentIndex, eligibleQuestions.length - 1)
+
+    setState((current) => ({
+      ...resumeTimedState(current),
+      screen: 'quiz',
+      quizQuestions: eligibleQuestions,
+      currentIndex: nextIndex,
+    }))
   }
 
   function finishQuiz(finalAnswers) {
@@ -210,6 +234,10 @@ export default function App() {
     setLearning((current) => toggleFavorite(current, questionId))
   }
 
+  function handleToggleMemorized(questionId) {
+    setLearning((current) => toggleMemorized(current, questionId))
+  }
+
   const resumable = state.quizQuestions.length > 0 && state.screen === 'home'
   const showBottomNav = NAV_SCREENS.has(state.screen)
 
@@ -226,6 +254,7 @@ export default function App() {
           onResume={resumeQuiz}
           onReset={resetProgress}
           learningSummary={learningSummary}
+          memorizedIds={learning.memorized}
         />
       )}
       {state.screen === 'quiz' && (
@@ -244,6 +273,8 @@ export default function App() {
           onReset={resetProgress}
           favoriteIds={learning.favorites}
           onToggleFavorite={handleToggleFavorite}
+          memorizedIds={learning.memorized}
+          onToggleMemorized={handleToggleMemorized}
         />
       )}
       {state.screen === 'results' && (
@@ -264,6 +295,13 @@ export default function App() {
           onBack={backToHome}
           onClear={handleClearHistory}
           onResetLearning={handleResetLearning}
+        />
+      )}
+      {state.screen === 'memorized' && (
+        <MemorizedQuestions
+          questions={QUESTIONS}
+          memorizedIds={learning.memorized}
+          onToggleMemorized={handleToggleMemorized}
         />
       )}
       {state.screen === 'terrain' && <Terrain />}
