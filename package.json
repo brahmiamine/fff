@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "test": "node --test",
     "validate": "node scripts/validate-questions.mjs",
     "build": "npm run validate && vite build",
     "preview": "vite preview"

@@ -1,17 +1,35 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import Home from './components/Home.jsx'
 import Quiz from './components/Quiz.jsx'
 import Results from './components/Results.jsx'
 import AnswerKey from './components/AnswerKey.jsx'
 import History from './components/History.jsx'
+import BottomNav from './components/BottomNav.jsx'
 import questionsData from './data/questions.json'
 import { prepareQuestions, shuffle } from './utils/shuffle.js'
 import { loadProgress, saveProgress, clearProgress } from './utils/storage.js'
 import { loadHistory, addHistoryEntry, clearHistory } from './utils/history.js'
 import { computeScore } from './utils/scoring.js'
-import { isAnswerCorrect } from './components/QuestionCard.jsx'
+import { isAnswerCorrect } from './utils/answers.js'
+import { enrichQuestions } from './utils/questionMetadata.js'
+import { normalizeSavedSession, pauseTimedState, resumeTimedState } from './utils/session.js'
+import {
+  clearLearningState,
+  computeLearningSummary,
+  emptyLearningState,
+  loadLearningState,
+  recordQuizAttempts,
+  saveLearningState,
+  selectAdaptiveQuestions,
+  selectFavoriteQuestions,
+  selectMistakeQuestions,
+  selectWeakQuestions,
+  toggleFavorite,
+} from './utils/learning.js'
 
 const PASS_THRESHOLD = 0.8
+const QUESTIONS = enrichQuestions(questionsData)
+const NAV_SCREENS = new Set(['home', 'history', 'answers'])
 
 function freshState() {
   return {
@@ -20,31 +38,72 @@ function freshState() {
     answers: {},
     currentIndex: 0,
     timeLimitSeconds: null,
-    startedAt: null,
+    deadlineAt: null,
+    remainingSeconds: null,
+    mode: 'training',
+    preset: 'custom',
   }
 }
 
+function initialState() {
+  const saved = loadProgress(QUESTIONS)
+  if (!saved) return freshState()
+  const hydrated = {
+    ...freshState(),
+    ...saved,
+    quizQuestions: enrichQuestions(saved.quizQuestions || []),
+    mode: saved.mode || 'training',
+    preset: saved.preset || 'custom',
+  }
+  return normalizeSavedSession(hydrated) || freshState()
+}
+
+function prepareSelectedQuestions(pool, learning, count, preset) {
+  const size = Math.min(Math.max(count || pool.length, 1), pool.length)
+  let selected
+
+  if (preset === 'adaptive') selected = selectAdaptiveQuestions(pool, learning, size)
+  else if (preset === 'weak') selected = selectWeakQuestions(pool, learning, size)
+  else if (preset === 'mistakes') selected = selectMistakeQuestions(pool, learning, size)
+  else if (preset === 'favorites') selected = selectFavoriteQuestions(pool, learning, size)
+  else return prepareQuestions(pool).slice(0, size)
+
+  return prepareQuestions(selected)
+}
+
 export default function App() {
-  const [state, setState] = useState(() => loadProgress(questionsData) || freshState())
+  const [state, setState] = useState(initialState)
   const [history, setHistory] = useState(() => loadHistory())
+  const [learning, setLearning] = useState(() => loadLearningState())
+
+  const learningSummary = useMemo(() => computeLearningSummary(QUESTIONS, learning), [learning])
 
   useEffect(() => {
-    if (state.screen === 'quiz' || state.screen === 'results') {
+    if (state.quizQuestions.length > 0 && ['home', 'quiz', 'results'].includes(state.screen)) {
       saveProgress(state)
     }
   }, [state])
 
-  function startQuiz({ count, category, timeLimitSeconds }) {
-    const pool =
-      category && category !== 'all' ? questionsData.filter((q) => q.category === category) : questionsData
-    const size = Math.min(Math.max(count || pool.length, 1), pool.length)
+  useEffect(() => {
+    saveLearningState(learning)
+  }, [learning])
+
+  function startQuiz({ count, category = 'all', timeLimitSeconds = null, mode = 'training', preset = 'custom' }) {
+    const pool = category !== 'all' ? QUESTIONS.filter((q) => q.category === category) : QUESTIONS
+    const quizQuestions = prepareSelectedQuestions(pool, learning, count, preset)
+    if (quizQuestions.length === 0) return
+
+    const limit = timeLimitSeconds || null
     setState({
       screen: 'quiz',
-      quizQuestions: prepareQuestions(pool).slice(0, size),
+      quizQuestions,
       answers: {},
       currentIndex: 0,
-      timeLimitSeconds: timeLimitSeconds || null,
-      startedAt: timeLimitSeconds ? Date.now() : null,
+      timeLimitSeconds: limit,
+      deadlineAt: limit ? Date.now() + limit * 1000 : null,
+      remainingSeconds: limit,
+      mode,
+      preset,
     })
   }
 
@@ -57,19 +116,20 @@ export default function App() {
       answers: {},
       currentIndex: 0,
       timeLimitSeconds: null,
-      startedAt: null,
+      deadlineAt: null,
+      remainingSeconds: null,
+      mode: 'training',
+      preset: 'mistakes',
     })
   }
 
   function resumeQuiz() {
-    setState((s) => ({ ...s, screen: 'quiz' }))
+    setState((current) => ({ ...resumeTimedState(current), screen: 'quiz' }))
   }
 
   function finishQuiz(finalAnswers) {
     const score = computeScore(state.quizQuestions, finalAnswers)
-    const goodCount = state.quizQuestions.filter((q) =>
-      isAnswerCorrect(q, finalAnswers[q.id] || []),
-    ).length
+    const goodCount = state.quizQuestions.filter((q) => isAnswerCorrect(q, finalAnswers[q.id] || [])).length
 
     const categoryStats = {}
     state.quizQuestions.forEach((q) => {
@@ -85,44 +145,54 @@ export default function App() {
       goodCount,
       unanswered: score.unanswered,
       categoryStats,
+      mode: state.mode,
+      preset: state.preset,
     })
     setHistory(loadHistory())
+    setLearning((current) => recordQuizAttempts(current, state.quizQuestions, finalAnswers))
 
-    setState((s) => ({ ...s, screen: 'results', answers: finalAnswers }))
+    setState((current) => ({
+      ...current,
+      screen: 'results',
+      answers: finalAnswers,
+      deadlineAt: null,
+    }))
   }
 
-  // "Quitter" pauses the quiz: back to Home, progress kept for later resume.
   function pauseQuiz() {
-    setState((s) => ({ ...s, screen: 'home' }))
+    setState((current) => ({ ...pauseTimedState(current), screen: 'home' }))
   }
 
-  // Fully wipes any saved progress and returns to a clean Home screen.
   function resetProgress() {
     clearProgress()
     setState(freshState())
   }
 
   function setCurrentIndex(updater) {
-    setState((s) => ({
-      ...s,
-      currentIndex: typeof updater === 'function' ? updater(s.currentIndex) : updater,
+    setState((current) => ({
+      ...current,
+      currentIndex: typeof updater === 'function' ? updater(current.currentIndex) : updater,
     }))
   }
 
   function setAnswers(nextAnswers) {
-    setState((s) => ({ ...s, answers: nextAnswers }))
+    setState((current) => ({ ...current, answers: nextAnswers }))
+  }
+
+  function navigateTo(screen) {
+    setState((current) => ({ ...current, screen }))
   }
 
   function viewAnswers() {
-    setState((s) => ({ ...s, screen: 'answers' }))
+    navigateTo('answers')
   }
 
   function viewHistory() {
-    setState((s) => ({ ...s, screen: 'history' }))
+    navigateTo('history')
   }
 
   function backToHome() {
-    setState((s) => ({ ...s, screen: 'home' }))
+    navigateTo('home')
   }
 
   function handleClearHistory() {
@@ -130,20 +200,31 @@ export default function App() {
     setHistory([])
   }
 
+  function handleResetLearning() {
+    clearLearningState()
+    setLearning(emptyLearningState())
+  }
+
+  function handleToggleFavorite(questionId) {
+    setLearning((current) => toggleFavorite(current, questionId))
+  }
+
   const resumable = state.quizQuestions.length > 0 && state.screen === 'home'
+  const showBottomNav = NAV_SCREENS.has(state.screen)
 
   return (
-    <div className="app-shell">
+    <div className={`app-shell ${showBottomNav ? 'has-bottom-nav' : ''}`}>
       {state.screen === 'home' && (
         <Home
-          allQuestions={questionsData}
+          allQuestions={QUESTIONS}
           onStart={startQuiz}
           resumable={resumable}
           resumeIndex={state.currentIndex}
+          resumeTotal={state.quizQuestions.length}
+          resumeMode={state.mode}
           onResume={resumeQuiz}
           onReset={resetProgress}
-          onViewAnswers={viewAnswers}
-          onViewHistory={viewHistory}
+          learningSummary={learningSummary}
         />
       )}
       {state.screen === 'quiz' && (
@@ -154,10 +235,14 @@ export default function App() {
           answers={state.answers}
           setAnswers={setAnswers}
           timeLimitSeconds={state.timeLimitSeconds}
-          startedAt={state.startedAt}
+          deadlineAt={state.deadlineAt}
+          remainingSeconds={state.remainingSeconds}
+          mode={state.mode}
           onFinish={finishQuiz}
           onAbort={pauseQuiz}
           onReset={resetProgress}
+          favoriteIds={learning.favorites}
+          onToggleFavorite={handleToggleFavorite}
         />
       )}
       {state.screen === 'results' && (
@@ -165,14 +250,22 @@ export default function App() {
           questions={state.quizQuestions}
           answers={state.answers}
           passThreshold={PASS_THRESHOLD}
+          mode={state.mode}
           onRestart={resetProgress}
           onReviewMistakes={reviewMistakes}
         />
       )}
-      {state.screen === 'answers' && <AnswerKey questions={questionsData} onBack={backToHome} />}
+      {state.screen === 'answers' && <AnswerKey questions={QUESTIONS} onBack={backToHome} />}
       {state.screen === 'history' && (
-        <History history={history} onBack={backToHome} onClear={handleClearHistory} />
+        <History
+          history={history}
+          learningSummary={learningSummary}
+          onBack={backToHome}
+          onClear={handleClearHistory}
+          onResetLearning={handleResetLearning}
+        />
       )}
+      {showBottomNav && <BottomNav activeScreen={state.screen} onNavigate={navigateTo} />}
     </div>
   )
 }
