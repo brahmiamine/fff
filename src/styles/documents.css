@@ -9,13 +9,17 @@
 }
 
 .document-card {
+  width: 100%;
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: center;
   gap: 14px;
   color: inherit;
   text-decoration: none;
+  text-align: left;
+  font: inherit;
   border: 1.5px solid var(--gray-100);
+  cursor: pointer;
   transition: transform 160ms ease, border-color 160ms ease;
 }
 
@@ -24,6 +28,7 @@
   height: 44px;
   display: grid;
   place-items: center;
+  flex: none;
   border-radius: 12px;
   background: var(--off-white);
   font-size: 1.35rem;
@@ -58,13 +63,76 @@
 
 .document-arrow {
   color: var(--fff-red);
-  font-size: 1.3rem;
+  font-size: 1.65rem;
   font-weight: 900;
+  line-height: 1;
 }
 
-.document-card:focus-visible {
+.document-card:focus-visible,
+.document-viewer-back:focus-visible {
   outline: 2px solid var(--fff-blue-light);
   outline-offset: 3px;
+}
+
+.document-viewer-screen {
+  gap: 10px;
+  padding-inline: 0;
+  padding-bottom: calc(76px + env(safe-area-inset-bottom));
+}
+
+.document-viewer-header {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-inline: 16px;
+}
+
+.document-viewer-back {
+  align-self: flex-start;
+}
+
+.document-viewer-heading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.document-viewer-heading > span:last-child {
+  min-width: 0;
+}
+
+.document-viewer-heading h1 {
+  margin: 0;
+  color: var(--white);
+  font-size: 1.15rem;
+  line-height: 1.25;
+}
+
+.document-viewer-heading p {
+  margin: 3px 0 0;
+  color: var(--fff-gold-light);
+  font-size: 0.76rem;
+  line-height: 1.35;
+}
+
+.document-pdf-viewer {
+  min-height: calc(100vh - 190px);
+  height: calc(100dvh - 190px);
+  margin-top: 2px;
+  padding: 0;
+  overflow: hidden;
+  border-radius: 16px 16px 0 0;
+}
+
+.document-pdf-frame {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: calc(100vh - 190px);
+  min-height: calc(100dvh - 190px);
+  border: 0;
+  background: var(--off-white);
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -85,4 +153,20 @@
 
 :root[data-theme='dark'] .document-copy > strong {
   color: #edf1ff;
+}
+
+:root[data-theme='dark'] .document-pdf-frame {
+  background: #10182a;
+}
+
+@media (max-width: 360px) {
+  .document-viewer-heading h1 {
+    font-size: 1.02rem;
+  }
+
+  .document-pdf-viewer,
+  .document-pdf-frame {
+    min-height: calc(100dvh - 182px);
+    height: calc(100dvh - 182px);
+  }
 }
