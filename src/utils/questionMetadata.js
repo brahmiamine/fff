@@ -1,3 +1,5 @@
+import { abbreviateQuestion } from '../data/abbreviations.js'
+
 const DEFAULT_SOURCE = 'CDA District 75 — test théorique corrigé'
 const DEFAULT_SEASON = '2026/2027'
 
@@ -12,7 +14,7 @@ export function inferLaw(question) {
   if (text.includes('coup de pied de but')) return 'Loi 16'
   if (text.includes('coup de pied de coin') || text.includes('corner')) return 'Loi 17'
   if (text.includes('coup franc')) return 'Loi 13'
-  if (text.includes('coup d’envoi') || text.includes("coup d'envoi") || text.includes('ballon à terre')) return 'Loi 8'
+  if (text.includes('coup d’envoi') || text.includes("coup d'envoi") || text.includes('balle à terre')) return 'Loi 8'
   if (text.includes('les joueurs')) return 'Loi 3'
   if (text.includes('faute') || text.includes('avantage')) return 'Lois 5 et 12'
   return null
@@ -26,8 +28,10 @@ function firstSentence(text) {
 
 export function enrichQuestion(question) {
   const joined = `${question.category || ''} ${question.question || ''}`
+  const abbreviated = abbreviateQuestion(question)
+
   return {
-    ...question,
+    ...abbreviated,
     subcategory: question.subcategory ?? null,
     law: question.law ?? inferLaw(question),
     difficulty: question.difficulty || 'standard',
