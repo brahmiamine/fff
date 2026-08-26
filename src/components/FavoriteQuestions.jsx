@@ -1,6 +1,7 @@
 import QuestionMedia from './QuestionMedia.jsx'
+import PageBackButton from './PageBackButton.jsx'
 
-export default function FavoriteQuestions({ questions, favoriteIds, memorizedIds, onToggleFavorite, onStart }) {
+export default function FavoriteQuestions({ questions, favoriteIds, memorizedIds, onToggleFavorite, onStart, onBack }) {
   const favorites = new Set(favoriteIds)
   const memorized = new Set(memorizedIds)
   const items = questions.filter((question) => favorites.has(question.id))
@@ -8,6 +9,8 @@ export default function FavoriteQuestions({ questions, favoriteIds, memorizedIds
 
   return (
     <div className="screen collection-screen">
+      <PageBackButton onBack={onBack} />
+
       <div className="collection-heading">
         <h1 className="app-title">Mes favoris</h1>
         <p className="app-subtitle">
