@@ -11,8 +11,8 @@ const NAV_ITEMS = [
     ),
   },
   {
-    screen: 'memorized',
-    label: 'Mémoriser',
+    screen: 'reviews',
+    label: 'Révisions',
     icon: (
       <>
         <path d="M6 4h12v16l-6-3-6 3V4Z" />
@@ -21,19 +21,22 @@ const NAV_ITEMS = [
     ),
   },
   {
-    screen: 'favorites',
-    label: 'Favoris',
+    screen: 'notes',
+    label: 'Mes notes',
     icon: (
-      <path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2-4.5-4.4 6.2-.9L12 3Z" />
+      <>
+        <path d="M5 4h14v16H5z" />
+        <path d="M8 8h8M8 12h8M8 16h5" />
+      </>
     ),
   },
   {
-    screen: 'mistakes',
-    label: 'Erreurs',
+    screen: 'documents',
+    label: 'Documents',
     icon: (
       <>
-        <circle cx="12" cy="12" r="9" />
-        <path d="m9 9 6 6M15 9l-6 6" />
+        <path d="M6 3h8l4 4v14H6z" />
+        <path d="M14 3v5h5M9 12h6M9 16h6" />
       </>
     ),
   },
@@ -49,13 +52,16 @@ const NAV_ITEMS = [
   },
 ]
 
-const SETTINGS_SUBPAGES = new Set(['statistics', 'unvalidated'])
+const REVIEW_SUBPAGES = new Set(['memorized', 'favorites', 'mistakes', 'unvalidated'])
+const SETTINGS_SUBPAGES = new Set(['statistics', 'answers'])
 
 export default function BottomNav({ activeScreen, onNavigate }) {
   return (
     <nav className="bottom-nav" aria-label="Navigation principale">
       {NAV_ITEMS.map((item) => {
-        const active = activeScreen === item.screen || (item.screen === 'settings' && SETTINGS_SUBPAGES.has(activeScreen))
+        const active = activeScreen === item.screen
+          || (item.screen === 'reviews' && REVIEW_SUBPAGES.has(activeScreen))
+          || (item.screen === 'settings' && SETTINGS_SUBPAGES.has(activeScreen))
         return (
           <button
             type="button"
