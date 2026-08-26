@@ -32,7 +32,7 @@ const NAV_ITEMS = [
   },
   {
     screen: 'documents',
-    label: 'Documents',
+    label: 'Mes documents',
     icon: (
       <>
         <path d="M6 3h8l4 4v14H6z" />
