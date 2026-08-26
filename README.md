@@ -22,6 +22,9 @@ Les questions reprennent le contenu du test théorique corrigé CDA Paris, saiso
 - Quiz dédiés aux points faibles, erreurs passées et favoris
 - Historique, meilleur score, moyenne récente et évolution des derniers quiz
 - Statistiques par catégorie et par question : vues, erreurs et maîtrise
+- **Sons globaux désactivables** : bonne réponse, erreur, réussite, chrono critique et expiration
+- **Animations globales désactivables** : changement de question, correction, favoris, navigation, score, boutons et zoom du terrain
+- Les préférences Sons/Animations sont persistées dans les paramètres et s'appliquent à toute l'application
 - **Barre de navigation mobile en bas** : Accueil, Progression, Questions et Terrain
 - **Écran Terrain** avec schéma des dimensions, zoom 100–250 %, déplacement dans l'image agrandie et repères Loi 1
 - Métadonnées pédagogiques normalisées : loi, difficulté, source, saison, spécificité District/Ligue, tags et point à retenir
