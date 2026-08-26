@@ -9,6 +9,7 @@ import './styles/navigation.css'
 import './styles/settings.css'
 import './styles/media.css'
 import './styles/question-browser.css'
+import './styles/abbreviations.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
