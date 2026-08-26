@@ -1,4 +1,6 @@
+import { useState } from 'react'
 import { isAnswerCorrect } from '../utils/answers.js'
+import AbbreviationsModal from './AbbreviationsModal.jsx'
 import QuestionMedia from './QuestionMedia.jsx'
 
 export default function QuestionCard({
@@ -10,6 +12,7 @@ export default function QuestionCard({
   onToggleFavorite,
   showExplanations = true,
 }) {
+  const [showAbbreviations, setShowAbbreviations] = useState(false)
   const isMultiple = question.type === 'multiple'
 
   function optionState(optionId) {
@@ -36,7 +39,21 @@ export default function QuestionCard({
         </div>
       </div>
 
-      <h2 className="question-text">{question.question}</h2>
+      <h2 className="question-text">
+        <span>{question.question}</span>{' '}
+        <button
+          type="button"
+          className="abbreviations-info-button"
+          aria-label="Afficher les abréviations d’arbitrage"
+          aria-haspopup="dialog"
+          onClick={() => setShowAbbreviations(true)}
+          title="Voir les abréviations"
+        >
+          i
+        </button>
+      </h2>
+
+      <AbbreviationsModal open={showAbbreviations} onClose={() => setShowAbbreviations(false)} />
 
       <QuestionMedia question={question} />
 
