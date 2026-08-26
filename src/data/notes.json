@@ -28,5 +28,38 @@
     "reference": "Terrain",
     "special": "terrain",
     "paragraphs": []
+  },
+  {
+    "id": "motifs-carton-jaune",
+    "title": "🟨 Motifs carton jaune — AVT",
+    "subtitle": "Note rapide à mémoriser",
+    "law": "Loi 12",
+    "type": "Aide-mémoire",
+    "reference": "Motifs d’avertissement",
+    "paragraphs": [
+      "Gestion du jeu : retarder la reprise, entrer/revenir ou quitter délibérément le terrain sans autorisation, ne pas respecter la distance réglementaire. Exemple : botter le ballon au loin après le coup de sifflet.",
+      "Attitude : manifester sa désapprobation en paroles ou en actes et se rendre coupable de comportement antisportif (CAS). Exemple : contester ostensiblement une décision ou commettre un tacle inconsidéré.",
+      "Répétition : enfreindre de manière répétée les Lois du Jeu. Exemple : plusieurs fautes successives.",
+      "VAR : pénétrer dans la zone de visionnage ou faire un usage excessif du signal d’analyse vidéo.",
+      "À retenir : Retard – Désapprobation – Entrée/Sortie – Distance – Répétition – CAS – VAR.",
+      "Repère : inconsidéré = AVT."
+    ]
+  },
+  {
+    "id": "motifs-carton-rouge",
+    "title": "🟥 Motifs carton rouge — EXC",
+    "subtitle": "Note rapide à mémoriser",
+    "law": "Loi 12",
+    "type": "Aide-mémoire",
+    "reference": "Motifs d’exclusion",
+    "paragraphs": [
+      "DOGSO : empêcher un but ou annihiler une occasion de but manifeste. Exemple : retenir un attaquant qui part seul au but.",
+      "Faute grossière : geste avec force excessive ou mettant en danger l’intégrité physique de l’adversaire en disputant le ballon. Exemple : tacle avec force excessive sur la jambe.",
+      "Acte de brutalité / crachat / morsure : violence, notamment sans disputer le ballon. Exemple : donner un coup de poing à un adversaire.",
+      "Propos ou actes blessants, injurieux et/ou grossiers. Exemple : insulte grossière envers l’arbitre.",
+      "Autres motifs : recevoir un second avertissement au cours du même match ou pénétrer dans la salle de visionnage.",
+      "À retenir : DOGSO – Faute grossière – Brutalité – Crachat/Morsure – Insultes – 2e AVT – Salle VAR.",
+      "Repère : force excessive / intégrité physique en danger = EXC ; DOGSO = occasion manifeste de but annihilée."
+    ]
   }
 ]
