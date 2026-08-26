@@ -1,3 +1,5 @@
+import { playSound } from '../utils/sound.js'
+
 const COUNT_OPTIONS = [10, 20, 30, 'all']
 const QUESTION_TIME_OPTIONS = [30, 45, 60]
 
@@ -37,6 +39,11 @@ export default function Settings({
 
   function selectCustomQuestionTime() {
     if (!customQuestionTime) onChange({ questionTimeSeconds: 90 })
+  }
+
+  function handleSoundToggle(value) {
+    onChange({ soundsEnabled: value })
+    if (value) void playSound('correct', true)
   }
 
   return (
@@ -154,6 +161,25 @@ export default function Settings({
           onChange={(value) => onChange({ showExplanations: value })}
           label="Afficher les explications"
           description="Affiche le texte explicatif dans les corrections et les questions mémorisées."
+        />
+      </section>
+
+      <section className="card settings-card" aria-labelledby="settings-experience-title">
+        <div className="settings-section-heading">
+          <h2 id="settings-experience-title">Expérience</h2>
+          <p>Ces réglages s’appliquent à toute l’application.</p>
+        </div>
+        <ToggleSetting
+          checked={settings.animationsEnabled}
+          onChange={(value) => onChange({ animationsEnabled: value })}
+          label="Animations"
+          description="Active les transitions, feedbacks visuels, score animé, favoris et navigation."
+        />
+        <ToggleSetting
+          checked={settings.soundsEnabled}
+          onChange={handleSoundToggle}
+          label="Sons"
+          description="Joue des sons courts pour les réponses, la réussite et les dernières secondes du chrono."
         />
       </section>
 
