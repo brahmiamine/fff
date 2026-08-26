@@ -46,5 +46,16 @@
     "reference": "Motifs d’exclusion",
     "accent": "red",
     "markdown": "### 🟥 Les motifs principaux\n\n- **DOGSO :** empêcher un but ou annihiler une occasion de but manifeste. *Exemple : retenir un attaquant qui part seul au but.*\n- **Faute grossière :** geste avec force excessive ou mettant en danger l’intégrité physique de l’adversaire **en disputant le ballon**. *Exemple : tacle avec force excessive sur la jambe.*\n- **Acte de brutalité :** usage ou tentative de force excessive **sans disputer le ballon**. *Exemple : donner un coup de poing à un adversaire.*\n- **Crachat / morsure :** cracher sur/vers ou mordre quelqu’un.\n- **Propos ou actes blessants, injurieux et/ou grossiers.** *Exemple : insulte grossière envers l’arbitre.*\n- **Deuxième AVT :** recevoir un second avertissement au cours du même match.\n- **VAR :** pénétrer dans la salle de visionnage.\n\n> **À retenir :** ==DOGSO – Faute grossière – Brutalité – Crachat/Morsure – Insultes – 2e AVT – Salle VAR==\n\n> **Repère essentiel :** **force excessive / intégrité physique en danger = EXC 🟥** ; **DOGSO = occasion manifeste de but annihilée**."
+  },
+  {
+    "id": "main-position-du-bras",
+    "title": "✋ Main — Position du bras",
+    "subtitle": "Repère visuel pour apprécier une main sanctionnable",
+    "law": "Loi 12",
+    "type": "Aide-mémoire",
+    "reference": "Main — position du bras",
+    "accent": "yellow",
+    "image": "https://raw.githubusercontent.com/brahmiamine/fff/main/image/main-position-bras.webp",
+    "markdown": "### 🎯 Repère simple\n\n**Ballon sur la main / le bras + bras qui augmente artificiellement la surface du corps = main sanctionnable.**\n\n**Mouvement de la main / du bras vers le ballon = main sanctionnable.**\n\n> **À retenir :** ==Impact + position du bras + mouvement = décision.==\n\n> ⚠️ **Attention :** l’illustration est un repère visuel. Un bras décollé ne signifie pas automatiquement qu’il y a faute."
   }
 ]
