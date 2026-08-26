@@ -5,9 +5,8 @@
     "law": "Loi 12",
     "type": "Définition",
     "reference": "Fautes et incorrections",
-    "paragraphs": [
-      "Usage ou tentative de force excessive ou de brutalité contre une personne sans disputer le ballon, avec ou sans contact."
-    ]
+    "accent": "red",
+    "markdown": "**Définition :** usage ou tentative de **force excessive** ou de brutalité contre une personne **sans disputer le ballon**, avec ou sans contact.\n\n> **À retenir :** acte violent ou tentative d’acte violent **sans lutte pour le ballon**."
   },
   {
     "id": "faute-grossiere",
@@ -15,9 +14,8 @@
     "law": "Loi 12",
     "type": "Définition",
     "reference": "Fautes et incorrections",
-    "paragraphs": [
-      "Tacle ou challenge pour le ballon avec force excessive ou mettant en danger l’intégrité physique de l’adversaire."
-    ]
+    "accent": "red",
+    "markdown": "**Définition :** tacle ou challenge pour le ballon avec **force excessive** ou mettant en danger **l’intégrité physique de l’adversaire**.\n\n> **À retenir :** il y a **dispute du ballon** + force excessive / mise en danger de l’adversaire."
   },
   {
     "id": "terrain-loi-1",
@@ -36,14 +34,8 @@
     "law": "Loi 12",
     "type": "Aide-mémoire",
     "reference": "Motifs d’avertissement",
-    "paragraphs": [
-      "Gestion du jeu : retarder la reprise, entrer/revenir ou quitter délibérément le terrain sans autorisation, ne pas respecter la distance réglementaire. Exemple : botter le ballon au loin après le coup de sifflet.",
-      "Attitude : manifester sa désapprobation en paroles ou en actes et se rendre coupable de comportement antisportif (CAS). Exemple : contester ostensiblement une décision ou commettre un tacle inconsidéré.",
-      "Répétition : enfreindre de manière répétée les Lois du Jeu. Exemple : plusieurs fautes successives.",
-      "VAR : pénétrer dans la zone de visionnage ou faire un usage excessif du signal d’analyse vidéo.",
-      "À retenir : Retard – Désapprobation – Entrée/Sortie – Distance – Répétition – CAS – VAR.",
-      "Repère : inconsidéré = AVT."
-    ]
+    "accent": "yellow",
+    "markdown": "### 🟨 Les motifs principaux\n\n- **Gestion du jeu :** retarder la reprise, entrer/revenir ou quitter délibérément le terrain sans autorisation, ne pas respecter la distance réglementaire. *Exemple : botter le ballon au loin après le coup de sifflet.*\n- **Désapprobation :** manifester sa désapprobation en paroles ou en actes. *Exemple : contester ostensiblement une décision.*\n- **CAS :** se rendre coupable de comportement antisportif. *Exemple : tacle inconsidéré ou simulation.*\n- **Répétition :** enfreindre de manière répétée les Lois du Jeu. *Exemple : plusieurs fautes successives.*\n- **VAR :** pénétrer dans la zone de visionnage ou faire un usage excessif du signal d’analyse vidéo.\n\n> **À retenir :** ==Retard – Désapprobation – Entrée/Sortie – Distance – Répétition – CAS – VAR==\n\n> **Repère essentiel :** **inconsidéré = AVT 🟨**"
   },
   {
     "id": "motifs-carton-rouge",
@@ -52,14 +44,7 @@
     "law": "Loi 12",
     "type": "Aide-mémoire",
     "reference": "Motifs d’exclusion",
-    "paragraphs": [
-      "DOGSO : empêcher un but ou annihiler une occasion de but manifeste. Exemple : retenir un attaquant qui part seul au but.",
-      "Faute grossière : geste avec force excessive ou mettant en danger l’intégrité physique de l’adversaire en disputant le ballon. Exemple : tacle avec force excessive sur la jambe.",
-      "Acte de brutalité / crachat / morsure : violence, notamment sans disputer le ballon. Exemple : donner un coup de poing à un adversaire.",
-      "Propos ou actes blessants, injurieux et/ou grossiers. Exemple : insulte grossière envers l’arbitre.",
-      "Autres motifs : recevoir un second avertissement au cours du même match ou pénétrer dans la salle de visionnage.",
-      "À retenir : DOGSO – Faute grossière – Brutalité – Crachat/Morsure – Insultes – 2e AVT – Salle VAR.",
-      "Repère : force excessive / intégrité physique en danger = EXC ; DOGSO = occasion manifeste de but annihilée."
-    ]
+    "accent": "red",
+    "markdown": "### 🟥 Les motifs principaux\n\n- **DOGSO :** empêcher un but ou annihiler une occasion de but manifeste. *Exemple : retenir un attaquant qui part seul au but.*\n- **Faute grossière :** geste avec force excessive ou mettant en danger l’intégrité physique de l’adversaire **en disputant le ballon**. *Exemple : tacle avec force excessive sur la jambe.*\n- **Acte de brutalité :** usage ou tentative de force excessive **sans disputer le ballon**. *Exemple : donner un coup de poing à un adversaire.*\n- **Crachat / morsure :** cracher sur/vers ou mordre quelqu’un.\n- **Propos ou actes blessants, injurieux et/ou grossiers.** *Exemple : insulte grossière envers l’arbitre.*\n- **Deuxième AVT :** recevoir un second avertissement au cours du même match.\n- **VAR :** pénétrer dans la salle de visionnage.\n\n> **À retenir :** ==DOGSO – Faute grossière – Brutalité – Crachat/Morsure – Insultes – 2e AVT – Salle VAR==\n\n> **Repère essentiel :** **force excessive / intégrité physique en danger = EXC 🟥** ; **DOGSO = occasion manifeste de but annihilée**."
   }
 ]
