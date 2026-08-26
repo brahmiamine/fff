@@ -1,13 +1,12 @@
 import NOTES from '../data/notes.json'
 import QuestionMedia from './QuestionMedia.jsx'
 import Terrain from './Terrain.jsx'
+import PageBackButton from './PageBackButton.jsx'
 
 export default function Notes({ onBack }) {
   return (
     <div className="screen collection-screen notes-screen">
-      <div className="quiz-header">
-        <button type="button" className="btn-link" onClick={onBack}>← Paramètres</button>
-      </div>
+      <PageBackButton onBack={onBack} />
 
       <div className="collection-heading">
         <h1 className="app-title">Mes notes</h1>
