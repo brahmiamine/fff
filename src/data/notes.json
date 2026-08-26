@@ -1,0 +1,32 @@
+[
+  {
+    "id": "acte-de-brutalite",
+    "title": "Acte de brutalité",
+    "law": "Loi 12",
+    "type": "Définition",
+    "reference": "Fautes et incorrections",
+    "paragraphs": [
+      "Usage ou tentative de force excessive ou de brutalité contre une personne sans disputer le ballon, avec ou sans contact."
+    ]
+  },
+  {
+    "id": "faute-grossiere",
+    "title": "Faute grossière",
+    "law": "Loi 12",
+    "type": "Définition",
+    "reference": "Fautes et incorrections",
+    "paragraphs": [
+      "Tacle ou challenge pour le ballon avec force excessive ou mettant en danger l’intégrité physique de l’adversaire."
+    ]
+  },
+  {
+    "id": "terrain-loi-1",
+    "title": "Terrain — Loi 1",
+    "subtitle": "Dimensions et repères essentiels",
+    "law": "Loi 1",
+    "type": "Repères",
+    "reference": "Terrain",
+    "special": "terrain",
+    "paragraphs": []
+  }
+]
