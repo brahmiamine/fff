@@ -56,6 +56,11 @@ const REVIEW_SUBPAGES = new Set(['memorized', 'favorites', 'mistakes', 'unvalida
 const SETTINGS_SUBPAGES = new Set(['statistics', 'answers'])
 
 export default function BottomNav({ activeScreen, onNavigate }) {
+  function handleNavigate(screen) {
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
+    onNavigate(screen)
+  }
+
   return (
     <nav className="bottom-nav" aria-label="Navigation principale">
       {NAV_ITEMS.map((item) => {
@@ -67,7 +72,7 @@ export default function BottomNav({ activeScreen, onNavigate }) {
             type="button"
             key={item.screen}
             className={`bottom-nav-item ${active ? 'bottom-nav-item-active' : ''}`}
-            onClick={() => onNavigate(item.screen)}
+            onClick={() => handleNavigate(item.screen)}
             aria-current={active ? 'page' : undefined}
           >
             <svg
