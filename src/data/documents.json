@@ -7,5 +7,14 @@
     "source": "IFAB",
     "icon": "⚽",
     "url": "https://www.theifab.com/downloads/lois-du-jeu-202627-pages-simples?l=fr"
+  },
+  {
+    "id": "rapport-disciplinaire-fia-2024",
+    "title": "Rapport disciplinaire",
+    "subtitle": "Méthodologie FIA · Version 2024",
+    "type": "PDF",
+    "source": "FFF",
+    "icon": "📋",
+    "url": "https://haute-garonne.fff.fr/wp-content/uploads/sites/74/bsk-pdf-manager/556cdbd65f0b3e22bafe8c2f14582cbe.pdf#page=27"
   }
 ]
