@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import DOCUMENTS from '../data/documents.json'
 
 const SELECTED_DOCUMENT_KEY = 'cda-paris-quiz:selected-document'
@@ -11,9 +11,18 @@ function loadSelectedDocumentId() {
   }
 }
 
+function buildViewerUrl(documentUrl) {
+  return `https://docs.google.com/gview?embedded=1&url=${encodeURIComponent(documentUrl)}`
+}
+
 export default function Documents() {
   const [selectedId, setSelectedId] = useState(loadSelectedDocumentId)
+  const [viewerLoading, setViewerLoading] = useState(false)
   const selectedDocument = DOCUMENTS.find((document) => document.id === selectedId) || null
+  const viewerUrl = useMemo(
+    () => selectedDocument ? buildViewerUrl(selectedDocument.url) : null,
+    [selectedDocument],
+  )
 
   useEffect(() => {
     try {
@@ -26,6 +35,7 @@ export default function Documents() {
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
+    setViewerLoading(Boolean(selectedId))
   }, [selectedId])
 
   if (selectedDocument) {
@@ -50,12 +60,22 @@ export default function Documents() {
         </div>
 
         <div className="document-pdf-viewer card">
+          {viewerLoading && (
+            <div className="document-viewer-loading" role="status" aria-live="polite">
+              <span className="document-viewer-spinner" aria-hidden="true" />
+              <strong>Chargement du document…</strong>
+              <small>Le PDF s’affiche directement dans l’application.</small>
+            </div>
+          )}
+
           <iframe
-            src={selectedDocument.url}
+            key={selectedDocument.id}
+            src={viewerUrl}
             title={`${selectedDocument.title} — PDF`}
             className="document-pdf-frame"
             loading="eager"
             allow="fullscreen"
+            onLoad={() => setViewerLoading(false)}
           />
         </div>
       </div>
