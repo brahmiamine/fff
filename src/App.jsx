@@ -10,6 +10,7 @@ import FavoriteQuestions from './components/FavoriteQuestions.jsx'
 import MistakeQuestions from './components/MistakeQuestions.jsx'
 import Settings from './components/Settings.jsx'
 import UnvalidatedQuestions from './components/UnvalidatedQuestions.jsx'
+import Notes from './components/Notes.jsx'
 import questionsData from './data/questions.json'
 import { prepareQuestions, shuffle } from './utils/shuffle.js'
 import { loadProgress, saveProgress, clearProgress } from './utils/storage.js'
@@ -46,7 +47,7 @@ import {
 
 const PASS_THRESHOLD = 0.8
 const QUESTIONS = enrichQuestions(questionsData)
-const NAV_SCREENS = new Set(['home', 'memorized', 'favorites', 'mistakes', 'settings', 'statistics', 'unvalidated'])
+const NAV_SCREENS = new Set(['home', 'memorized', 'favorites', 'mistakes', 'settings', 'statistics', 'unvalidated', 'notes'])
 
 function freshState() {
   return {
@@ -405,6 +406,9 @@ export default function App() {
           onBack={() => navigateTo('settings')}
         />
       )}
+      {state.screen === 'notes' && (
+        <Notes onBack={() => navigateTo('settings')} />
+      )}
       {state.screen === 'settings' && (
         <Settings
           settings={settings}
@@ -412,6 +416,7 @@ export default function App() {
           onViewQuestions={() => navigateTo('answers')}
           onViewStatistics={() => navigateTo('statistics')}
           onViewUnvalidated={() => navigateTo('unvalidated')}
+          onViewNotes={() => navigateTo('notes')}
           onResetAll={handleResetAllData}
           historyCount={history.length}
           learningSummary={learningSummary}
