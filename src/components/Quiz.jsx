@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from 'react'
 import ProgressBar from './ProgressBar.jsx'
 import QuestionCard from './QuestionCard.jsx'
 import { getRemainingSeconds } from '../utils/session.js'
+import { isAnswerCorrect } from '../utils/answers.js'
+import { playSound, unlockAudio } from '../utils/sound.js'
 
 function formatTime(totalSeconds) {
   const m = Math.floor(totalSeconds / 60)
@@ -45,10 +47,12 @@ export default function Quiz({
   memorizedIds,
   onToggleMemorized,
   showExplanations,
+  soundsEnabled = false,
 }) {
   const [revealed, setRevealed] = useState(false)
   const [now, setNow] = useState(Date.now())
   const finishedRef = useRef(false)
+  const timerCuesRef = useRef(new Set())
 
   const question = questions[currentIndex]
   const selected = answers[question.id] || []
@@ -69,13 +73,26 @@ export default function Quiz({
   }, [timeLimitSeconds])
 
   useEffect(() => {
-    if (timeLimitSeconds && remaining === 0 && !finishedRef.current) {
+    timerCuesRef.current.clear()
+  }, [deadlineAt])
+
+  useEffect(() => {
+    if (!timeLimitSeconds || remaining === null) return
+
+    if ((remaining === 5 || remaining === 3) && !timerCuesRef.current.has(remaining)) {
+      timerCuesRef.current.add(remaining)
+      void playSound('tick', soundsEnabled)
+    }
+
+    if (remaining === 0 && !finishedRef.current) {
       finishedRef.current = true
+      void playSound('timeout', soundsEnabled)
       onFinish(answers)
     }
-  }, [remaining, timeLimitSeconds, answers, onFinish])
+  }, [remaining, timeLimitSeconds, answers, onFinish, soundsEnabled])
 
   function toggleOption(optionId) {
+    void unlockAudio(soundsEnabled)
     const current = answers[question.id] || []
     const next = question.type === 'multiple'
       ? current.includes(optionId) ? current.filter((id) => id !== optionId) : [...current, optionId]
@@ -86,6 +103,7 @@ export default function Quiz({
   function handleValidate() {
     if (selected.length === 0) return
     onValidate(question.id)
+    void playSound(isAnswerCorrect(question, selected) ? 'correct' : 'wrong', soundsEnabled)
     setRevealed(true)
   }
 
@@ -111,7 +129,7 @@ export default function Quiz({
       <div className="quiz-header">
         <div className="quiz-header-actions">
           <button type="button" className="btn-link" onClick={isFirst ? onReset : onAbort}>← {isFirst ? 'Retour' : 'Mettre en pause'}</button>
-          {timeLimitSeconds && <span className={`timer-badge ${remaining <= 30 ? 'timer-badge-low' : ''}`}>⏱ {formatTime(remaining)}</span>}
+          {timeLimitSeconds && <span className={`timer-badge ${remaining <= 30 ? 'timer-badge-low' : ''} ${remaining <= 10 ? 'timer-badge-critical' : ''}`}>⏱ {formatTime(remaining)}</span>}
           <button type="button" className="btn-link btn-reset" onClick={handleReset}>Réinitialiser</button>
         </div>
         <div className="mode-line"><span className="badge mode-badge">{isExam ? 'Mode examen' : 'Mode entraînement'}</span></div>
@@ -119,6 +137,7 @@ export default function Quiz({
       </div>
 
       <QuestionCard
+        key={question.id}
         question={question}
         selected={selected}
         revealed={!isExam && revealed}
