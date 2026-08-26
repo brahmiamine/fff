@@ -1,3 +1,4 @@
+import PageBackButton from './PageBackButton.jsx'
 import { computeCategoryStats } from '../utils/history.js'
 
 export default function History({ history, learningSummary, onBack, onClear, onResetLearning }) {
@@ -18,11 +19,7 @@ export default function History({ history, learningSummary, onBack, onClear, onR
 
   return (
     <div className="screen history-screen">
-      {onBack && (
-        <div className="quiz-header">
-          <button type="button" className="btn-link" onClick={onBack}>← Paramètres</button>
-        </div>
-      )}
+      {onBack && <PageBackButton onBack={onBack} />}
       <h1 className="app-title">Statistiques</h1>
       <p className="app-subtitle">Résultats, maîtrise et progression</p>
 
