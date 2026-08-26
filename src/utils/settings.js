@@ -12,6 +12,8 @@ export function defaultSettings() {
     defaultTimed: false,
     questionTimeSeconds: 60,
     showExplanations: true,
+    animationsEnabled: true,
+    soundsEnabled: false,
     theme: 'system',
   }
 }
@@ -42,6 +44,8 @@ export function normalizeSettings(value) {
     defaultTimed: typeof value.defaultTimed === 'boolean' ? value.defaultTimed : defaults.defaultTimed,
     questionTimeSeconds: normalizeQuestionTimeSeconds(value.questionTimeSeconds),
     showExplanations: typeof value.showExplanations === 'boolean' ? value.showExplanations : defaults.showExplanations,
+    animationsEnabled: typeof value.animationsEnabled === 'boolean' ? value.animationsEnabled : defaults.animationsEnabled,
+    soundsEnabled: typeof value.soundsEnabled === 'boolean' ? value.soundsEnabled : defaults.soundsEnabled,
     theme: THEMES.has(value.theme) ? value.theme : defaults.theme,
   }
 }
