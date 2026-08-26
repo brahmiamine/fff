@@ -1,11 +1,8 @@
 import DOCUMENTS from '../data/documents.json'
-import PageBackButton from './PageBackButton.jsx'
 
-export default function Documents({ onBack }) {
+export default function Documents() {
   return (
     <div className="screen collection-screen documents-screen">
-      <PageBackButton onBack={onBack} />
-
       <div className="collection-heading">
         <h1 className="app-title">Mes documents</h1>
         <p className="app-subtitle">Documents utiles pour l’arbitrage</p>
