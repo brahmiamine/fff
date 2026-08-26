@@ -56,17 +56,37 @@ const REPLACEMENTS = [
   [/\brapport\b/gi, 'RCC'],
 ]
 
+const SPECIAL_OPTION_NOTATION = {
+  q26: {
+    c: 'CFD/CFI accordé à l’équipe qui défend dans sa propre surface de but — SRCP LOI 13',
+  },
+  remise09: {
+    b: 'CFI — SRCP LOI 13',
+  },
+  q27: {
+    a: 'BAT à un joueur de l’équipe A, à l’endroit où le jeu a été arrêté — SRCP LOI 8',
+  },
+  q28: {
+    c: 'BAT — SRCP LOI 8',
+  },
+}
+
 export function abbreviateFootballText(text) {
   if (typeof text !== 'string' || !text) return text
   return REPLACEMENTS.reduce((value, [pattern, replacement]) => value.replace(pattern, replacement), text)
 }
 
 export function abbreviateQuestion(question) {
+  const optionNotation = SPECIAL_OPTION_NOTATION[question.id] || {}
+
   return {
     ...question,
     question: abbreviateFootballText(question.question),
     options: Array.isArray(question.options)
-      ? question.options.map((option) => ({ ...option, text: abbreviateFootballText(option.text) }))
+      ? question.options.map((option) => ({
+          ...option,
+          text: optionNotation[option.id] || abbreviateFootballText(option.text),
+        }))
       : question.options,
   }
 }
