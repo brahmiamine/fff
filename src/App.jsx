@@ -131,11 +131,11 @@ export default function App() {
     if (settings.theme !== 'system' || !media) return undefined
 
     if (media.addEventListener) media.addEventListener('change', applyTheme)
-    else media.addListener?.('change', applyTheme)
+    else media.addListener?.(applyTheme)
 
     return () => {
       if (media.removeEventListener) media.removeEventListener('change', applyTheme)
-      else media.removeListener?.('change', applyTheme)
+      else media.removeListener?.(applyTheme)
     }
   }, [settings.theme])
 
