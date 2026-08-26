@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
 import QuestionMedia from './QuestionMedia.jsx'
+import PageBackButton from './PageBackButton.jsx'
 import {
   DEFAULT_QUESTION_FILTERS,
   filterQuestionList,
@@ -33,11 +34,7 @@ export default function AnswerKey({ questions, validatedIds = [], onBack, showEx
 
   return (
     <div className="screen answerkey-screen">
-      <div className="quiz-header">
-        <button type="button" className="btn-link" onClick={onBack}>
-          ← Retour
-        </button>
-      </div>
+      <PageBackButton onBack={onBack} />
 
       <h1 className="app-title">Toutes les questions et réponses</h1>
       <p className="app-subtitle">
