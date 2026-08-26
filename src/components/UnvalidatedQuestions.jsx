@@ -1,4 +1,5 @@
 import QuestionMedia from './QuestionMedia.jsx'
+import PageBackButton from './PageBackButton.jsx'
 import { selectUnvalidatedQuestions } from '../utils/questionFilters.js'
 
 export default function UnvalidatedQuestions({
@@ -15,9 +16,7 @@ export default function UnvalidatedQuestions({
 
   return (
     <div className="screen collection-screen">
-      <div className="quiz-header">
-        <button type="button" className="btn-link" onClick={onBack}>← Paramètres</button>
-      </div>
+      <PageBackButton onBack={onBack} />
 
       <div className="collection-heading">
         <h1 className="app-title">Questions jamais validées</h1>
