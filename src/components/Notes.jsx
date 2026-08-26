@@ -1,7 +1,6 @@
 import NOTES from '../data/notes.json'
 import QuestionMedia from './QuestionMedia.jsx'
 import Terrain from './Terrain.jsx'
-import PageBackButton from './PageBackButton.jsx'
 
 function renderInlineMarkdown(text, keyPrefix = 'inline') {
   const tokens = text.split(/(\*\*.+?\*\*|==.+?==|`.+?`|\*[^*]+?\*)/g)
@@ -105,11 +104,9 @@ function MarkdownNote({ content, accent = 'blue' }) {
   return <div className={`note-markdown note-markdown-${accent}`}>{blocks}</div>
 }
 
-export default function Notes({ onBack }) {
+export default function Notes() {
   return (
     <div className="screen collection-screen notes-screen">
-      <PageBackButton onBack={onBack} />
-
       <div className="collection-heading">
         <h1 className="app-title">Mes notes</h1>
         <p className="app-subtitle">Définitions et rappels utiles pour l’arbitrage</p>
