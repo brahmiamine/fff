@@ -23,9 +23,6 @@ export default function Settings({
   onChange,
   onViewQuestions,
   onViewStatistics,
-  onViewUnvalidated,
-  onViewNotes,
-  onViewDocuments,
   onResetAll,
   historyCount,
   learningSummary,
@@ -216,33 +213,6 @@ export default function Settings({
         <span className="settings-link-copy">
           <strong>Statistiques</strong>
           <small>{historyCount} quiz terminé{historyCount > 1 ? 's' : ''} · {learningSummary.seenQuestions} question{learningSummary.seenQuestions > 1 ? 's' : ''} vue{learningSummary.seenQuestions > 1 ? 's' : ''}</small>
-        </span>
-        <span className="settings-link-arrow" aria-hidden="true">→</span>
-      </button>
-
-      <button type="button" className="settings-link-card" onClick={onViewUnvalidated}>
-        <span className="settings-link-icon" aria-hidden="true">?</span>
-        <span className="settings-link-copy">
-          <strong>Questions jamais validées</strong>
-          <small>{learningSummary.neverValidatedCount} question{learningSummary.neverValidatedCount > 1 ? 's' : ''} à valider au moins une fois</small>
-        </span>
-        <span className="settings-link-arrow" aria-hidden="true">→</span>
-      </button>
-
-      <button type="button" className="settings-link-card" onClick={onViewNotes}>
-        <span className="settings-link-icon" aria-hidden="true">✎</span>
-        <span className="settings-link-copy">
-          <strong>Mes notes</strong>
-          <small>Consulter les définitions et rappels d’arbitrage</small>
-        </span>
-        <span className="settings-link-arrow" aria-hidden="true">→</span>
-      </button>
-
-      <button type="button" className="settings-link-card" onClick={onViewDocuments}>
-        <span className="settings-link-icon" aria-hidden="true">▤</span>
-        <span className="settings-link-copy">
-          <strong>Mes documents</strong>
-          <small>Consulter les documents et règlements utiles à l’arbitrage</small>
         </span>
         <span className="settings-link-arrow" aria-hidden="true">→</span>
       </button>
