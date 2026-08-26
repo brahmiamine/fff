@@ -1,7 +1,6 @@
 import { useMemo } from 'react'
 import fffLogo from '../assets/fff-logo.png'
 import district75Logo from '../assets/district75-logo.png'
-import Terrain from './Terrain.jsx'
 import { resolveDefaultQuestionCount } from '../utils/settings.js'
 
 function formatDuration(totalSeconds) {
@@ -115,8 +114,6 @@ export default function Home({
           </div>
         </>
       )}
-
-      <Terrain />
 
       <p className="footer-note">Questions issues du test théorique CDA — District Parisien de Football, saison 2026/2027. À but d'entraînement.</p>
     </div>
