@@ -57,6 +57,13 @@ const REPLACEMENTS = [
 ]
 
 const SPECIAL_OPTION_NOTATION = {
+  q01: {
+    g: 'CFD à l’endroit de la faute au bénéfice de l’équipe attaquante',
+  },
+  q10b: {
+    b: 'CFD à refaire',
+    c: 'AVT au joueur 6B pour non-respect de la distance requise sur CFD',
+  },
   q26: {
     c: 'CFD/CFI accordé à l’équipe qui défend dans sa propre surface de but — SRCP LOI 13',
   },
