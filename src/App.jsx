@@ -48,6 +48,8 @@ import {
 const PASS_THRESHOLD = 0.8
 const QUESTIONS = enrichQuestions(questionsData)
 const NAV_SCREENS = new Set(['home', 'memorized', 'favorites', 'mistakes', 'settings', 'statistics', 'unvalidated', 'notes'])
+const STATIC_SCREENS = new Set([...NAV_SCREENS, 'answers'])
+const LAST_SCREEN_KEY = 'cda-paris-quiz:last-screen'
 
 function freshState() {
   return {
@@ -63,9 +65,26 @@ function freshState() {
   }
 }
 
+function loadLastScreen() {
+  try {
+    return window.sessionStorage.getItem(LAST_SCREEN_KEY)
+  } catch {
+    return null
+  }
+}
+
+function restoreLastScreen(baseState) {
+  const lastScreen = loadLastScreen()
+  if (STATIC_SCREENS.has(lastScreen)) return { ...baseState, screen: lastScreen }
+  if (['quiz', 'results'].includes(lastScreen) && baseState.quizQuestions.length > 0) {
+    return { ...baseState, screen: lastScreen }
+  }
+  return baseState
+}
+
 function initialState() {
   const saved = loadProgress(QUESTIONS)
-  if (!saved) return freshState()
+  if (!saved) return restoreLastScreen(freshState())
   const hydrated = {
     ...freshState(),
     ...saved,
@@ -73,7 +92,8 @@ function initialState() {
     mode: saved.mode || 'training',
     preset: saved.preset || 'custom',
   }
-  return normalizeSavedSession(hydrated) || freshState()
+  const normalized = normalizeSavedSession(hydrated) || freshState()
+  return restoreLastScreen(normalized)
 }
 
 function prepareSelectedQuestions(pool, learning, count, preset) {
@@ -101,6 +121,14 @@ export default function App() {
     [learning.validated, learning.memorized],
   )
   const unvalidatedQuizCount = resolveDefaultQuestionCount(settings.defaultQuestionCount, unvalidatedEligibleTotal)
+
+  useEffect(() => {
+    try {
+      window.sessionStorage.setItem(LAST_SCREEN_KEY, state.screen)
+    } catch {
+      // Le stockage peut être indisponible en navigation privée ; la navigation continue normalement.
+    }
+  }, [state.screen])
 
   useEffect(() => {
     if (state.quizQuestions.length > 0 && ['home', 'quiz', 'results'].includes(state.screen)) {
