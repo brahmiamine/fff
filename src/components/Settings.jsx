@@ -19,6 +19,7 @@ function ToggleSetting({ checked, onChange, label, description }) {
 export default function Settings({
   settings,
   onChange,
+  onViewQuestions,
   onViewStatistics,
   onViewUnvalidated,
   onResetAll,
@@ -172,6 +173,15 @@ export default function Settings({
           </div>
         </div>
       </section>
+
+      <button type="button" className="settings-link-card" onClick={onViewQuestions}>
+        <span className="settings-link-icon" aria-hidden="true">☰</span>
+        <span className="settings-link-copy">
+          <strong>Toutes les questions</strong>
+          <small>Consulter les questions et les bonnes réponses</small>
+        </span>
+        <span className="settings-link-arrow" aria-hidden="true">→</span>
+      </button>
 
       <button type="button" className="settings-link-card" onClick={onViewStatistics}>
         <span className="settings-link-icon" aria-hidden="true">▥</span>

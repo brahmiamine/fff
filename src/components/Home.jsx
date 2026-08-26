@@ -30,7 +30,6 @@ export default function Home({
   resumeMode,
   onResume,
   onReset,
-  onViewAnswers,
   learningSummary,
   memorizedIds,
   settings,
@@ -120,14 +119,6 @@ export default function Home({
       <Terrain />
 
       <p className="footer-note">Questions issues du test théorique CDA — District Parisien de Football, saison 2026/2027. À but d'entraînement.</p>
-
-      <button type="button" className="home-questions-link" onClick={onViewAnswers}>
-        <span>
-          <strong>Toutes les questions</strong>
-          <small>Consulter les questions et les bonnes réponses</small>
-        </span>
-        <span className="home-questions-arrow" aria-hidden="true">→</span>
-      </button>
     </div>
   )
 }
