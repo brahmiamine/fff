@@ -10,6 +10,7 @@ import './styles/settings.css'
 import './styles/media.css'
 import './styles/question-browser.css'
 import './styles/abbreviations.css'
+import './styles/notes.css'
 import './styles/effects.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
