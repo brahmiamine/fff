@@ -18,6 +18,10 @@ export const FOOTBALL_ABBREVIATIONS = [
 ]
 
 const REPLACEMENTS = [
+  [/\bADJ\s*\(arrêt du jeu\)/gi, 'Arrêt du jeu'],
+  [/\bMEG\s*\(mise en garde\)/gi, 'MEG'],
+  [/\bAVT pour CAS\s*\(avertissement pour comportement antisportif\)/gi, 'AVT pour CAS'],
+  [/\bPY à retirer\s*\(le penalty doit être retiré\)/gi, 'PY à retirer'],
   [/\bavertissement pour comportement antisportif\s*\(CAS\)/gi, 'AVT pour CAS'],
   [/\bavertissement pour comportement antisportif\b/gi, 'AVT pour CAS'],
   [/\bavertissement pour CAS\b/gi, 'AVT pour CAS'],
@@ -25,8 +29,10 @@ const REPLACEMENTS = [
   [/\bcomportement antisportif\b/gi, 'CAS'],
   [/\bsous le principe de l[’']avantage\b/gi, 'SRA'],
   [/\bsous réserve de l[’']avantage\b/gi, 'SRA'],
-  [/\blaisse(?:r)? jouer\s*\(avantage\)/gi, 'laisse jouer SRA'],
-  [/\blaisse(?:r)? jouer l[’']avantage\b/gi, 'laisse jouer SRA'],
+  [/\blaisser jouer\s*\(avantage\)/gi, 'laisser jouer SRA'],
+  [/\blaisser jouer l[’']avantage\b/gi, 'laisser jouer SRA'],
+  [/\blaisse jouer\s*\(avantage\)/gi, 'laisse jouer SRA'],
+  [/\blaisse jouer l[’']avantage\b/gi, 'laisse jouer SRA'],
   [/\bcoups francs indirects\b/gi, 'CFI'],
   [/\bcoup franc indirect\b/gi, 'CFI'],
   [/\bcoups francs directs\b/gi, 'CFD'],
