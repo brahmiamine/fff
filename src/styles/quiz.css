@@ -1,3 +1,16 @@
+.quiz-screen {
+  padding-top: 0;
+}
+
+.quiz-screen > .quiz-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  margin: 0 -16px;
+  padding: calc(20px + env(safe-area-inset-top, 0px)) 16px 10px;
+  background: linear-gradient(180deg, var(--fff-blue) 0%, var(--fff-blue-dark) 100%);
+}
+
 .quiz-header .progress-wrap {
   gap: 8px;
   margin-top: 10px;
