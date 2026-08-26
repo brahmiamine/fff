@@ -1,14 +1,17 @@
 import { useState } from 'react'
 import QuestionMedia from './QuestionMedia.jsx'
 import AbbreviationsModal from './AbbreviationsModal.jsx'
+import PageBackButton from './PageBackButton.jsx'
 
-export default function MemorizedQuestions({ questions, memorizedIds, onToggleMemorized, showExplanations = true }) {
+export default function MemorizedQuestions({ questions, memorizedIds, onToggleMemorized, showExplanations = true, onBack }) {
   const [showAbbreviations, setShowAbbreviations] = useState(false)
   const memorized = new Set(memorizedIds)
   const items = questions.filter((question) => memorized.has(question.id))
 
   return (
     <div className="screen memorized-screen">
+      <PageBackButton onBack={onBack} />
+
       <div className="memorized-heading">
         <h1 className="app-title">Questions mémorisées</h1>
         <p className="app-subtitle">
