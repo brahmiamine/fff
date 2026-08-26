@@ -1,6 +1,7 @@
 import QuestionMedia from './QuestionMedia.jsx'
+import PageBackButton from './PageBackButton.jsx'
 
-export default function MistakeQuestions({ questions, learningSummary, memorizedIds, onStart }) {
+export default function MistakeQuestions({ questions, learningSummary, memorizedIds, onStart, onBack }) {
   const memorized = new Set(memorizedIds)
   const questionById = new Map(questions.map((question) => [question.id, question]))
   const items = learningSummary.perQuestion
@@ -11,6 +12,8 @@ export default function MistakeQuestions({ questions, learningSummary, memorized
 
   return (
     <div className="screen collection-screen">
+      <PageBackButton onBack={onBack} />
+
       <div className="collection-heading">
         <h1 className="app-title">Mes erreurs</h1>
         <p className="app-subtitle">
