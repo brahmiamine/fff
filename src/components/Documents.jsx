@@ -1,6 +1,67 @@
+import { useEffect, useState } from 'react'
 import DOCUMENTS from '../data/documents.json'
 
+const SELECTED_DOCUMENT_KEY = 'cda-paris-quiz:selected-document'
+
+function loadSelectedDocumentId() {
+  try {
+    return window.sessionStorage.getItem(SELECTED_DOCUMENT_KEY)
+  } catch {
+    return null
+  }
+}
+
 export default function Documents() {
+  const [selectedId, setSelectedId] = useState(loadSelectedDocumentId)
+  const selectedDocument = DOCUMENTS.find((document) => document.id === selectedId) || null
+
+  useEffect(() => {
+    try {
+      if (selectedId) window.sessionStorage.setItem(SELECTED_DOCUMENT_KEY, selectedId)
+      else window.sessionStorage.removeItem(SELECTED_DOCUMENT_KEY)
+    } catch {
+      // Le stockage peut être indisponible ; le lecteur reste utilisable.
+    }
+  }, [selectedId])
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
+  }, [selectedId])
+
+  if (selectedDocument) {
+    return (
+      <div className="screen documents-screen document-viewer-screen">
+        <div className="document-viewer-header">
+          <button
+            type="button"
+            className="btn-link document-viewer-back"
+            onClick={() => setSelectedId(null)}
+          >
+            ← Mes documents
+          </button>
+
+          <div className="document-viewer-heading">
+            <span className="document-icon" aria-hidden="true">{selectedDocument.icon || '📄'}</span>
+            <span>
+              <h1>{selectedDocument.title}</h1>
+              <p>{selectedDocument.subtitle}</p>
+            </span>
+          </div>
+        </div>
+
+        <div className="document-pdf-viewer card">
+          <iframe
+            src={selectedDocument.url}
+            title={`${selectedDocument.title} — PDF`}
+            className="document-pdf-frame"
+            loading="eager"
+            allow="fullscreen"
+          />
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="screen collection-screen documents-screen">
       <div className="collection-heading">
@@ -10,13 +71,12 @@ export default function Documents() {
 
       <div className="documents-list">
         {DOCUMENTS.map((document) => (
-          <a
+          <button
+            type="button"
             key={document.id}
             className="card document-card"
-            href={document.url}
-            target="_blank"
-            rel="noreferrer"
-            aria-label={`Ouvrir ${document.title} en PDF`}
+            onClick={() => setSelectedId(document.id)}
+            aria-label={`Lire ${document.title} dans l’application`}
           >
             <span className="document-icon" aria-hidden="true">{document.icon || '📄'}</span>
             <span className="document-copy">
@@ -27,8 +87,8 @@ export default function Documents() {
                 {document.source && <span>{document.source}</span>}
               </span>
             </span>
-            <span className="document-arrow" aria-hidden="true">↗</span>
-          </a>
+            <span className="document-arrow" aria-hidden="true">›</span>
+          </button>
         ))}
       </div>
     </div>
