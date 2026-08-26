@@ -17,6 +17,7 @@ import { loadHistory, addHistoryEntry, clearHistory } from './utils/history.js'
 import { computeScore } from './utils/scoring.js'
 import { isAnswerCorrect } from './utils/answers.js'
 import { enrichQuestions } from './utils/questionMetadata.js'
+import { selectUnvalidatedQuestions } from './utils/questionFilters.js'
 import { normalizeSavedSession, pauseTimedState, resumeTimedState } from './utils/session.js'
 import {
   clearLearningState,
@@ -39,6 +40,7 @@ import {
   defaultSettings,
   loadSettings,
   normalizeSettings,
+  resolveDefaultQuestionCount,
   saveSettings,
 } from './utils/settings.js'
 
@@ -93,6 +95,11 @@ export default function App() {
   const [settings, setSettings] = useState(() => loadSettings())
 
   const learningSummary = useMemo(() => computeLearningSummary(QUESTIONS, learning), [learning])
+  const unvalidatedEligibleTotal = useMemo(
+    () => selectUnvalidatedQuestions(QUESTIONS, learning.validated, learning.memorized).length,
+    [learning.validated, learning.memorized],
+  )
+  const unvalidatedQuizCount = resolveDefaultQuestionCount(settings.defaultQuestionCount, unvalidatedEligibleTotal)
 
   useEffect(() => {
     if (state.quizQuestions.length > 0 && ['home', 'quiz', 'results'].includes(state.screen)) {
@@ -133,7 +140,10 @@ export default function App() {
   }, [settings.theme])
 
   function startQuiz({ count, category = 'all', timeLimitSeconds = null, mode = 'training', preset = 'custom' }) {
-    const categoryPool = category !== 'all' ? QUESTIONS.filter((q) => q.category === category) : QUESTIONS
+    let categoryPool = category !== 'all' ? QUESTIONS.filter((q) => q.category === category) : QUESTIONS
+    if (preset === 'unvalidated') {
+      categoryPool = selectUnvalidatedQuestions(categoryPool, learning.validated)
+    }
     const pool = excludeMemorizedQuestions(categoryPool, learning)
     const quizQuestions = prepareSelectedQuestions(pool, learning, count, preset)
     if (quizQuestions.length === 0) {
@@ -152,6 +162,20 @@ export default function App() {
       remainingSeconds: limit,
       mode,
       preset,
+    })
+  }
+
+  function startUnvalidatedQuiz() {
+    if (unvalidatedQuizCount === 0) return
+    const timeLimitSeconds = settings.defaultTimed
+      ? unvalidatedQuizCount * settings.questionTimeSeconds
+      : null
+
+    startQuiz({
+      count: unvalidatedQuizCount,
+      mode: settings.defaultMode,
+      preset: 'unvalidated',
+      timeLimitSeconds,
     })
   }
 
@@ -353,6 +377,7 @@ export default function App() {
       {state.screen === 'answers' && (
         <AnswerKey
           questions={QUESTIONS}
+          validatedIds={learning.validated}
           onBack={backToHome}
           showExplanations={settings.showExplanations}
         />
@@ -370,6 +395,9 @@ export default function App() {
         <UnvalidatedQuestions
           questions={QUESTIONS}
           validatedIds={learning.validated}
+          memorizedIds={learning.memorized}
+          quizCount={unvalidatedQuizCount}
+          onStart={startUnvalidatedQuiz}
           onBack={() => navigateTo('settings')}
         />
       )}

@@ -1,8 +1,17 @@
 import QuestionMedia from './QuestionMedia.jsx'
+import { selectUnvalidatedQuestions } from '../utils/questionFilters.js'
 
-export default function UnvalidatedQuestions({ questions, validatedIds, onBack }) {
-  const validated = new Set(validatedIds)
-  const items = questions.filter((question) => !validated.has(question.id))
+export default function UnvalidatedQuestions({
+  questions,
+  validatedIds,
+  memorizedIds = [],
+  quizCount = 0,
+  onStart,
+  onBack,
+}) {
+  const items = selectUnvalidatedQuestions(questions, validatedIds)
+  const eligibleItems = selectUnvalidatedQuestions(questions, validatedIds, memorizedIds)
+  const excludedMemorizedCount = items.length - eligibleItems.length
 
   return (
     <div className="screen collection-screen">
@@ -16,6 +25,28 @@ export default function UnvalidatedQuestions({ questions, validatedIds, onBack }
           {items.length} question{items.length > 1 ? 's' : ''} à valider au moins une fois
         </p>
       </div>
+
+      {items.length > 0 && (
+        <div className="card unvalidated-start-card">
+          <div>
+            <strong>Travailler les questions jamais validées</strong>
+            <p>Le nombre de questions, le mode et le chrono utilisent tes Paramètres.</p>
+            {excludedMemorizedCount > 0 && (
+              <small>
+                {excludedMemorizedCount} question{excludedMemorizedCount > 1 ? 's' : ''} mémorisée{excludedMemorizedCount > 1 ? 's' : ''} reste{excludedMemorizedCount > 1 ? 'nt' : ''} exclue{excludedMemorizedCount > 1 ? 's' : ''} des quiz.
+              </small>
+            )}
+          </div>
+          <button
+            type="button"
+            className="btn btn-primary"
+            disabled={quizCount === 0}
+            onClick={onStart}
+          >
+            {quizCount > 0 ? `Commencer le quiz (${quizCount})` : 'Aucune question disponible'}
+          </button>
+        </div>
+      )}
 
       {items.length === 0 ? (
         <div className="card collection-empty collection-success-empty">
