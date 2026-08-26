@@ -6,7 +6,7 @@
     "type": "PDF",
     "source": "IFAB",
     "icon": "⚽",
-    "url": "https://www.theifab.com/downloads/lois-du-jeu-202627-pages-simples?l=fr"
+    "url": "https://raw.githubusercontent.com/brahmiamine/fff/main/documents/Lois%20du%20Jeu%202026_27_pages%20simples%20FRANCE.pdf"
   },
   {
     "id": "rapport-disciplinaire-fia-2024",
@@ -15,6 +15,6 @@
     "type": "PDF",
     "source": "FFF",
     "icon": "📋",
-    "url": "https://haute-garonne.fff.fr/wp-content/uploads/sites/74/bsk-pdf-manager/556cdbd65f0b3e22bafe8c2f14582cbe.pdf#page=27"
+    "url": "https://raw.githubusercontent.com/brahmiamine/fff/main/documents/rapport%20descplinaire.pdf"
   }
 ]
