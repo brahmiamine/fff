@@ -24,6 +24,7 @@ export default function Settings({
   onViewQuestions,
   onViewStatistics,
   onViewUnvalidated,
+  onViewNotes,
   onResetAll,
   historyCount,
   learningSummary,
@@ -223,6 +224,15 @@ export default function Settings({
         <span className="settings-link-copy">
           <strong>Questions jamais validées</strong>
           <small>{learningSummary.neverValidatedCount} question{learningSummary.neverValidatedCount > 1 ? 's' : ''} à valider au moins une fois</small>
+        </span>
+        <span className="settings-link-arrow" aria-hidden="true">→</span>
+      </button>
+
+      <button type="button" className="settings-link-card" onClick={onViewNotes}>
+        <span className="settings-link-icon" aria-hidden="true">✎</span>
+        <span className="settings-link-copy">
+          <strong>Mes notes</strong>
+          <small>Consulter les définitions et rappels d’arbitrage</small>
         </span>
         <span className="settings-link-arrow" aria-hidden="true">→</span>
       </button>
