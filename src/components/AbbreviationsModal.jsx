@@ -22,13 +22,13 @@ export default function AbbreviationsModal({ open, onClose }) {
   if (!open) return null
 
   return (
-    <div className="abbreviations-backdrop" role="presentation" onMouseDown={onClose}>
+    <div className="abbreviations-backdrop" role="presentation" onClick={onClose}>
       <div
         className="abbreviations-modal"
         role="dialog"
         aria-modal="true"
         aria-labelledby="abbreviations-title"
-        onMouseDown={(event) => event.stopPropagation()}
+        onClick={(event) => event.stopPropagation()}
       >
         <div className="abbreviations-modal-header">
           <div>
