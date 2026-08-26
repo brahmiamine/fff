@@ -5,6 +5,7 @@ import Results from './components/Results.jsx'
 import AnswerKey from './components/AnswerKey.jsx'
 import History from './components/History.jsx'
 import BottomNav from './components/BottomNav.jsx'
+import ReviewsHub from './components/ReviewsHub.jsx'
 import MemorizedQuestions from './components/MemorizedQuestions.jsx'
 import FavoriteQuestions from './components/FavoriteQuestions.jsx'
 import MistakeQuestions from './components/MistakeQuestions.jsx'
@@ -48,8 +49,20 @@ import {
 
 const PASS_THRESHOLD = 0.8
 const QUESTIONS = enrichQuestions(questionsData)
-const NAV_SCREENS = new Set(['home', 'memorized', 'favorites', 'mistakes', 'settings', 'statistics', 'unvalidated', 'notes', 'documents'])
-const STATIC_SCREENS = new Set([...NAV_SCREENS, 'answers'])
+const NAV_SCREENS = new Set([
+  'home',
+  'reviews',
+  'memorized',
+  'favorites',
+  'mistakes',
+  'unvalidated',
+  'notes',
+  'documents',
+  'settings',
+  'statistics',
+  'answers',
+])
+const STATIC_SCREENS = new Set(NAV_SCREENS)
 const LAST_SCREEN_KEY = 'cda-paris-quiz:last-screen'
 
 function freshState() {
@@ -122,6 +135,10 @@ export default function App() {
     [learning.validated, learning.memorized],
   )
   const unvalidatedQuizCount = resolveDefaultQuestionCount(settings.defaultQuestionCount, unvalidatedEligibleTotal)
+  const mistakeCount = useMemo(() => {
+    const memorized = new Set(learning.memorized)
+    return learningSummary.perQuestion.filter((item) => item.lastResult === false && !memorized.has(item.id)).length
+  }, [learning.memorized, learningSummary])
 
   useEffect(() => {
     try {
@@ -425,6 +442,18 @@ export default function App() {
           onResetLearning={handleResetLearning}
         />
       )}
+      {state.screen === 'reviews' && (
+        <ReviewsHub
+          memorizedCount={learning.memorized.length}
+          favoriteCount={learning.favorites.length}
+          mistakeCount={mistakeCount}
+          neverValidatedCount={learningSummary.neverValidatedCount}
+          onOpenMemorized={() => navigateTo('memorized')}
+          onOpenFavorites={() => navigateTo('favorites')}
+          onOpenMistakes={() => navigateTo('mistakes')}
+          onOpenUnvalidated={() => navigateTo('unvalidated')}
+        />
+      )}
       {state.screen === 'unvalidated' && (
         <UnvalidatedQuestions
           questions={QUESTIONS}
@@ -432,24 +461,17 @@ export default function App() {
           memorizedIds={learning.memorized}
           quizCount={unvalidatedQuizCount}
           onStart={startUnvalidatedQuiz}
-          onBack={() => navigateTo('settings')}
+          onBack={() => navigateTo('reviews')}
         />
       )}
-      {state.screen === 'notes' && (
-        <Notes onBack={() => navigateTo('settings')} />
-      )}
-      {state.screen === 'documents' && (
-        <Documents onBack={() => navigateTo('settings')} />
-      )}
+      {state.screen === 'notes' && <Notes />}
+      {state.screen === 'documents' && <Documents />}
       {state.screen === 'settings' && (
         <Settings
           settings={settings}
           onChange={handleSettingsChange}
           onViewQuestions={() => navigateTo('answers')}
           onViewStatistics={() => navigateTo('statistics')}
-          onViewUnvalidated={() => navigateTo('unvalidated')}
-          onViewNotes={() => navigateTo('notes')}
-          onViewDocuments={() => navigateTo('documents')}
           onResetAll={handleResetAllData}
           historyCount={history.length}
           learningSummary={learningSummary}
@@ -461,6 +483,7 @@ export default function App() {
           memorizedIds={learning.memorized}
           onToggleMemorized={handleToggleMemorized}
           showExplanations={settings.showExplanations}
+          onBack={() => navigateTo('reviews')}
         />
       )}
       {state.screen === 'favorites' && (
@@ -470,6 +493,7 @@ export default function App() {
           memorizedIds={learning.memorized}
           onToggleFavorite={handleToggleFavorite}
           onStart={startQuiz}
+          onBack={() => navigateTo('reviews')}
         />
       )}
       {state.screen === 'mistakes' && (
@@ -478,6 +502,7 @@ export default function App() {
           learningSummary={learningSummary}
           memorizedIds={learning.memorized}
           onStart={startQuiz}
+          onBack={() => navigateTo('reviews')}
         />
       )}
       {showBottomNav && <BottomNav activeScreen={state.screen} onNavigate={navigateTo} />}
