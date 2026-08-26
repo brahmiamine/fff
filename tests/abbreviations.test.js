@@ -24,7 +24,15 @@ test('abbreviates football exam terminology without changing the meaning', () =>
 test('uses SRA only for advantage wording that describes the referee decision', () => {
   assert.equal(abbreviateFootballText("Sous le principe de l’avantage"), 'SRA')
   assert.equal(abbreviateFootballText("L’arbitre laisse jouer (avantage)"), 'L’arbitre laisse jouer SRA')
+  assert.equal(abbreviateFootballText("L’arbitre peut laisser jouer l’avantage"), 'L’arbitre peut laisser jouer SRA')
   assert.equal(abbreviateFootballText("un attaquant tire un avantage de sa position"), "un attaquant tire un avantage de sa position")
+})
+
+test('collapses existing expanded shorthand and removes unsupported ADJ', () => {
+  assert.equal(abbreviateFootballText('MEG (mise en garde) du gardien'), 'MEG du gardien')
+  assert.equal(abbreviateFootballText('AVT pour CAS (avertissement pour comportement antisportif)'), 'AVT pour CAS')
+  assert.equal(abbreviateFootballText('ADJ (arrêt du jeu)'), 'Arrêt du jeu')
+  assert.equal(abbreviateFootballText('PY à retirer (le penalty doit être retiré)'), 'PY à retirer')
 })
 
 test('abbreviates question and answer labels but preserves correct answer ids', () => {
