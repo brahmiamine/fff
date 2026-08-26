@@ -1,0 +1,132 @@
+.note-markdown {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  color: var(--gray-600);
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+.note-markdown p,
+.note-markdown ul,
+.note-markdown blockquote,
+.note-markdown-heading {
+  margin: 0;
+}
+
+.note-markdown-heading {
+  color: var(--fff-blue-dark);
+  font-size: 1rem;
+  line-height: 1.35;
+}
+
+.note-markdown ul {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-left: 20px;
+}
+
+.note-markdown li::marker {
+  color: var(--fff-blue);
+}
+
+.note-markdown strong {
+  color: var(--fff-blue);
+  font-weight: 850;
+}
+
+.note-markdown em {
+  color: var(--gray-600);
+}
+
+.note-markdown mark {
+  border-radius: 5px;
+  background: #fff0a8;
+  color: #5d4700;
+  padding: 1px 4px;
+  font-weight: 750;
+}
+
+.note-markdown code {
+  border-radius: 5px;
+  background: var(--gray-100);
+  color: var(--fff-blue-dark);
+  padding: 1px 5px;
+  font-size: 0.84em;
+}
+
+.note-markdown blockquote {
+  border-left: 4px solid var(--fff-blue);
+  border-radius: 0 10px 10px 0;
+  background: #eef2ff;
+  color: var(--fff-blue-dark);
+  padding: 10px 12px;
+}
+
+.note-markdown-yellow strong,
+.note-markdown-yellow li::marker {
+  color: #9b6b00;
+}
+
+.note-markdown-yellow blockquote {
+  border-left-color: #d6a700;
+  background: #fff8d9;
+}
+
+.note-markdown-red strong,
+.note-markdown-red li::marker {
+  color: var(--fff-red);
+}
+
+.note-markdown-red blockquote {
+  border-left-color: var(--fff-red);
+  background: var(--danger-bg);
+}
+
+:root[data-theme='dark'] .note-markdown {
+  color: #c7d0e4;
+}
+
+:root[data-theme='dark'] .note-markdown-heading {
+  color: #edf1ff;
+}
+
+:root[data-theme='dark'] .note-markdown strong {
+  color: #9fb2ff;
+}
+
+:root[data-theme='dark'] .note-markdown-yellow strong,
+:root[data-theme='dark'] .note-markdown-yellow li::marker {
+  color: #f0d58d;
+}
+
+:root[data-theme='dark'] .note-markdown-red strong,
+:root[data-theme='dark'] .note-markdown-red li::marker {
+  color: #ff7a87;
+}
+
+:root[data-theme='dark'] .note-markdown blockquote {
+  background: #17213a;
+  color: #edf1ff;
+}
+
+:root[data-theme='dark'] .note-markdown-yellow blockquote {
+  border-left-color: #d8b24e;
+  background: #312b18;
+}
+
+:root[data-theme='dark'] .note-markdown-red blockquote {
+  border-left-color: #ff6d7b;
+  background: #3b1720;
+}
+
+:root[data-theme='dark'] .note-markdown mark {
+  background: #665619;
+  color: #fff4bd;
+}
+
+:root[data-theme='dark'] .note-markdown code {
+  background: #10182a;
+  color: #edf1ff;
+}
