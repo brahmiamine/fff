@@ -25,6 +25,7 @@ export default function Settings({
   onViewStatistics,
   onViewUnvalidated,
   onViewNotes,
+  onViewDocuments,
   onResetAll,
   historyCount,
   learningSummary,
@@ -233,6 +234,15 @@ export default function Settings({
         <span className="settings-link-copy">
           <strong>Mes notes</strong>
           <small>Consulter les définitions et rappels d’arbitrage</small>
+        </span>
+        <span className="settings-link-arrow" aria-hidden="true">→</span>
+      </button>
+
+      <button type="button" className="settings-link-card" onClick={onViewDocuments}>
+        <span className="settings-link-icon" aria-hidden="true">▤</span>
+        <span className="settings-link-copy">
+          <strong>Mes documents</strong>
+          <small>Consulter les documents et règlements utiles à l’arbitrage</small>
         </span>
         <span className="settings-link-arrow" aria-hidden="true">→</span>
       </button>
