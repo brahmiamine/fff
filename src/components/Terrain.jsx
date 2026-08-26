@@ -55,7 +55,7 @@ function TerrainDiagram() {
   )
 }
 
-export default function Terrain() {
+export default function Terrain({ embedded = false }) {
   const [zoom, setZoom] = useState(MIN_ZOOM)
   const zoomPercent = Math.round(zoom * 100)
 
@@ -67,6 +67,41 @@ export default function Terrain() {
     setZoom((current) => (current === MIN_ZOOM ? 2 : MIN_ZOOM))
   }
 
+  const content = (
+    <div className={`terrain-card${embedded ? ' terrain-card-embedded' : ''}`}>
+      <div className="terrain-toolbar" aria-label="Contrôles de zoom">
+        <button type="button" className="terrain-zoom-button" onClick={() => changeZoom(-ZOOM_STEP)} disabled={zoom <= MIN_ZOOM} aria-label="Réduire le zoom">−</button>
+        <span className="terrain-zoom-value" aria-live="polite">{zoomPercent}%</span>
+        <button type="button" className="terrain-zoom-button" onClick={() => changeZoom(ZOOM_STEP)} disabled={zoom >= MAX_ZOOM} aria-label="Agrandir le zoom">+</button>
+        <button type="button" className="terrain-reset-button" onClick={() => setZoom(MIN_ZOOM)} disabled={zoom === MIN_ZOOM}>Réinitialiser</button>
+      </div>
+
+      <div className="terrain-image-stage" onDoubleClick={toggleZoom}>
+        <div className="terrain-diagram-wrap" style={{ width: `${zoomPercent}%` }}>
+          <TerrainDiagram />
+        </div>
+      </div>
+
+      <p className="terrain-hint">Le schéma est vectoriel : il reste net lorsque tu zoomes. Double-clic pour passer rapidement de 100 % à 200 %.</p>
+
+      <div className="terrain-reference-block">
+        <h3>Repères à mémoriser</h3>
+        <div className="terrain-reference-grid">
+          <span><strong>90–120 m</strong> longueur</span>
+          <span><strong>45–90 m</strong> largeur</span>
+          <span><strong>16,5 m</strong> surface de réparation</span>
+          <span><strong>5,5 m</strong> surface de but</span>
+          <span><strong>11 m</strong> point de penalty</span>
+          <span><strong>9,15 m</strong> rayon / distance</span>
+          <span><strong>7,32 m</strong> largeur du but</span>
+          <span><strong>2,44 m</strong> hauteur du but</span>
+        </div>
+      </div>
+    </div>
+  )
+
+  if (embedded) return content
+
   return (
     <section className="home-terrain-section" aria-labelledby="terrain-title">
       <div className="home-section-heading">
@@ -77,36 +112,7 @@ export default function Terrain() {
         <span className="home-section-chip">Référence</span>
       </div>
 
-      <div className="card terrain-card">
-        <div className="terrain-toolbar" aria-label="Contrôles de zoom">
-          <button type="button" className="terrain-zoom-button" onClick={() => changeZoom(-ZOOM_STEP)} disabled={zoom <= MIN_ZOOM} aria-label="Réduire le zoom">−</button>
-          <span className="terrain-zoom-value" aria-live="polite">{zoomPercent}%</span>
-          <button type="button" className="terrain-zoom-button" onClick={() => changeZoom(ZOOM_STEP)} disabled={zoom >= MAX_ZOOM} aria-label="Agrandir le zoom">+</button>
-          <button type="button" className="terrain-reset-button" onClick={() => setZoom(MIN_ZOOM)} disabled={zoom === MIN_ZOOM}>Réinitialiser</button>
-        </div>
-
-        <div className="terrain-image-stage" onDoubleClick={toggleZoom}>
-          <div className="terrain-diagram-wrap" style={{ width: `${zoomPercent}%` }}>
-            <TerrainDiagram />
-          </div>
-        </div>
-
-        <p className="terrain-hint">Le schéma est vectoriel : il reste net lorsque tu zoomes. Double-clic pour passer rapidement de 100 % à 200 %.</p>
-
-        <div className="terrain-reference-block">
-          <h3>Repères à mémoriser</h3>
-          <div className="terrain-reference-grid">
-            <span><strong>90–120 m</strong> longueur</span>
-            <span><strong>45–90 m</strong> largeur</span>
-            <span><strong>16,5 m</strong> surface de réparation</span>
-            <span><strong>5,5 m</strong> surface de but</span>
-            <span><strong>11 m</strong> point de penalty</span>
-            <span><strong>9,15 m</strong> rayon / distance</span>
-            <span><strong>7,32 m</strong> largeur du but</span>
-            <span><strong>2,44 m</strong> hauteur du but</span>
-          </div>
-        </div>
-      </div>
+      <div className="card">{content}</div>
     </section>
   )
 }
