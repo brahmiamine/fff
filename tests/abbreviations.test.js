@@ -52,3 +52,21 @@ test('abbreviates question and answer labels but preserves correct answer ids', 
   assert.deepEqual(result.correct, ['a'])
   assert.deepEqual(source.correct, ['a'])
 })
+
+test('adds SRCP notation only on questions where special restart placement applies', () => {
+  const law13 = abbreviateQuestion({
+    id: 'remise09',
+    question: 'Décision ?',
+    options: [{ id: 'b', text: 'Coup franc indirect' }],
+    correct: ['b'],
+  })
+  const law8 = abbreviateQuestion({
+    id: 'q28',
+    question: 'Décisions ?',
+    options: [{ id: 'c', text: 'Balle à terre' }],
+    correct: ['c'],
+  })
+
+  assert.equal(law13.options[0].text, 'CFI — SRCP LOI 13')
+  assert.equal(law8.options[0].text, 'BAT — SRCP LOI 8')
+})
