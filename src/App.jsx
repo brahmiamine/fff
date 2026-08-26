@@ -117,6 +117,11 @@ export default function App() {
 
   useEffect(() => {
     const root = document.documentElement
+    root.dataset.animations = settings.animationsEnabled ? 'on' : 'off'
+  }, [settings.animationsEnabled])
+
+  useEffect(() => {
+    const root = document.documentElement
     const media = window.matchMedia?.('(prefers-color-scheme: dark)')
 
     function applyTheme() {
@@ -356,6 +361,8 @@ export default function App() {
           memorizedIds={learning.memorized}
           onToggleMemorized={handleToggleMemorized}
           showExplanations={settings.showExplanations}
+          animationsEnabled={settings.animationsEnabled}
+          soundsEnabled={settings.soundsEnabled}
         />
       )}
       {state.screen === 'results' && (
@@ -367,6 +374,8 @@ export default function App() {
           onRestart={resetProgress}
           onReviewMistakes={reviewMistakes}
           showExplanations={settings.showExplanations}
+          animationsEnabled={settings.animationsEnabled}
+          soundsEnabled={settings.soundsEnabled}
         />
       )}
       {state.screen === 'answers' && (
