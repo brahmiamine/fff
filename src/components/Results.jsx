@@ -1,9 +1,25 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { isAnswerCorrect } from '../utils/answers.js'
 import { computeScore } from '../utils/scoring.js'
+import { playSound } from '../utils/sound.js'
 import QuestionMedia from './QuestionMedia.jsx'
 
-export default function Results({ questions, answers, passThreshold, mode, onRestart, onReviewMistakes, showExplanations = true }) {
+function formatScoreValue(value) {
+  const rounded = Math.round(value * 10) / 10
+  return Number.isInteger(rounded) ? rounded : rounded.toFixed(1)
+}
+
+export default function Results({
+  questions,
+  answers,
+  passThreshold,
+  mode,
+  onRestart,
+  onReviewMistakes,
+  showExplanations = true,
+  animationsEnabled = true,
+  soundsEnabled = false,
+}) {
   const [showReview, setShowReview] = useState(mode === 'exam')
 
   const scored = questions.map((q) => ({ question: q, selected: answers[q.id] || [], correct: isAnswerCorrect(q, answers[q.id] || []) }))
@@ -12,6 +28,36 @@ export default function Results({ questions, answers, passThreshold, mode, onRes
   const mistakeCount = total - goodCount
   const score = computeScore(questions, answers)
   const passed = score.total / 100 >= passThreshold
+  const [displayScore, setDisplayScore] = useState(animationsEnabled ? 0 : score.total)
+  const successSoundPlayedRef = useRef(false)
+
+  useEffect(() => {
+    const prefersReducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
+    if (!animationsEnabled || prefersReducedMotion) {
+      setDisplayScore(score.total)
+      return undefined
+    }
+
+    let frameId
+    const duration = 700
+    const startedAt = performance.now()
+
+    function update(currentTime) {
+      const progress = Math.min(1, (currentTime - startedAt) / duration)
+      const eased = 1 - Math.pow(1 - progress, 3)
+      setDisplayScore(score.total * eased)
+      if (progress < 1) frameId = requestAnimationFrame(update)
+    }
+
+    frameId = requestAnimationFrame(update)
+    return () => cancelAnimationFrame(frameId)
+  }, [animationsEnabled, score.total])
+
+  useEffect(() => {
+    if (!passed || successSoundPlayedRef.current) return
+    successSoundPlayedRef.current = true
+    void playSound('success', soundsEnabled)
+  }, [passed, soundsEnabled])
 
   const categories = useMemo(() => {
     const map = new Map()
@@ -31,8 +77,13 @@ export default function Results({ questions, answers, passThreshold, mode, onRes
   return (
     <div className="screen results-screen">
       <div className={`card score-card ${passed ? 'score-pass' : 'score-fail'}`}>
+        {passed && animationsEnabled && (
+          <div className="score-confetti" aria-hidden="true">
+            {Array.from({ length: 10 }, (_, index) => <span key={index} />)}
+          </div>
+        )}
         <p className="score-headline">{passed ? 'Réussi' : 'À retravailler'}</p>
-        <p className="score-number">{score.total} / 100</p>
+        <p className="score-number">{formatScoreValue(displayScore)} / 100</p>
         <p className="score-percent">{goodCount} / {total} questions entièrement correctes{score.unanswered > 0 && ` · ${score.unanswered} non répondue${score.unanswered > 1 ? 's' : ''}`}</p>
       </div>
 

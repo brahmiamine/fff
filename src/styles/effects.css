@@ -1,0 +1,133 @@
+:root[data-animations='on'] .btn,
+:root[data-animations='on'] .preset-card,
+:root[data-animations='on'] .option-btn,
+:root[data-animations='on'] .favorite-button,
+:root[data-animations='on'] .bottom-nav-icon,
+:root[data-animations='on'] .terrain-diagram-wrap,
+:root[data-animations='on'] .metric-track span,
+:root[data-animations='on'] .progress-fill {
+  transition: transform 180ms cubic-bezier(0.22, 1, 0.36, 1), color 180ms ease, background-color 180ms ease, border-color 180ms ease, width 180ms cubic-bezier(0.22, 1, 0.36, 1), filter 180ms ease;
+}
+
+:root[data-animations='on'] .btn:active:not(:disabled),
+:root[data-animations='on'] .preset-card:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+:root[data-animations='on'] .question-card {
+  animation: question-enter 220ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+:root[data-animations='on'] .feedback-box {
+  animation: feedback-enter 220ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+:root[data-animations='on'] .option-correct {
+  animation: answer-correct 240ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+:root[data-animations='on'] .option-incorrect {
+  animation: answer-wrong 220ms ease-out;
+}
+
+:root[data-animations='on'] .favorite-active {
+  animation: favorite-pop 240ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+:root[data-animations='on'] .bottom-nav-item-active .bottom-nav-icon {
+  transform: translateY(-2px) scale(1.06);
+}
+
+:root[data-animations='on'] .timer-badge-critical {
+  animation: timer-pulse 900ms ease-in-out infinite;
+}
+
+.score-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.score-confetti {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.score-confetti span {
+  position: absolute;
+  top: -16px;
+  width: 7px;
+  height: 12px;
+  border-radius: 2px;
+  opacity: 0;
+  animation: confetti-drop 900ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.score-confetti span:nth-child(1) { left: 8%; background: var(--fff-red); animation-delay: 20ms; }
+.score-confetti span:nth-child(2) { left: 18%; background: var(--fff-gold); animation-delay: 90ms; }
+.score-confetti span:nth-child(3) { left: 29%; background: var(--fff-blue); animation-delay: 40ms; }
+.score-confetti span:nth-child(4) { left: 39%; background: var(--success); animation-delay: 130ms; }
+.score-confetti span:nth-child(5) { left: 49%; background: var(--fff-gold); animation-delay: 10ms; }
+.score-confetti span:nth-child(6) { left: 59%; background: var(--fff-red); animation-delay: 110ms; }
+.score-confetti span:nth-child(7) { left: 68%; background: var(--success); animation-delay: 55ms; }
+.score-confetti span:nth-child(8) { left: 77%; background: var(--fff-blue); animation-delay: 150ms; }
+.score-confetti span:nth-child(9) { left: 87%; background: var(--fff-gold); animation-delay: 70ms; }
+.score-confetti span:nth-child(10) { left: 94%; background: var(--fff-red); animation-delay: 125ms; }
+
+@keyframes question-enter {
+  from { opacity: 0; transform: translateX(12px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes feedback-enter {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes answer-correct {
+  0% { transform: scale(1); }
+  55% { transform: scale(1.012); }
+  100% { transform: scale(1); }
+}
+
+@keyframes answer-wrong {
+  0%, 100% { transform: translateX(0); }
+  35% { transform: translateX(-4px); }
+  70% { transform: translateX(4px); }
+}
+
+@keyframes favorite-pop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.28) rotate(-6deg); }
+  100% { transform: scale(1); }
+}
+
+@keyframes timer-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.06); }
+}
+
+@keyframes confetti-drop {
+  0% { opacity: 0; transform: translateY(-10px) rotate(0deg); }
+  18% { opacity: 1; }
+  100% { opacity: 0; transform: translateY(145px) rotate(240deg); }
+}
+
+:root[data-animations='off'] *,
+:root[data-animations='off'] *::before,
+:root[data-animations='off'] *::after {
+  animation: none !important;
+  transition: none !important;
+  scroll-behavior: auto !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}

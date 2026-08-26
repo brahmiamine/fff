@@ -14,6 +14,8 @@ test('settings defaults stay stable and user values are normalized', () => {
     defaultTimed: false,
     questionTimeSeconds: 60,
     showExplanations: true,
+    animationsEnabled: true,
+    soundsEnabled: false,
     theme: 'system',
   })
 
@@ -23,6 +25,8 @@ test('settings defaults stay stable and user values are normalized', () => {
     defaultTimed: true,
     questionTimeSeconds: 45,
     showExplanations: false,
+    animationsEnabled: false,
+    soundsEnabled: true,
     theme: 'dark',
   }), {
     defaultQuestionCount: 30,
@@ -30,8 +34,24 @@ test('settings defaults stay stable and user values are normalized', () => {
     defaultTimed: true,
     questionTimeSeconds: 45,
     showExplanations: false,
+    animationsEnabled: false,
+    soundsEnabled: true,
     theme: 'dark',
   })
+})
+
+test('older saved settings inherit safe experience defaults', () => {
+  const settings = normalizeSettings({
+    defaultQuestionCount: 10,
+    defaultMode: 'training',
+    defaultTimed: false,
+    questionTimeSeconds: 60,
+    showExplanations: true,
+    theme: 'system',
+  })
+
+  assert.equal(settings.animationsEnabled, true)
+  assert.equal(settings.soundsEnabled, false)
 })
 
 test('custom question time accepts practical values and rejects out-of-range values', () => {
@@ -50,6 +70,8 @@ test('invalid settings fall back safely without losing valid preferences', () =>
     defaultTimed: 'yes',
     questionTimeSeconds: 999,
     showExplanations: true,
+    animationsEnabled: 'yes',
+    soundsEnabled: 1,
     theme: 'neon',
   })
 
@@ -58,6 +80,8 @@ test('invalid settings fall back safely without losing valid preferences', () =>
   assert.equal(settings.defaultTimed, false)
   assert.equal(settings.questionTimeSeconds, 60)
   assert.equal(settings.showExplanations, true)
+  assert.equal(settings.animationsEnabled, true)
+  assert.equal(settings.soundsEnabled, false)
   assert.equal(settings.theme, 'system')
 })
 
