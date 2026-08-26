@@ -279,10 +279,6 @@ export default function App() {
     setState((current) => ({ ...current, screen }))
   }
 
-  function backToHome() {
-    navigateTo('home')
-  }
-
   function handleClearHistory() {
     clearHistory()
     setHistory([])
@@ -335,7 +331,6 @@ export default function App() {
           resumeMode={state.mode}
           onResume={resumeQuiz}
           onReset={resetProgress}
-          onViewAnswers={() => navigateTo('answers')}
           learningSummary={learningSummary}
           memorizedIds={learning.memorized}
           settings={settings}
@@ -378,7 +373,7 @@ export default function App() {
         <AnswerKey
           questions={QUESTIONS}
           validatedIds={learning.validated}
-          onBack={backToHome}
+          onBack={() => navigateTo('settings')}
           showExplanations={settings.showExplanations}
         />
       )}
@@ -405,6 +400,7 @@ export default function App() {
         <Settings
           settings={settings}
           onChange={handleSettingsChange}
+          onViewQuestions={() => navigateTo('answers')}
           onViewStatistics={() => navigateTo('statistics')}
           onViewUnvalidated={() => navigateTo('unvalidated')}
           onResetAll={handleResetAllData}
