@@ -1,6 +1,10 @@
 import { useEffect } from 'react'
 import { FOOTBALL_ABBREVIATIONS } from '../data/abbreviations.js'
 
+const SORTED_ABBREVIATIONS = [...FOOTBALL_ABBREVIATIONS].sort((a, b) => (
+  a.code.localeCompare(b.code, 'fr', { numeric: true, sensitivity: 'base' })
+))
+
 export default function AbbreviationsModal({ open, onClose }) {
   useEffect(() => {
     if (!open) return undefined
@@ -39,7 +43,7 @@ export default function AbbreviationsModal({ open, onClose }) {
         </div>
 
         <div className="abbreviations-list">
-          {FOOTBALL_ABBREVIATIONS.map(({ code, label }) => (
+          {SORTED_ABBREVIATIONS.map(({ code, label }) => (
             <div className="abbreviations-row" key={code}>
               <strong className="abbreviations-code">{code}</strong>
               <span className="abbreviations-label">{label}</span>
