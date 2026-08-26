@@ -11,6 +11,7 @@ import MistakeQuestions from './components/MistakeQuestions.jsx'
 import Settings from './components/Settings.jsx'
 import UnvalidatedQuestions from './components/UnvalidatedQuestions.jsx'
 import Notes from './components/Notes.jsx'
+import Documents from './components/Documents.jsx'
 import questionsData from './data/questions.json'
 import { prepareQuestions, shuffle } from './utils/shuffle.js'
 import { loadProgress, saveProgress, clearProgress } from './utils/storage.js'
@@ -47,7 +48,7 @@ import {
 
 const PASS_THRESHOLD = 0.8
 const QUESTIONS = enrichQuestions(questionsData)
-const NAV_SCREENS = new Set(['home', 'memorized', 'favorites', 'mistakes', 'settings', 'statistics', 'unvalidated', 'notes'])
+const NAV_SCREENS = new Set(['home', 'memorized', 'favorites', 'mistakes', 'settings', 'statistics', 'unvalidated', 'notes', 'documents'])
 const STATIC_SCREENS = new Set([...NAV_SCREENS, 'answers'])
 const LAST_SCREEN_KEY = 'cda-paris-quiz:last-screen'
 
@@ -437,6 +438,9 @@ export default function App() {
       {state.screen === 'notes' && (
         <Notes onBack={() => navigateTo('settings')} />
       )}
+      {state.screen === 'documents' && (
+        <Documents onBack={() => navigateTo('settings')} />
+      )}
       {state.screen === 'settings' && (
         <Settings
           settings={settings}
@@ -445,6 +449,7 @@ export default function App() {
           onViewStatistics={() => navigateTo('statistics')}
           onViewUnvalidated={() => navigateTo('unvalidated')}
           onViewNotes={() => navigateTo('notes')}
+          onViewDocuments={() => navigateTo('documents')}
           onResetAll={handleResetAllData}
           historyCount={history.length}
           learningSummary={learningSummary}
