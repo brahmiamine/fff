@@ -53,7 +53,6 @@
   display: flex;
   flex: 1;
   align-items: center;
-  justify-content: space-between;
   gap: 12px;
   min-width: 0;
   padding: 14px 16px;
@@ -72,18 +71,6 @@
   color: var(--fff-blue-dark);
   font-size: 1rem;
   line-height: 1.35;
-}
-
-.note-collapse-chevron {
-  flex: none;
-  color: var(--fff-blue);
-  font-size: 1.35rem;
-  line-height: 1;
-  transition: transform 160ms ease;
-}
-
-.note-collapse-toggle[aria-expanded='true'] .note-collapse-chevron {
-  transform: rotate(180deg);
 }
 
 .note-collapse-content {
@@ -242,8 +229,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .note-collapse,
-  .note-collapse-chevron {
+  .note-collapse {
     transition: none;
   }
 }

@@ -233,7 +233,6 @@ export default function Notes() {
                     onClick={() => toggleNote(note.id)}
                   >
                     <span className="note-collapse-title">{note.title}</span>
-                    <span className="note-collapse-chevron" aria-hidden="true">⌄</span>
                   </button>
                 </h2>
               </div>
