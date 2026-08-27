@@ -1,4 +1,12 @@
+import { useEffect, useMemo, useRef, useState } from 'react'
 import NOTES from '../data/notes.json'
+import {
+  loadNoteOrder,
+  loadOpenNoteIds,
+  moveNote,
+  saveNoteOrder,
+  saveOpenNoteIds,
+} from '../utils/notePreferences.js'
 import QuestionMedia from './QuestionMedia.jsx'
 import Terrain from './Terrain.jsx'
 
@@ -105,6 +113,82 @@ function MarkdownNote({ content, accent = 'blue' }) {
 }
 
 export default function Notes() {
+  const noteIds = useMemo(() => NOTES.map((note) => note.id), [])
+  const notesById = useMemo(() => new Map(NOTES.map((note) => [note.id, note])), [])
+  const [noteOrder, setNoteOrder] = useState(() => loadNoteOrder(noteIds))
+  const [openNoteIds, setOpenNoteIds] = useState(() => new Set(loadOpenNoteIds(noteIds)))
+  const [draggedNoteId, setDraggedNoteId] = useState(null)
+  const dragState = useRef(null)
+
+  useEffect(() => {
+    saveNoteOrder(noteOrder)
+  }, [noteOrder])
+
+  useEffect(() => {
+    saveOpenNoteIds([...openNoteIds])
+  }, [openNoteIds])
+
+  const orderedNotes = noteOrder.map((id) => notesById.get(id)).filter(Boolean)
+
+  function toggleNote(noteId) {
+    setOpenNoteIds((currentIds) => {
+      const nextIds = new Set(currentIds)
+      if (nextIds.has(noteId)) nextIds.delete(noteId)
+      else nextIds.add(noteId)
+      return nextIds
+    })
+  }
+
+  function startDragging(event, noteId) {
+    if (event.pointerType === 'mouse' && event.button !== 0) return
+
+    dragState.current = {
+      noteId,
+      overId: noteId,
+      pointerId: event.pointerId,
+    }
+    event.currentTarget.setPointerCapture?.(event.pointerId)
+    setDraggedNoteId(noteId)
+  }
+
+  function dragNote(event) {
+    const currentDrag = dragState.current
+    if (!currentDrag || currentDrag.pointerId !== event.pointerId) return
+
+    const edgeSize = 72
+    if (event.clientY < edgeSize) window.scrollBy(0, -12)
+    else if (event.clientY > window.innerHeight - edgeSize) window.scrollBy(0, 12)
+
+    const target = document.elementFromPoint(event.clientX, event.clientY)?.closest('[data-note-id]')
+    const targetId = target?.dataset.noteId
+
+    if (!targetId || targetId === currentDrag.noteId || targetId === currentDrag.overId) return
+
+    currentDrag.overId = targetId
+    setNoteOrder((currentOrder) => moveNote(currentOrder, currentDrag.noteId, targetId))
+  }
+
+  function stopDragging(event) {
+    if (dragState.current?.pointerId !== event.pointerId) return
+
+    if (event.currentTarget.hasPointerCapture?.(event.pointerId)) {
+      event.currentTarget.releasePointerCapture(event.pointerId)
+    }
+    dragState.current = null
+    setDraggedNoteId(null)
+  }
+
+  function moveNoteWithKeyboard(event, noteId) {
+    if (!['ArrowUp', 'ArrowDown'].includes(event.key)) return
+
+    const currentIndex = noteOrder.indexOf(noteId)
+    const targetIndex = event.key === 'ArrowUp' ? currentIndex - 1 : currentIndex + 1
+    if (targetIndex < 0 || targetIndex >= noteOrder.length) return
+
+    event.preventDefault()
+    setNoteOrder((currentOrder) => moveNote(currentOrder, noteId, currentOrder[targetIndex]))
+  }
+
   return (
     <div className="screen collection-screen notes-screen">
       <div className="collection-heading">
@@ -112,41 +196,83 @@ export default function Notes() {
         <p className="app-subtitle">Définitions et rappels utiles pour l’arbitrage</p>
       </div>
 
-      <div className="review-list">
-        {NOTES.map((note, index) => (
-          <article key={note.id} className="card collection-item">
-            <div className="collection-item-meta">
-              <span className="badge badge-law">{note.law}</span>
-              <span className="badge">{note.type || 'Note'}</span>
-            </div>
+      <div className="review-list notes-list">
+        {orderedNotes.map((note) => {
+          const isOpen = openNoteIds.has(note.id)
+          const panelId = `note-panel-${note.id}`
 
-            <p className="review-number">Note {index + 1}</p>
-            <h2 className="review-question">{note.title}</h2>
-            {note.subtitle && <p className="collection-note">{note.subtitle}</p>}
+          return (
+            <article
+              key={note.id}
+              data-note-id={note.id}
+              className={`card collection-item note-collapse ${
+                draggedNoteId === note.id ? 'note-collapse-dragging' : ''
+              }`}
+            >
+              <div className="note-collapse-header">
+                <button
+                  type="button"
+                  className="note-drag-handle"
+                  aria-label={`Déplacer la note ${note.title}`}
+                  title="Maintenir et glisser pour déplacer"
+                  onPointerDown={(event) => startDragging(event, note.id)}
+                  onPointerMove={dragNote}
+                  onPointerUp={stopDragging}
+                  onPointerCancel={stopDragging}
+                  onKeyDown={(event) => moveNoteWithKeyboard(event, note.id)}
+                >
+                  <span aria-hidden="true">⠿</span>
+                </button>
 
-            {note.markdown ? (
-              <MarkdownNote content={note.markdown} accent={note.accent} />
-            ) : (
-              (note.paragraphs || []).map((paragraph) => (
-                <p key={paragraph} className="review-explanation">{paragraph}</p>
-              ))
-            )}
+                <h2 className="note-collapse-heading">
+                  <button
+                    type="button"
+                    className="note-collapse-toggle"
+                    aria-expanded={isOpen}
+                    aria-controls={panelId}
+                    onClick={() => toggleNote(note.id)}
+                  >
+                    <span className="note-collapse-title">{note.title}</span>
+                    <span className="note-collapse-chevron" aria-hidden="true">⌄</span>
+                  </button>
+                </h2>
+              </div>
 
-            {(note.image || note.video) && (
-              <QuestionMedia
-                question={{
-                  ...note,
-                  question: note.title,
-                }}
-                compact
-              />
-            )}
+              {isOpen && (
+                <div id={panelId} className="note-collapse-content">
+                  <div className="collection-item-meta">
+                    <span className="badge badge-law">{note.law}</span>
+                    <span className="badge">{note.type || 'Note'}</span>
+                  </div>
 
-            {note.special === 'terrain' && <Terrain embedded />}
+                  {note.subtitle && <p className="collection-note">{note.subtitle}</p>}
 
-            <p className="collection-note">Référence : {note.law} — {note.reference}</p>
-          </article>
-        ))}
+                  {note.markdown ? (
+                    <MarkdownNote content={note.markdown} accent={note.accent} />
+                  ) : (
+                    (note.paragraphs || []).map((paragraph) => (
+                      <p key={paragraph} className="review-explanation">{paragraph}</p>
+                    ))
+                  )}
+
+                  {(note.image || note.video) && (
+                    <QuestionMedia
+                      question={{
+                        ...note,
+                        question: note.title,
+                      }}
+                      compact
+                    />
+                  )}
+
+                  {note.special === 'terrain' && <Terrain embedded />}
+
+                  <p className="collection-note">Référence : {note.law} — {note.reference}</p>
+                </div>
+              )}
+            </article>
+          )
+        })}
       </div>
     </div>
   )

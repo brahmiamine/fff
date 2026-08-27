@@ -1,3 +1,99 @@
+.notes-list {
+  gap: 10px;
+}
+
+.note-collapse {
+  overflow: hidden;
+  padding: 0;
+  transition: box-shadow 160ms ease, opacity 160ms ease, transform 160ms ease;
+}
+
+.note-collapse-dragging {
+  z-index: 2;
+  opacity: 0.72;
+  box-shadow: 0 10px 28px rgba(11, 30, 91, 0.24);
+  transform: scale(1.015);
+}
+
+.note-collapse-header {
+  display: flex;
+  min-height: 60px;
+}
+
+.note-drag-handle,
+.note-collapse-toggle {
+  border: 0;
+  background: transparent;
+  color: var(--fff-blue-dark);
+}
+
+.note-drag-handle {
+  width: 48px;
+  flex: 0 0 48px;
+  border-right: 1px solid var(--gray-100);
+  color: var(--gray-600);
+  font-size: 1.35rem;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+}
+
+.note-drag-handle:active {
+  cursor: grabbing;
+}
+
+.note-collapse-heading {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+}
+
+.note-collapse-toggle {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-width: 0;
+  padding: 14px 16px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.note-drag-handle:focus-visible,
+.note-collapse-toggle:focus-visible {
+  outline: 3px solid var(--fff-gold);
+  outline-offset: -3px;
+}
+
+.note-collapse-title {
+  margin: 0;
+  color: var(--fff-blue-dark);
+  font-size: 1rem;
+  line-height: 1.35;
+}
+
+.note-collapse-chevron {
+  flex: none;
+  color: var(--fff-blue);
+  font-size: 1.35rem;
+  line-height: 1;
+  transition: transform 160ms ease;
+}
+
+.note-collapse-toggle[aria-expanded='true'] .note-collapse-chevron {
+  transform: rotate(180deg);
+}
+
+.note-collapse-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border-top: 1px solid var(--gray-100);
+  padding: 16px 18px 18px;
+}
+
 .note-markdown {
   display: flex;
   flex-direction: column;
@@ -129,4 +225,25 @@
 :root[data-theme='dark'] .note-markdown code {
   background: #10182a;
   color: #edf1ff;
+}
+
+:root[data-theme='dark'] .note-drag-handle,
+:root[data-theme='dark'] .note-collapse-toggle,
+:root[data-theme='dark'] .note-collapse-title {
+  color: #edf1ff;
+}
+
+:root[data-theme='dark'] .note-drag-handle {
+  border-right-color: #27324d;
+}
+
+:root[data-theme='dark'] .note-collapse-content {
+  border-top-color: #27324d;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .note-collapse,
+  .note-collapse-chevron {
+    transition: none;
+  }
 }
