@@ -1,4 +1,3 @@
-import { useMemo } from 'react'
 import fffLogo from '../assets/fff-logo.png'
 import district75Logo from '../assets/district75-logo.png'
 import { resolveDefaultQuestionCount } from '../utils/settings.js'
@@ -21,15 +20,9 @@ export default function Home({
   resumeMode,
   onResume,
   onReset,
-  memorizedIds,
   settings,
 }) {
-  const memorizedSet = useMemo(() => new Set(memorizedIds), [memorizedIds])
-  const availableQuestions = useMemo(
-    () => allQuestions.filter((question) => !memorizedSet.has(question.id)),
-    [allQuestions, memorizedSet],
-  )
-  const totalQuestions = availableQuestions.length
+  const totalQuestions = allQuestions.length
 
   function handleReset() {
     if (window.confirm('Réinitialiser le quiz en cours ?')) onReset()
@@ -74,12 +67,6 @@ export default function Home({
         </div>
       ) : (
         <>
-          {noQuestionsAvailable && (
-            <div className="card setup-card">
-              <p className="setup-text">Toutes les questions sont mémorisées. Réactive-en depuis l’onglet « Mémoriser » pour recommencer à les voir dans les quiz.</p>
-            </div>
-          )}
-
           <div className="card setup-card">
             <p className="field-label">Choisir un entraînement</p>
             <div className="preset-grid">
