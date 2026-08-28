@@ -110,6 +110,20 @@ export function recordQuizAttempts(state, questions, answers, now = Date.now()) 
   return { ...current, questions: nextQuestions }
 }
 
+export function recordValidatedAttempt(state, question, selectedAnswer, now = Date.now()) {
+  if (!question?.id || !Array.isArray(selectedAnswer) || selectedAnswer.length === 0) {
+    return normalizeLearningState(state)
+  }
+
+  const attempted = recordQuizAttempts(
+    state,
+    [question],
+    { [question.id]: selectedAnswer },
+    now,
+  )
+  return markQuestionsValidated(attempted, question.id)
+}
+
 function statFor(state, questionId) {
   return normalizeLearningState(state).questions[questionId] || null
 }
