@@ -26,6 +26,7 @@ import {
   loadLearningState,
   markQuestionsValidated,
   recordQuizAttempts,
+  recordValidatedAttempt,
   saveLearningState,
   selectAdaptiveQuestions,
   selectFavoriteQuestions,
@@ -315,14 +316,18 @@ export default function App() {
       lot: activeLot,
     }, activeLot)
     setHistory(loadHistory(activeLot))
-    setLearning((current) => {
-      const attempted = recordQuizAttempts(current, state.quizQuestions, finalAnswers)
-      if (state.mode !== 'exam') return attempted
-      const answeredIds = state.quizQuestions
-        .filter((question) => (finalAnswers[question.id] || []).length > 0)
-        .map((question) => question.id)
-      return markQuestionsValidated(attempted, answeredIds)
-    })
+
+    // En entraînement, chaque réponse est enregistrée dès l'appui sur « Valider ».
+    // En examen, il n'y a pas de validation intermédiaire : on enregistre tout à la fin.
+    if (state.mode === 'exam') {
+      setLearning((current) => {
+        const attempted = recordQuizAttempts(current, state.quizQuestions, finalAnswers)
+        const answeredIds = state.quizQuestions
+          .filter((question) => (finalAnswers[question.id] || []).length > 0)
+          .map((question) => question.id)
+        return markQuestionsValidated(attempted, answeredIds)
+      })
+    }
 
     setState((current) => ({
       ...current,
@@ -370,8 +375,8 @@ export default function App() {
     setLearning((current) => toggleFavorite(current, questionId))
   }
 
-  function handleQuestionValidated(questionId) {
-    setLearning((current) => markQuestionsValidated(current, questionId))
+  function handleQuestionValidated(question, selectedAnswer) {
+    setLearning((current) => recordValidatedAttempt(current, question, selectedAnswer))
   }
 
   function handleSettingsChange(patch) {
