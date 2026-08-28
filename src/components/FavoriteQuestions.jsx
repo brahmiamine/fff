@@ -1,11 +1,9 @@
 import QuestionMedia from './QuestionMedia.jsx'
 import PageBackButton from './PageBackButton.jsx'
 
-export default function FavoriteQuestions({ questions, favoriteIds, memorizedIds, onToggleFavorite, onStart, onBack }) {
+export default function FavoriteQuestions({ questions, favoriteIds, onToggleFavorite, onStart, onBack }) {
   const favorites = new Set(favoriteIds)
-  const memorized = new Set(memorizedIds)
   const items = questions.filter((question) => favorites.has(question.id))
-  const trainableItems = items.filter((question) => !memorized.has(question.id))
 
   return (
     <div className="screen collection-screen">
@@ -18,13 +16,13 @@ export default function FavoriteQuestions({ questions, favoriteIds, memorizedIds
         </p>
       </div>
 
-      {trainableItems.length > 0 && (
+      {items.length > 0 && (
         <button
           type="button"
           className="btn btn-primary collection-start-button"
-          onClick={() => onStart({ count: Math.min(20, trainableItems.length), preset: 'favorites' })}
+          onClick={() => onStart({ count: Math.min(20, items.length), preset: 'favorites' })}
         >
-          Réviser mes favoris ({Math.min(20, trainableItems.length)})
+          Réviser mes favoris ({Math.min(20, items.length)})
         </button>
       )}
 
@@ -35,23 +33,18 @@ export default function FavoriteQuestions({ questions, favoriteIds, memorizedIds
         </div>
       ) : (
         <div className="review-list">
-          {items.map((question) => {
-            const isMemorized = memorized.has(question.id)
-            return (
-              <article key={question.id} className="card collection-item">
-                <div className="collection-item-meta">
-                  <span className="badge">{question.category}</span>
-                  {isMemorized && <span className="badge collection-muted-badge">Mémorisée</span>}
-                </div>
-                <p className="review-question">{question.question}</p>
-                <QuestionMedia question={question} compact />
-                {isMemorized && <p className="collection-note">Cette question reste dans tes favoris mais ne sera pas proposée dans les quiz.</p>}
-                <button type="button" className="collection-remove-button" onClick={() => onToggleFavorite(question.id)}>
-                  ★ Retirer des favoris
-                </button>
-              </article>
-            )
-          })}
+          {items.map((question) => (
+            <article key={question.id} className="card collection-item">
+              <div className="collection-item-meta">
+                <span className="badge">{question.category}</span>
+              </div>
+              <p className="review-question">{question.question}</p>
+              <QuestionMedia question={question} compact />
+              <button type="button" className="collection-remove-button" onClick={() => onToggleFavorite(question.id)}>
+                ★ Retirer des favoris
+              </button>
+            </article>
+          ))}
         </div>
       )}
     </div>
