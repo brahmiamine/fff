@@ -189,6 +189,7 @@
   color: var(--fff-blue-dark);
   padding: 14px 16px;
   text-align: left;
+  text-decoration: none;
   font: inherit;
   cursor: pointer;
 }
