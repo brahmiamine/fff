@@ -5,14 +5,11 @@ import { selectUnvalidatedQuestions } from '../utils/questionFilters.js'
 export default function UnvalidatedQuestions({
   questions,
   validatedIds,
-  memorizedIds = [],
   quizCount = 0,
   onStart,
   onBack,
 }) {
   const items = selectUnvalidatedQuestions(questions, validatedIds)
-  const eligibleItems = selectUnvalidatedQuestions(questions, validatedIds, memorizedIds)
-  const excludedMemorizedCount = items.length - eligibleItems.length
 
   return (
     <div className="screen collection-screen">
@@ -30,11 +27,6 @@ export default function UnvalidatedQuestions({
           <div>
             <strong>Travailler les questions jamais validées</strong>
             <p>Le nombre de questions, le mode et le chrono utilisent tes Paramètres.</p>
-            {excludedMemorizedCount > 0 && (
-              <small>
-                {excludedMemorizedCount} question{excludedMemorizedCount > 1 ? 's' : ''} mémorisée{excludedMemorizedCount > 1 ? 's' : ''} reste{excludedMemorizedCount > 1 ? 'nt' : ''} exclue{excludedMemorizedCount > 1 ? 's' : ''} des quiz.
-              </small>
-            )}
           </div>
           <button
             type="button"
