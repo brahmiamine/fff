@@ -3,14 +3,6 @@ import fffLogo from '../assets/fff-logo.png'
 import district75Logo from '../assets/district75-logo.png'
 import { resolveDefaultQuestionCount } from '../utils/settings.js'
 
-function formatDuration(totalSeconds) {
-  const minutes = Math.floor(totalSeconds / 60)
-  const seconds = totalSeconds % 60
-  if (minutes === 0) return `${seconds} s`
-  if (seconds === 0) return `${minutes} min`
-  return `${minutes} min ${seconds} s`
-}
-
 function PresetButton({ title, detail, disabled, onClick }) {
   return (
     <button type="button" className="preset-card" disabled={disabled} onClick={onClick}>
@@ -29,7 +21,6 @@ export default function Home({
   resumeMode,
   onResume,
   onReset,
-  learningSummary,
   memorizedIds,
   settings,
 }) {
@@ -48,8 +39,9 @@ export default function Home({
   const quickCount = Math.min(10, totalQuestions)
   const noQuestionsAvailable = totalQuestions === 0
   const questionTimeSeconds = settings.questionTimeSeconds
-  const examTimeLimit = standardCount * questionTimeSeconds
-  const customTimeLimit = settings.defaultTimed ? examTimeLimit : null
+  const standardTimeLimit = settings.defaultTimed ? standardCount * questionTimeSeconds : null
+  const quickTimeLimit = settings.defaultTimed ? quickCount * questionTimeSeconds : null
+  const isExamMode = settings.defaultMode === 'exam'
 
   function startCustomQuiz() {
     onStart({
@@ -57,7 +49,7 @@ export default function Home({
       category: 'all',
       mode: settings.defaultMode,
       preset: 'custom',
-      timeLimitSeconds: customTimeLimit,
+      timeLimitSeconds: standardTimeLimit,
     })
   }
 
@@ -82,13 +74,6 @@ export default function Home({
         </div>
       ) : (
         <>
-          <div className="card dashboard-card">
-            <div><strong>{learningSummary.validatedQuestions}</strong><span>questions répondues</span></div>
-            <div><strong>{learningSummary.masteredQuestions}</strong><span>maîtrisées</span></div>
-            <div><strong>{learningSummary.mistakeCount}</strong><span>erreurs actives</span></div>
-            <div><strong>{learningSummary.memorizedCount}</strong><span>mémorisées</span></div>
-          </div>
-
           {noQuestionsAvailable && (
             <div className="card setup-card">
               <p className="setup-text">Toutes les questions sont mémorisées. Réactive-en depuis l’onglet « Mémoriser » pour recommencer à les voir dans les quiz.</p>
@@ -98,11 +83,28 @@ export default function Home({
           <div className="card setup-card">
             <p className="field-label">Choisir un entraînement</p>
             <div className="preset-grid">
-              <PresetButton title="⚡ Quiz rapide" detail={`${quickCount} questions`} disabled={quickCount === 0} onClick={() => onStart({ count: quickCount, preset: 'quick' })} />
-              <PresetButton title="🎯 Entraînement" detail={`${standardCount} questions`} disabled={standardCount === 0} onClick={() => onStart({ count: standardCount, preset: 'training' })} />
-              <PresetButton title="⏱ Examen blanc" detail={`${standardCount} questions · ${formatDuration(examTimeLimit)}`} disabled={standardCount === 0} onClick={() => onStart({ count: standardCount, preset: 'mock', mode: 'exam', timeLimitSeconds: examTimeLimit })} />
-              <PresetButton title="🧠 Adaptatif" detail="priorise tes besoins" disabled={standardCount === 0} onClick={() => onStart({ count: standardCount, preset: 'adaptive' })} />
-              <PresetButton title="📉 Points faibles" detail="catégories à renforcer" disabled={standardCount === 0} onClick={() => onStart({ count: standardCount, preset: 'weak' })} />
+              <PresetButton
+                title={isExamMode ? '⚡ Examen rapide' : '⚡ Quiz rapide'}
+                detail={`${quickCount} questions`}
+                disabled={quickCount === 0}
+                onClick={() => onStart({
+                  count: quickCount,
+                  preset: 'quick',
+                  mode: settings.defaultMode,
+                  timeLimitSeconds: quickTimeLimit,
+                })}
+              />
+              <PresetButton
+                title={isExamMode ? '🎯 Examen' : '🎯 Entraînement'}
+                detail={`${standardCount} questions`}
+                disabled={standardCount === 0}
+                onClick={() => onStart({
+                  count: standardCount,
+                  preset: 'training',
+                  mode: settings.defaultMode,
+                  timeLimitSeconds: standardTimeLimit,
+                })}
+              />
             </div>
           </div>
 
