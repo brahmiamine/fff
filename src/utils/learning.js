@@ -7,7 +7,7 @@ function scopedLearningKey(lot = 'lot1') {
 }
 
 export function emptyLearningState() {
-  return { version: 1, favorites: [], memorized: [], validated: [], questions: {} }
+  return { version: 2, favorites: [], validated: [], questions: {} }
 }
 
 function normalizeIdList(value) {
@@ -25,9 +25,8 @@ export function normalizeLearningState(value) {
   if (!value || typeof value !== 'object') return emptyLearningState()
   const questions = value.questions && typeof value.questions === 'object' ? value.questions : {}
   return {
-    version: 1,
+    version: 2,
     favorites: normalizeIdList(value.favorites),
-    memorized: normalizeIdList(value.memorized),
     validated: migrateValidatedIds(value, questions),
     questions,
   }
@@ -79,25 +78,12 @@ export function toggleFavorite(state, questionId) {
   return { ...current, favorites: [...favorites] }
 }
 
-export function toggleMemorized(state, questionId) {
-  const current = normalizeLearningState(state)
-  const memorized = new Set(current.memorized)
-  if (memorized.has(questionId)) memorized.delete(questionId)
-  else memorized.add(questionId)
-  return { ...current, memorized: [...memorized] }
-}
-
 export function markQuestionsValidated(state, questionIds) {
   const current = normalizeLearningState(state)
   const validated = new Set(current.validated)
   const ids = Array.isArray(questionIds) ? questionIds : [questionIds]
   ids.filter(Boolean).forEach((questionId) => validated.add(questionId))
   return { ...current, validated: [...validated] }
-}
-
-export function excludeMemorizedQuestions(questions, state) {
-  const memorized = new Set(normalizeLearningState(state).memorized)
-  return questions.filter((question) => !memorized.has(question.id))
 }
 
 export function recordQuizAttempts(state, questions, answers, now = Date.now()) {
@@ -170,7 +156,6 @@ export function selectFavoriteQuestions(questions, state, count) {
 
 export function computeLearningSummary(questions, state) {
   const current = normalizeLearningState(state)
-  const memorized = new Set(current.memorized)
   const knownQuestionIds = new Set(questions.map((question) => question.id))
   const validated = new Set(current.validated.filter((questionId) => knownQuestionIds.has(questionId)))
   const perQuestion = questions.map((question) => {
@@ -202,7 +187,7 @@ export function computeLearningSummary(questions, state) {
     .sort((a, b) => a.rate - b.rate)
 
   const seenQuestions = perQuestion.filter((item) => item.seenCount > 0)
-  const mistakeCount = perQuestion.filter((item) => item.lastResult === false && !memorized.has(item.id)).length
+  const mistakeCount = perQuestion.filter((item) => item.lastResult === false).length
 
   return {
     totalQuestions: questions.length,
@@ -212,7 +197,6 @@ export function computeLearningSummary(questions, state) {
     masteredQuestions: seenQuestions.filter((item) => item.mastery >= 0.8 && item.seenCount >= 2).length,
     mistakeCount,
     favoriteCount: current.favorites.length,
-    memorizedCount: current.memorized.length,
     categories,
     perQuestion,
   }
