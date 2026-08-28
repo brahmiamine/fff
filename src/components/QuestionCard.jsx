@@ -8,8 +8,6 @@ export default function QuestionCard({
   selected,
   revealed,
   onToggleOption,
-  isFavorite,
-  onToggleFavorite,
   showExplanations = true,
 }) {
   const [showAbbreviations, setShowAbbreviations] = useState(false)
@@ -31,11 +29,6 @@ export default function QuestionCard({
           <span className="badge">{question.category}</span>
           <span className="badge badge-type">{isMultiple ? 'Choix multiple' : 'Choix unique'}</span>
           {question.law && <span className="badge badge-law">{question.law}</span>}
-        </div>
-        <div className="question-learning-actions">
-          <button type="button" className={`favorite-button ${isFavorite ? 'favorite-active' : ''}`} aria-label={isFavorite ? 'Retirer des favoris' : 'Ajouter aux favoris'} aria-pressed={isFavorite} onClick={onToggleFavorite}>
-            {isFavorite ? '★' : '☆'}
-          </button>
         </div>
       </div>
 
