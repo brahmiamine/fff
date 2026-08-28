@@ -21,22 +21,23 @@ const NAV_ITEMS = [
     ),
   },
   {
-    screen: 'notes',
-    label: 'Mes notes',
-    icon: (
-      <>
-        <path d="M5 4h14v16H5z" />
-        <path d="M8 8h8M8 12h8M8 16h5" />
-      </>
-    ),
-  },
-  {
     screen: 'documents',
     label: 'Mes documents',
     icon: (
       <>
         <path d="M6 3h8l4 4v14H6z" />
         <path d="M14 3v5h5M9 12h6M9 16h6" />
+      </>
+    ),
+  },
+  {
+    screen: 'statistics',
+    label: 'Statistiques',
+    icon: (
+      <>
+        <path d="M4 20V11h4v9" />
+        <path d="M10 20V5h4v15" />
+        <path d="M16 20v-7h4v7" />
       </>
     ),
   },
@@ -53,7 +54,7 @@ const NAV_ITEMS = [
 ]
 
 const REVIEW_SUBPAGES = new Set(['memorized', 'favorites', 'mistakes', 'unvalidated'])
-const SETTINGS_SUBPAGES = new Set(['statistics', 'answers'])
+const SETTINGS_SUBPAGES = new Set(['answers'])
 
 export default function BottomNav({ activeScreen, onNavigate }) {
   function handleNavigate(screen) {
