@@ -1,4 +1,5 @@
 import { playSound } from '../utils/sound.js'
+import { QUESTION_LOTS } from '../data/questionLots.js'
 
 const COUNT_OPTIONS = [10, 20, 30, 'all']
 const QUESTION_TIME_OPTIONS = [30, 45, 60]
@@ -29,7 +30,7 @@ export default function Settings({
 
   function handleResetAll() {
     const confirmed = window.confirm(
-      'Réinitialiser toutes les données ? Les quiz en cours, statistiques, favoris, erreurs, questions mémorisées et paramètres seront effacés pour tous les lots.',
+      'Réinitialiser toutes les données ? Les quiz en cours, statistiques, favoris, erreurs et paramètres seront effacés pour tous les lots.',
     )
     if (confirmed) onResetAll()
   }
@@ -56,28 +57,22 @@ export default function Settings({
           <p>Le lot sélectionné pilote toute l’application.</p>
         </div>
 
-        <div className="settings-field settings-field-stacked">
+        <label className="settings-field">
           <span>
             <strong>Lot de questions</strong>
             <small>Les quiz, révisions, favoris, erreurs, questions validées et statistiques restent séparés pour chaque lot.</small>
           </span>
-          <div className="settings-segmented" role="group" aria-label="Lot de questions">
-            <button
-              type="button"
-              className={settings.questionLot === 'lot1' ? 'settings-segment-active' : ''}
-              onClick={() => onChange({ questionLot: 'lot1' })}
-            >
-              Lot 1
-            </button>
-            <button
-              type="button"
-              className={settings.questionLot === 'lot2' ? 'settings-segment-active' : ''}
-              onClick={() => onChange({ questionLot: 'lot2' })}
-            >
-              Lot 2
-            </button>
-          </div>
-        </div>
+          <select
+            className="settings-select settings-lot-select"
+            value={settings.questionLot}
+            onChange={(event) => onChange({ questionLot: event.target.value })}
+            aria-label="Lot de questions"
+          >
+            {QUESTION_LOTS.map((lot) => (
+              <option key={lot.id} value={lot.id}>{lot.label}</option>
+            ))}
+          </select>
+        </label>
 
         <label className="settings-field">
           <span>
@@ -180,7 +175,7 @@ export default function Settings({
           checked={settings.showExplanations}
           onChange={(value) => onChange({ showExplanations: value })}
           label="Afficher les explications"
-          description="Affiche le texte explicatif dans les corrections et les questions mémorisées."
+          description="Affiche le texte explicatif dans les corrections."
         />
       </section>
 
