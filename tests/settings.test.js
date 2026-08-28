@@ -9,6 +9,7 @@ import {
 
 test('settings defaults stay stable and user values are normalized', () => {
   assert.deepEqual(defaultSettings(), {
+    questionLot: 'lot1',
     defaultQuestionCount: 20,
     defaultMode: 'training',
     defaultTimed: false,
@@ -20,6 +21,7 @@ test('settings defaults stay stable and user values are normalized', () => {
   })
 
   assert.deepEqual(normalizeSettings({
+    questionLot: 'lot2',
     defaultQuestionCount: '30',
     defaultMode: 'exam',
     defaultTimed: true,
@@ -29,6 +31,7 @@ test('settings defaults stay stable and user values are normalized', () => {
     soundsEnabled: true,
     theme: 'dark',
   }), {
+    questionLot: 'lot2',
     defaultQuestionCount: 30,
     defaultMode: 'exam',
     defaultTimed: true,
@@ -50,6 +53,7 @@ test('older saved settings inherit safe experience defaults', () => {
     theme: 'system',
   })
 
+  assert.equal(settings.questionLot, 'lot1')
   assert.equal(settings.animationsEnabled, true)
   assert.equal(settings.soundsEnabled, false)
 })
@@ -65,6 +69,7 @@ test('custom question time accepts practical values and rejects out-of-range val
 
 test('invalid settings fall back safely without losing valid preferences', () => {
   const settings = normalizeSettings({
+    questionLot: 'lot99',
     defaultQuestionCount: 99,
     defaultMode: 'invalid',
     defaultTimed: 'yes',
@@ -75,6 +80,7 @@ test('invalid settings fall back safely without losing valid preferences', () =>
     theme: 'neon',
   })
 
+  assert.equal(settings.questionLot, 'lot1')
   assert.equal(settings.defaultQuestionCount, 20)
   assert.equal(settings.defaultMode, 'training')
   assert.equal(settings.defaultTimed, false)
