@@ -2,6 +2,7 @@ import { abbreviateQuestion } from '../data/abbreviations.js'
 
 const DEFAULT_SOURCE = 'CDA District 75 — test théorique corrigé'
 const DEFAULT_SEASON = '2026/2027'
+const DLR_RULE_CATEGORY = /^règlement\s+dlr\b/i
 
 export function inferLaw(question) {
   const text = `${question.category || ''} ${question.question || ''}`.toLowerCase()
@@ -45,5 +46,7 @@ export function enrichQuestion(question) {
 }
 
 export function enrichQuestions(questions) {
-  return questions.map(enrichQuestion)
+  return questions
+    .filter((question) => !DLR_RULE_CATEGORY.test(question.category || ''))
+    .map(enrichQuestion)
 }
