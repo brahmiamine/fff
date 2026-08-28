@@ -6,14 +6,11 @@ import AnswerKey from './components/AnswerKey.jsx'
 import History from './components/History.jsx'
 import BottomNav from './components/BottomNav.jsx'
 import ReviewsHub from './components/ReviewsHub.jsx'
-import MemorizedQuestions from './components/MemorizedQuestions.jsx'
 import FavoriteQuestions from './components/FavoriteQuestions.jsx'
 import MistakeQuestions from './components/MistakeQuestions.jsx'
 import Settings from './components/Settings.jsx'
 import UnvalidatedQuestions from './components/UnvalidatedQuestions.jsx'
 import Documents from './components/Documents.jsx'
-import questionsLot1 from './data/questions-lot1.json'
-import questionsLot2 from './data/questions-lot2.json'
 import { prepareQuestions, shuffle } from './utils/shuffle.js'
 import { loadProgress, saveProgress, clearProgress } from './utils/storage.js'
 import { loadHistory, addHistoryEntry, clearHistory } from './utils/history.js'
@@ -26,7 +23,6 @@ import {
   clearLearningState,
   computeLearningSummary,
   emptyLearningState,
-  excludeMemorizedQuestions,
   loadLearningState,
   markQuestionsValidated,
   recordQuizAttempts,
@@ -36,7 +32,6 @@ import {
   selectMistakeQuestions,
   selectWeakQuestions,
   toggleFavorite,
-  toggleMemorized,
 } from './utils/learning.js'
 import {
   clearSettings,
@@ -48,25 +43,50 @@ import {
 } from './utils/settings.js'
 
 const PASS_THRESHOLD = 0.8
-const LOT_IDS = ['lot1', 'lot2']
 
 function isQuestionEnabled(question) {
   return !/^Règlement DLR\b/i.test(question.category || '')
 }
 
-const QUESTIONS_BY_LOT = {
-  lot1: enrichQuestions(questionsLot1.filter(isQuestionEnabled)),
-  lot2: enrichQuestions(questionsLot2.filter(isQuestionEnabled)),
-}
+const QUESTION_MODULES = import.meta.glob('./data/questions-lot*.json', {
+  eager: true,
+  import: 'default',
+})
+
+const QUESTION_LOTS = Object.entries(QUESTION_MODULES)
+  .map(([path, questions]) => {
+    const match = path.match(/questions-(lot\d+)\.json$/)
+    if (!match) return null
+    const id = match[1]
+    const number = Number(id.replace('lot', ''))
+    return {
+      id,
+      label: `Lot ${Number.isFinite(number) ? number : id.replace('lot', '')}`,
+      questions: enrichQuestions((Array.isArray(questions) ? questions : []).filter(isQuestionEnabled)),
+    }
+  })
+  .filter(Boolean)
+  .sort((a, b) => Number(a.id.replace('lot', '')) - Number(b.id.replace('lot', '')))
+
+const QUESTION_LOT_OPTIONS = QUESTION_LOTS.map(({ id, label }) => ({ id, label }))
+const QUESTIONS_BY_LOT = Object.fromEntries(QUESTION_LOTS.map(({ id, questions }) => [id, questions]))
+const LOT_IDS = QUESTION_LOTS.map(({ id }) => id)
+const FALLBACK_LOT = LOT_IDS[0] || 'lot1'
 
 function questionsForLot(lot) {
-  return QUESTIONS_BY_LOT[lot] || QUESTIONS_BY_LOT.lot1
+  return QUESTIONS_BY_LOT[lot] || QUESTIONS_BY_LOT[FALLBACK_LOT] || []
+}
+
+function loadAvailableSettings() {
+  const settings = loadSettings()
+  return QUESTIONS_BY_LOT[settings.questionLot]
+    ? settings
+    : { ...settings, questionLot: FALLBACK_LOT }
 }
 
 const NAV_SCREENS = new Set([
   'home',
   'reviews',
-  'memorized',
   'favorites',
   'mistakes',
   'unvalidated',
@@ -138,23 +158,20 @@ function prepareSelectedQuestions(pool, learning, count, preset) {
 }
 
 export default function App() {
-  const [settings, setSettings] = useState(() => loadSettings())
+  const [settings, setSettings] = useState(loadAvailableSettings)
   const activeLot = settings.questionLot
   const QUESTIONS = questionsForLot(activeLot)
-  const [state, setState] = useState(() => initialStateForLot(loadSettings().questionLot))
-  const [history, setHistory] = useState(() => loadHistory(loadSettings().questionLot))
-  const [learning, setLearning] = useState(() => loadLearningState(loadSettings().questionLot))
+  const [state, setState] = useState(() => initialStateForLot(loadAvailableSettings().questionLot))
+  const [history, setHistory] = useState(() => loadHistory(loadAvailableSettings().questionLot))
+  const [learning, setLearning] = useState(() => loadLearningState(loadAvailableSettings().questionLot))
 
   const learningSummary = useMemo(() => computeLearningSummary(QUESTIONS, learning), [QUESTIONS, learning])
   const unvalidatedEligibleTotal = useMemo(
-    () => selectUnvalidatedQuestions(QUESTIONS, learning.validated, learning.memorized).length,
-    [QUESTIONS, learning.validated, learning.memorized],
+    () => selectUnvalidatedQuestions(QUESTIONS, learning.validated).length,
+    [QUESTIONS, learning.validated],
   )
   const unvalidatedQuizCount = resolveDefaultQuestionCount(settings.defaultQuestionCount, unvalidatedEligibleTotal)
-  const mistakeCount = useMemo(() => {
-    const memorized = new Set(learning.memorized)
-    return learningSummary.perQuestion.filter((item) => item.lastResult === false && !memorized.has(item.id)).length
-  }, [learning.memorized, learningSummary])
+  const mistakeCount = learningSummary.mistakeCount
 
   useEffect(() => {
     try {
@@ -208,11 +225,10 @@ export default function App() {
   }, [settings.theme])
 
   function startQuiz({ count, category = 'all', timeLimitSeconds = null, mode = 'training', preset = 'custom' }) {
-    let categoryPool = category !== 'all' ? QUESTIONS.filter((q) => q.category === category) : QUESTIONS
+    let pool = category !== 'all' ? QUESTIONS.filter((q) => q.category === category) : QUESTIONS
     if (preset === 'unvalidated') {
-      categoryPool = selectUnvalidatedQuestions(categoryPool, learning.validated)
+      pool = selectUnvalidatedQuestions(pool, learning.validated)
     }
-    const pool = excludeMemorizedQuestions(categoryPool, learning)
     const quizQuestions = prepareSelectedQuestions(pool, learning, count, preset)
     if (quizQuestions.length === 0) {
       window.alert('Aucune question disponible pour cette sélection.')
@@ -249,11 +265,10 @@ export default function App() {
 
   function reviewMistakes() {
     const wrong = state.quizQuestions.filter((q) => !isAnswerCorrect(q, state.answers[q.id] || []))
-    const eligibleWrong = excludeMemorizedQuestions(wrong, learning)
-    if (eligibleWrong.length === 0) return
+    if (wrong.length === 0) return
     setState({
       screen: 'quiz',
-      quizQuestions: shuffle(eligibleWrong).map((q) => ({ ...q, options: shuffle(q.options) })),
+      quizQuestions: shuffle(wrong).map((q) => ({ ...q, options: shuffle(q.options) })),
       answers: {},
       currentIndex: 0,
       timeLimitSeconds: null,
@@ -265,22 +280,15 @@ export default function App() {
   }
 
   function resumeQuiz() {
-    const eligibleQuestions = excludeMemorizedQuestions(state.quizQuestions, learning)
-    if (eligibleQuestions.length === 0) {
+    if (state.quizQuestions.length === 0) {
       clearProgress(activeLot)
       setState(freshState())
       return
     }
 
-    const currentQuestionId = state.quizQuestions[state.currentIndex]?.id
-    const matchingIndex = eligibleQuestions.findIndex((question) => question.id === currentQuestionId)
-    const nextIndex = matchingIndex >= 0 ? matchingIndex : Math.min(state.currentIndex, eligibleQuestions.length - 1)
-
     setState((current) => ({
       ...resumeTimedState(current),
       screen: 'quiz',
-      quizQuestions: eligibleQuestions,
-      currentIndex: nextIndex,
     }))
   }
 
@@ -362,16 +370,13 @@ export default function App() {
     setLearning((current) => toggleFavorite(current, questionId))
   }
 
-  function handleToggleMemorized(questionId) {
-    setLearning((current) => toggleMemorized(current, questionId))
-  }
-
   function handleQuestionValidated(questionId) {
     setLearning((current) => markQuestionsValidated(current, questionId))
   }
 
   function handleSettingsChange(patch) {
-    const next = normalizeSettings({ ...settings, ...patch })
+    let next = normalizeSettings({ ...settings, ...patch })
+    if (!QUESTIONS_BY_LOT[next.questionLot]) next = { ...next, questionLot: FALLBACK_LOT }
 
     if (next.questionLot !== activeLot) {
       const nextLot = next.questionLot
@@ -392,9 +397,12 @@ export default function App() {
     })
     clearSettings()
     const defaults = defaultSettings()
+    const nextSettings = QUESTIONS_BY_LOT[defaults.questionLot]
+      ? defaults
+      : { ...defaults, questionLot: FALLBACK_LOT }
     setHistory([])
     setLearning(emptyLearningState())
-    setSettings(defaults)
+    setSettings(nextSettings)
     setState(freshState())
   }
 
@@ -413,8 +421,6 @@ export default function App() {
           resumeMode={state.mode}
           onResume={resumeQuiz}
           onReset={resetProgress}
-          learningSummary={learningSummary}
-          memorizedIds={learning.memorized}
           settings={settings}
         />
       )}
@@ -435,8 +441,6 @@ export default function App() {
           onValidate={handleQuestionValidated}
           favoriteIds={learning.favorites}
           onToggleFavorite={handleToggleFavorite}
-          memorizedIds={learning.memorized}
-          onToggleMemorized={handleToggleMemorized}
           showExplanations={settings.showExplanations}
           animationsEnabled={settings.animationsEnabled}
           soundsEnabled={settings.soundsEnabled}
@@ -473,11 +477,9 @@ export default function App() {
       )}
       {state.screen === 'reviews' && (
         <ReviewsHub
-          memorizedCount={learning.memorized.length}
           favoriteCount={learning.favorites.length}
           mistakeCount={mistakeCount}
           neverValidatedCount={learningSummary.neverValidatedCount}
-          onOpenMemorized={() => navigateTo('memorized')}
           onOpenFavorites={() => navigateTo('favorites')}
           onOpenMistakes={() => navigateTo('mistakes')}
           onOpenUnvalidated={() => navigateTo('unvalidated')}
@@ -487,7 +489,6 @@ export default function App() {
         <UnvalidatedQuestions
           questions={QUESTIONS}
           validatedIds={learning.validated}
-          memorizedIds={learning.memorized}
           quizCount={unvalidatedQuizCount}
           onStart={startUnvalidatedQuiz}
           onBack={() => navigateTo('reviews')}
@@ -497,25 +498,16 @@ export default function App() {
       {state.screen === 'settings' && (
         <Settings
           settings={settings}
+          questionLots={QUESTION_LOT_OPTIONS}
           onChange={handleSettingsChange}
           onViewQuestions={() => navigateTo('answers')}
           onResetAll={handleResetAllData}
-        />
-      )}
-      {state.screen === 'memorized' && (
-        <MemorizedQuestions
-          questions={QUESTIONS}
-          memorizedIds={learning.memorized}
-          onToggleMemorized={handleToggleMemorized}
-          showExplanations={settings.showExplanations}
-          onBack={() => navigateTo('reviews')}
         />
       )}
       {state.screen === 'favorites' && (
         <FavoriteQuestions
           questions={QUESTIONS}
           favoriteIds={learning.favorites}
-          memorizedIds={learning.memorized}
           onToggleFavorite={handleToggleFavorite}
           onStart={startQuiz}
           onBack={() => navigateTo('reviews')}
@@ -525,7 +517,6 @@ export default function App() {
         <MistakeQuestions
           questions={QUESTIONS}
           learningSummary={learningSummary}
-          memorizedIds={learning.memorized}
           onStart={startQuiz}
           onBack={() => navigateTo('reviews')}
         />
