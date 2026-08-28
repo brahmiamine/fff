@@ -1,21 +1,12 @@
 export default function ReviewsHub({
-  memorizedCount,
   favoriteCount,
   mistakeCount,
   neverValidatedCount,
-  onOpenMemorized,
   onOpenFavorites,
   onOpenMistakes,
   onOpenUnvalidated,
 }) {
   const items = [
-    {
-      key: 'memorized',
-      icon: '✓',
-      title: 'Questions mémorisées',
-      description: `${memorizedCount} question${memorizedCount > 1 ? 's' : ''} mémorisée${memorizedCount > 1 ? 's' : ''}`,
-      onClick: onOpenMemorized,
-    },
     {
       key: 'favorites',
       icon: '★',
@@ -43,7 +34,7 @@ export default function ReviewsHub({
     <div className="screen collection-screen reviews-hub-screen">
       <div className="collection-heading">
         <h1 className="app-title">Révisions</h1>
-        <p className="app-subtitle">Retrouve tes questions enregistrées et celles à retravailler</p>
+        <p className="app-subtitle">Retrouve tes favoris, tes erreurs et les questions à valider</p>
       </div>
 
       {items.map((item) => (
