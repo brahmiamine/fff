@@ -24,14 +24,12 @@ export default function Settings({
   onChange,
   onViewQuestions,
   onResetAll,
-  historyCount,
-  learningSummary,
 }) {
   const customQuestionTime = !QUESTION_TIME_OPTIONS.includes(settings.questionTimeSeconds)
 
   function handleResetAll() {
     const confirmed = window.confirm(
-      'Réinitialiser toutes les données ? Les quiz en cours, statistiques, favoris, erreurs, questions mémorisées et paramètres seront effacés.',
+      'Réinitialiser toutes les données ? Les quiz en cours, statistiques, favoris, erreurs, questions mémorisées et paramètres seront effacés pour tous les lots.',
     )
     if (confirmed) onResetAll()
   }
@@ -54,8 +52,31 @@ export default function Settings({
 
       <section className="card settings-card" aria-labelledby="settings-quiz-title">
         <div className="settings-section-heading">
-          <h2 id="settings-quiz-title">Quiz par défaut</h2>
-          <p>Ces choix préremplissent l’accueil.</p>
+          <h2 id="settings-quiz-title">Questions et quiz</h2>
+          <p>Le lot sélectionné pilote toute l’application.</p>
+        </div>
+
+        <div className="settings-field settings-field-stacked">
+          <span>
+            <strong>Lot de questions</strong>
+            <small>Les quiz, révisions, favoris, erreurs, questions validées et statistiques restent séparés pour chaque lot.</small>
+          </span>
+          <div className="settings-segmented" role="group" aria-label="Lot de questions">
+            <button
+              type="button"
+              className={settings.questionLot === 'lot1' ? 'settings-segment-active' : ''}
+              onClick={() => onChange({ questionLot: 'lot1' })}
+            >
+              Lot 1
+            </button>
+            <button
+              type="button"
+              className={settings.questionLot === 'lot2' ? 'settings-segment-active' : ''}
+              onClick={() => onChange({ questionLot: 'lot2' })}
+            >
+              Lot 2
+            </button>
+          </div>
         </div>
 
         <label className="settings-field">
@@ -203,7 +224,7 @@ export default function Settings({
         <span className="settings-link-icon" aria-hidden="true">☰</span>
         <span className="settings-link-copy">
           <strong>Toutes les questions</strong>
-          <small>Consulter les questions et les bonnes réponses</small>
+          <small>Consulter les questions et les bonnes réponses du lot actif</small>
         </span>
         <span className="settings-link-arrow" aria-hidden="true">→</span>
       </button>
