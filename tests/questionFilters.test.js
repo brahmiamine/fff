@@ -76,7 +76,6 @@ test('filter options are derived from the question bank', () => {
   })
 })
 
-test('unvalidated selection excludes validated and optionally memorized questions', () => {
+test('unvalidated selection excludes only validated questions', () => {
   assert.deepEqual(selectUnvalidatedQuestions(questions, ['q1']).map((q) => q.id), ['q2', 'q3'])
-  assert.deepEqual(selectUnvalidatedQuestions(questions, ['q1'], ['q2']).map((q) => q.id), ['q3'])
 })
