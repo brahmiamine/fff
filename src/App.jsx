@@ -11,9 +11,9 @@ import FavoriteQuestions from './components/FavoriteQuestions.jsx'
 import MistakeQuestions from './components/MistakeQuestions.jsx'
 import Settings from './components/Settings.jsx'
 import UnvalidatedQuestions from './components/UnvalidatedQuestions.jsx'
-import Notes from './components/Notes.jsx'
 import Documents from './components/Documents.jsx'
-import questionsData from './data/questions.json'
+import questionsLot1 from './data/questions-lot1.json'
+import questionsLot2 from './data/questions-lot2.json'
 import { prepareQuestions, shuffle } from './utils/shuffle.js'
 import { loadProgress, saveProgress, clearProgress } from './utils/storage.js'
 import { loadHistory, addHistoryEntry, clearHistory } from './utils/history.js'
@@ -48,7 +48,21 @@ import {
 } from './utils/settings.js'
 
 const PASS_THRESHOLD = 0.8
-const QUESTIONS = enrichQuestions(questionsData)
+const LOT_IDS = ['lot1', 'lot2']
+
+function isQuestionEnabled(question) {
+  return !/^Règlement DLR\b/i.test(question.category || '')
+}
+
+const QUESTIONS_BY_LOT = {
+  lot1: enrichQuestions(questionsLot1.filter(isQuestionEnabled)),
+  lot2: enrichQuestions(questionsLot2.filter(isQuestionEnabled)),
+}
+
+function questionsForLot(lot) {
+  return QUESTIONS_BY_LOT[lot] || QUESTIONS_BY_LOT.lot1
+}
+
 const NAV_SCREENS = new Set([
   'home',
   'reviews',
@@ -56,7 +70,6 @@ const NAV_SCREENS = new Set([
   'favorites',
   'mistakes',
   'unvalidated',
-  'notes',
   'documents',
   'settings',
   'statistics',
@@ -96,8 +109,9 @@ function restoreLastScreen(baseState) {
   return baseState
 }
 
-function initialState() {
-  const saved = loadProgress(QUESTIONS)
+function initialStateForLot(lot) {
+  const questions = questionsForLot(lot)
+  const saved = loadProgress(questions, lot)
   if (!saved) return restoreLastScreen(freshState())
   const hydrated = {
     ...freshState(),
@@ -124,15 +138,17 @@ function prepareSelectedQuestions(pool, learning, count, preset) {
 }
 
 export default function App() {
-  const [state, setState] = useState(initialState)
-  const [history, setHistory] = useState(() => loadHistory())
-  const [learning, setLearning] = useState(() => loadLearningState())
   const [settings, setSettings] = useState(() => loadSettings())
+  const activeLot = settings.questionLot
+  const QUESTIONS = questionsForLot(activeLot)
+  const [state, setState] = useState(() => initialStateForLot(loadSettings().questionLot))
+  const [history, setHistory] = useState(() => loadHistory(loadSettings().questionLot))
+  const [learning, setLearning] = useState(() => loadLearningState(loadSettings().questionLot))
 
-  const learningSummary = useMemo(() => computeLearningSummary(QUESTIONS, learning), [learning])
+  const learningSummary = useMemo(() => computeLearningSummary(QUESTIONS, learning), [QUESTIONS, learning])
   const unvalidatedEligibleTotal = useMemo(
     () => selectUnvalidatedQuestions(QUESTIONS, learning.validated, learning.memorized).length,
-    [learning.validated, learning.memorized],
+    [QUESTIONS, learning.validated, learning.memorized],
   )
   const unvalidatedQuizCount = resolveDefaultQuestionCount(settings.defaultQuestionCount, unvalidatedEligibleTotal)
   const mistakeCount = useMemo(() => {
@@ -150,13 +166,13 @@ export default function App() {
 
   useEffect(() => {
     if (state.quizQuestions.length > 0 && ['home', 'quiz', 'results'].includes(state.screen)) {
-      saveProgress(state)
+      saveProgress(state, activeLot)
     }
-  }, [state])
+  }, [state, activeLot])
 
   useEffect(() => {
-    saveLearningState(learning)
-  }, [learning])
+    saveLearningState(learning, activeLot)
+  }, [learning, activeLot])
 
   useEffect(() => {
     saveSettings(settings)
@@ -251,7 +267,7 @@ export default function App() {
   function resumeQuiz() {
     const eligibleQuestions = excludeMemorizedQuestions(state.quizQuestions, learning)
     if (eligibleQuestions.length === 0) {
-      clearProgress()
+      clearProgress(activeLot)
       setState(freshState())
       return
     }
@@ -288,8 +304,9 @@ export default function App() {
       categoryStats,
       mode: state.mode,
       preset: state.preset,
-    })
-    setHistory(loadHistory())
+      lot: activeLot,
+    }, activeLot)
+    setHistory(loadHistory(activeLot))
     setLearning((current) => {
       const attempted = recordQuizAttempts(current, state.quizQuestions, finalAnswers)
       if (state.mode !== 'exam') return attempted
@@ -312,7 +329,7 @@ export default function App() {
   }
 
   function resetProgress() {
-    clearProgress()
+    clearProgress(activeLot)
     setState(freshState())
   }
 
@@ -332,12 +349,12 @@ export default function App() {
   }
 
   function handleClearHistory() {
-    clearHistory()
+    clearHistory(activeLot)
     setHistory([])
   }
 
   function handleResetLearning() {
-    clearLearningState()
+    clearLearningState(activeLot)
     setLearning(emptyLearningState())
   }
 
@@ -354,17 +371,30 @@ export default function App() {
   }
 
   function handleSettingsChange(patch) {
-    setSettings((current) => normalizeSettings({ ...current, ...patch }))
+    const next = normalizeSettings({ ...settings, ...patch })
+
+    if (next.questionLot !== activeLot) {
+      const nextLot = next.questionLot
+      setHistory(loadHistory(nextLot))
+      setLearning(loadLearningState(nextLot))
+      setState(initialStateForLot(nextLot))
+      window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
+    }
+
+    setSettings(next)
   }
 
   function handleResetAllData() {
-    clearProgress()
-    clearHistory()
-    clearLearningState()
+    LOT_IDS.forEach((lot) => {
+      clearProgress(lot)
+      clearHistory(lot)
+      clearLearningState(lot)
+    })
     clearSettings()
+    const defaults = defaultSettings()
     setHistory([])
     setLearning(emptyLearningState())
-    setSettings(defaultSettings())
+    setSettings(defaults)
     setState(freshState())
   }
 
@@ -437,7 +467,6 @@ export default function App() {
         <History
           history={history}
           learningSummary={learningSummary}
-          onBack={() => navigateTo('settings')}
           onClear={handleClearHistory}
           onResetLearning={handleResetLearning}
         />
@@ -464,17 +493,13 @@ export default function App() {
           onBack={() => navigateTo('reviews')}
         />
       )}
-      {state.screen === 'notes' && <Notes />}
       {state.screen === 'documents' && <Documents />}
       {state.screen === 'settings' && (
         <Settings
           settings={settings}
           onChange={handleSettingsChange}
           onViewQuestions={() => navigateTo('answers')}
-          onViewStatistics={() => navigateTo('statistics')}
           onResetAll={handleResetAllData}
-          historyCount={history.length}
-          learningSummary={learningSummary}
         />
       )}
       {state.screen === 'memorized' && (
