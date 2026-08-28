@@ -1,9 +1,25 @@
 const HISTORY_KEY = 'cda-quiz-history-v1'
 const MAX_ENTRIES = 50
 
-export function loadHistory() {
+function scopedHistoryKey(lot = 'lot1') {
+  return `${HISTORY_KEY}:${lot}`
+}
+
+export function loadHistory(lot = 'lot1') {
   try {
-    const raw = localStorage.getItem(HISTORY_KEY)
+    const scopedKey = scopedHistoryKey(lot)
+    let raw = localStorage.getItem(scopedKey)
+
+    // Migration des anciennes statistiques vers le lot 1.
+    if (!raw && lot === 'lot1') {
+      const legacy = localStorage.getItem(HISTORY_KEY)
+      if (legacy) {
+        raw = legacy
+        localStorage.setItem(scopedKey, legacy)
+        localStorage.removeItem(HISTORY_KEY)
+      }
+    }
+
     const parsed = raw ? JSON.parse(raw) : []
     return Array.isArray(parsed) ? parsed : []
   } catch {
@@ -11,19 +27,20 @@ export function loadHistory() {
   }
 }
 
-export function addHistoryEntry(entry) {
+export function addHistoryEntry(entry, lot = 'lot1') {
   try {
-    const history = loadHistory()
+    const history = loadHistory(lot)
     history.unshift(entry)
-    localStorage.setItem(HISTORY_KEY, JSON.stringify(history.slice(0, MAX_ENTRIES)))
+    localStorage.setItem(scopedHistoryKey(lot), JSON.stringify(history.slice(0, MAX_ENTRIES)))
   } catch {
     // localStorage unavailable — history just won't persist.
   }
 }
 
-export function clearHistory() {
+export function clearHistory(lot = 'lot1') {
   try {
-    localStorage.removeItem(HISTORY_KEY)
+    localStorage.removeItem(scopedHistoryKey(lot))
+    if (lot === 'lot1') localStorage.removeItem(HISTORY_KEY)
   } catch {
     // ignore
   }
