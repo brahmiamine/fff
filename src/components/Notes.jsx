@@ -10,6 +10,8 @@ import {
 import QuestionMedia from './QuestionMedia.jsx'
 import Terrain from './Terrain.jsx'
 
+const VISIBLE_NOTES = NOTES.filter((note) => note.id !== 'main-position-du-bras')
+
 function renderInlineMarkdown(text, keyPrefix = 'inline') {
   const tokens = text.split(/(\*\*.+?\*\*|==.+?==|`.+?`|\*[^*]+?\*)/g)
 
@@ -113,8 +115,8 @@ function MarkdownNote({ content, accent = 'blue' }) {
 }
 
 export default function Notes() {
-  const noteIds = useMemo(() => NOTES.map((note) => note.id), [])
-  const notesById = useMemo(() => new Map(NOTES.map((note) => [note.id, note])), [])
+  const noteIds = useMemo(() => VISIBLE_NOTES.map((note) => note.id), [])
+  const notesById = useMemo(() => new Map(VISIBLE_NOTES.map((note) => [note.id, note])), [])
   const [noteOrder, setNoteOrder] = useState(() => loadNoteOrder(noteIds))
   const [openNoteIds, setOpenNoteIds] = useState(() => new Set(loadOpenNoteIds(noteIds)))
   const [draggedNoteId, setDraggedNoteId] = useState(null)
