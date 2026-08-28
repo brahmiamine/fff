@@ -1,15 +1,22 @@
 #!/usr/bin/env node
-import { readFileSync } from 'node:fs'
+import { readFileSync, readdirSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import path from 'node:path'
 import { isSafeMediaReference } from '../src/utils/media.js'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
-const questionFiles = ['questions-lot1.json', 'questions-lot2.json']
+const dataDir = path.join(__dirname, '..', 'src', 'data')
+const questionFiles = readdirSync(dataDir)
+  .filter((fileName) => /^questions-lot\d+\.json$/.test(fileName))
+  .sort((a, b) => {
+    const aNumber = Number(a.match(/\d+/)?.[0] || 0)
+    const bNumber = Number(b.match(/\d+/)?.[0] || 0)
+    return aNumber - bNumber
+  })
 let hasErrors = false
 
 function validateFile(fileName) {
-  const filePath = path.join(__dirname, '..', 'src', 'data', fileName)
+  const filePath = path.join(dataDir, fileName)
   let questions
 
   try {
@@ -91,6 +98,11 @@ function validateFile(fileName) {
   }
 
   console.log(`✓ ${fileName} is valid (${questions.length} questions)`)
+}
+
+if (questionFiles.length === 0) {
+  console.error('✗ No question lot found in src/data')
+  process.exit(1)
 }
 
 questionFiles.forEach(validateFile)
