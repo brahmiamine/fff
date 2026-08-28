@@ -26,8 +26,7 @@
 }
 
 .collection-screen,
-.history-screen,
-.memorized-screen {
+.history-screen {
   padding-top: 28px;
 }
 
@@ -75,18 +74,6 @@
   justify-content: space-between;
   gap: 8px;
   flex-wrap: wrap;
-}
-
-.collection-muted-badge {
-  background: var(--success-bg);
-  color: #0d5c30;
-}
-
-.collection-note {
-  margin: 0;
-  color: var(--gray-600);
-  font-size: 0.8rem;
-  line-height: 1.4;
 }
 
 .collection-remove-button {
