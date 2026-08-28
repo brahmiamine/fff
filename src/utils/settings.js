@@ -2,11 +2,13 @@ const SETTINGS_KEY = 'cda-quiz-settings-v1'
 const QUESTION_COUNTS = new Set([10, 20, 30])
 const MODES = new Set(['training', 'exam'])
 const THEMES = new Set(['system', 'light', 'dark'])
+const QUESTION_LOTS = new Set(['lot1', 'lot2'])
 const MIN_QUESTION_TIME_SECONDS = 10
 const MAX_QUESTION_TIME_SECONDS = 300
 
 export function defaultSettings() {
   return {
+    questionLot: 'lot1',
     defaultQuestionCount: 20,
     defaultMode: 'training',
     defaultTimed: false,
@@ -39,6 +41,7 @@ export function normalizeSettings(value) {
     : QUESTION_COUNTS.has(numericCount) ? numericCount : defaults.defaultQuestionCount
 
   return {
+    questionLot: QUESTION_LOTS.has(value.questionLot) ? value.questionLot : defaults.questionLot,
     defaultQuestionCount,
     defaultMode: MODES.has(value.defaultMode) ? value.defaultMode : defaults.defaultMode,
     defaultTimed: typeof value.defaultTimed === 'boolean' ? value.defaultTimed : defaults.defaultTimed,
