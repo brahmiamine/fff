@@ -1,5 +1,4 @@
 import { playSound } from '../utils/sound.js'
-import { QUESTION_LOTS } from '../data/questionLots.js'
 
 const COUNT_OPTIONS = [10, 20, 30, 'all']
 const QUESTION_TIME_OPTIONS = [30, 45, 60]
@@ -22,6 +21,7 @@ function ToggleSetting({ checked, onChange, label, description }) {
 
 export default function Settings({
   settings,
+  questionLots,
   onChange,
   onViewQuestions,
   onResetAll,
@@ -68,7 +68,7 @@ export default function Settings({
             onChange={(event) => onChange({ questionLot: event.target.value })}
             aria-label="Lot de questions"
           >
-            {QUESTION_LOTS.map((lot) => (
+            {questionLots.map((lot) => (
               <option key={lot.id} value={lot.id}>{lot.label}</option>
             ))}
           </select>
