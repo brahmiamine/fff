@@ -301,8 +301,7 @@
 }
 
 :root[data-theme='dark'] .btn-secondary,
-:root[data-theme='dark'] .chip,
-:root[data-theme='dark'] .memorized-button {
+:root[data-theme='dark'] .chip {
   border-color: #46526f;
   background: #10182a;
   color: #dce4ff;
@@ -355,10 +354,6 @@
 :root[data-theme='dark'] .badge-law {
   background: #25315c;
   color: #dfe6ff;
-}
-
-:root[data-theme='dark'] .collection-muted-badge {
-  color: #9be6b8;
 }
 
 @media (hover: hover) and (pointer: fine) {
