@@ -2,6 +2,10 @@ import { isAnswerCorrect } from './answers.js'
 
 const LEARNING_KEY = 'cda-quiz-learning-v1'
 
+function scopedLearningKey(lot = 'lot1') {
+  return `${LEARNING_KEY}:${lot}`
+}
+
 export function emptyLearningState() {
   return { version: 1, favorites: [], memorized: [], validated: [], questions: {} }
 }
@@ -29,26 +33,39 @@ export function normalizeLearningState(value) {
   }
 }
 
-export function loadLearningState() {
+export function loadLearningState(lot = 'lot1') {
   try {
-    const raw = localStorage.getItem(LEARNING_KEY)
+    const scopedKey = scopedLearningKey(lot)
+    let raw = localStorage.getItem(scopedKey)
+
+    // Migration de l'ancien état d'apprentissage vers le lot 1.
+    if (!raw && lot === 'lot1') {
+      const legacy = localStorage.getItem(LEARNING_KEY)
+      if (legacy) {
+        raw = legacy
+        localStorage.setItem(scopedKey, legacy)
+        localStorage.removeItem(LEARNING_KEY)
+      }
+    }
+
     return raw ? normalizeLearningState(JSON.parse(raw)) : emptyLearningState()
   } catch {
     return emptyLearningState()
   }
 }
 
-export function saveLearningState(state) {
+export function saveLearningState(state, lot = 'lot1') {
   try {
-    localStorage.setItem(LEARNING_KEY, JSON.stringify(normalizeLearningState(state)))
+    localStorage.setItem(scopedLearningKey(lot), JSON.stringify(normalizeLearningState(state)))
   } catch {
     // Offline/private mode can disable localStorage. The app still works for the current session.
   }
 }
 
-export function clearLearningState() {
+export function clearLearningState(lot = 'lot1') {
   try {
-    localStorage.removeItem(LEARNING_KEY)
+    localStorage.removeItem(scopedLearningKey(lot))
+    if (lot === 'lot1') localStorage.removeItem(LEARNING_KEY)
   } catch {
     // ignore
   }
