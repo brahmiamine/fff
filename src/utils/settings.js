@@ -1,21 +1,23 @@
+import { QUESTION_LOT_IDS } from '../data/questionLots.js'
+
 const SETTINGS_KEY = 'cda-quiz-settings-v1'
 const QUESTION_COUNTS = new Set([10, 20, 30])
 const MODES = new Set(['training', 'exam'])
 const THEMES = new Set(['system', 'light', 'dark'])
-const QUESTION_LOTS = new Set(['lot1', 'lot2'])
+const QUESTION_LOTS = new Set(QUESTION_LOT_IDS)
 const MIN_QUESTION_TIME_SECONDS = 10
 const MAX_QUESTION_TIME_SECONDS = 300
 
 export function defaultSettings() {
   return {
-    questionLot: 'lot1',
+    questionLot: QUESTION_LOT_IDS[0] || 'lot1',
     defaultQuestionCount: 20,
     defaultMode: 'training',
     defaultTimed: false,
     questionTimeSeconds: 60,
     showExplanations: true,
     animationsEnabled: true,
-    soundsEnabled: false,
+    soundsEnabled: true,
     theme: 'system',
   }
 }
