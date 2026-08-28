@@ -2,6 +2,7 @@ import { playSound } from '../utils/sound.js'
 
 const COUNT_OPTIONS = [10, 20, 30, 'all']
 const QUESTION_TIME_OPTIONS = [30, 45, 60]
+const NOTES_URL = 'https://organic-power-292.notion.site/R-sume-3ca770c37f8a80b3a5eafe112edcf32d'
 
 function ToggleSetting({ checked, onChange, label, description }) {
   return (
@@ -22,7 +23,6 @@ export default function Settings({
   settings,
   onChange,
   onViewQuestions,
-  onViewStatistics,
   onResetAll,
   historyCount,
   learningSummary,
@@ -208,14 +208,20 @@ export default function Settings({
         <span className="settings-link-arrow" aria-hidden="true">→</span>
       </button>
 
-      <button type="button" className="settings-link-card" onClick={onViewStatistics}>
-        <span className="settings-link-icon" aria-hidden="true">▥</span>
+      <a
+        className="settings-link-card"
+        href={NOTES_URL}
+        target="_blank"
+        rel="noreferrer"
+        aria-label="Ouvrir Mes notes dans Notion"
+      >
+        <span className="settings-link-icon" aria-hidden="true">✎</span>
         <span className="settings-link-copy">
-          <strong>Statistiques</strong>
-          <small>{historyCount} quiz terminé{historyCount > 1 ? 's' : ''} · {learningSummary.seenQuestions} question{learningSummary.seenQuestions > 1 ? 's' : ''} vue{learningSummary.seenQuestions > 1 ? 's' : ''}</small>
+          <strong>Mes notes</strong>
+          <small>Ouvrir le résumé arbitre directement dans Notion</small>
         </span>
-        <span className="settings-link-arrow" aria-hidden="true">→</span>
-      </button>
+        <span className="settings-link-arrow" aria-hidden="true">↗</span>
+      </a>
 
       <section className="card settings-card settings-danger-card" aria-labelledby="settings-data-title">
         <div className="settings-section-heading">
