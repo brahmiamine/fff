@@ -6,134 +6,218 @@
 
 .notes-web-header {
   display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.notes-site-tabs {
-  display: flex;
-  gap: 8px;
-  overflow-x: auto;
-  padding-bottom: 2px;
-  scrollbar-width: none;
-}
-
-.notes-site-tabs::-webkit-scrollbar {
-  display: none;
-}
-
-.notes-site-tab {
-  flex: 0 0 auto;
-  border: 1px solid var(--gray-200);
-  border-radius: 999px;
-  background: var(--white);
-  color: var(--fff-blue-dark);
-  padding: 8px 13px;
-  font: inherit;
-  font-size: 0.88rem;
-  font-weight: 750;
-  cursor: pointer;
-}
-
-.notes-site-tab.is-active {
-  border-color: var(--fff-blue);
-  background: var(--fff-blue);
-  color: #fff;
-}
-
-.notes-site-shell {
-  min-height: 0;
-  overflow: hidden;
-  border: 1px solid var(--gray-200);
-  border-radius: 16px;
-  background: #fff;
-  box-shadow: 0 4px 18px rgba(11, 30, 91, 0.08);
-}
-
-.notes-site-toolbar {
-  display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  min-height: 48px;
-  border-bottom: 1px solid var(--gray-100);
-  padding: 8px 12px;
-  color: var(--fff-blue-dark);
-  background: var(--white);
 }
 
-.notes-site-toolbar strong {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  font-size: 0.92rem;
-}
-
-.notes-site-open {
+.notes-source-link {
   flex: 0 0 auto;
-  border-radius: 9px;
+  border-radius: 10px;
   background: var(--gray-100);
   color: var(--fff-blue);
-  padding: 7px 10px;
+  padding: 8px 11px;
   text-decoration: none;
   font-size: 0.82rem;
   font-weight: 800;
 }
 
-.notes-site-frame {
-  display: block;
-  width: 100%;
-  height: calc(100dvh - 220px);
-  min-height: 620px;
-  border: 0;
+.notion-note-page {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  border: 1px solid var(--gray-200);
+  border-radius: 16px;
+  background: var(--white);
+  padding: 18px;
+  color: var(--gray-700);
+  box-shadow: 0 4px 18px rgba(11, 30, 91, 0.08);
+}
+
+.notion-note-page section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.notion-note-page section + section {
+  border-top: 1px solid var(--gray-100);
+  padding-top: 22px;
+}
+
+.notion-note-page h2,
+.notion-note-page h3,
+.notion-note-page p,
+.notion-note-page ul,
+.notion-note-page ol,
+.notion-note-page blockquote {
+  margin: 0;
+}
+
+.notion-note-page h2 {
+  color: var(--fff-blue-dark);
+  font-size: 1.22rem;
+  line-height: 1.35;
+}
+
+.notion-note-page h3 {
+  color: var(--fff-blue-dark);
+  font-size: 1rem;
+  line-height: 1.35;
+}
+
+.notion-note-page p,
+.notion-note-page li {
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+
+.notion-note-page ul,
+.notion-note-page ol {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding-left: 22px;
+}
+
+.notion-note-page strong {
+  color: var(--fff-blue-dark);
+}
+
+.notion-note-page blockquote {
+  border-left: 4px solid var(--fff-blue);
+  border-radius: 0 10px 10px 0;
+  background: #eef2ff;
+  padding: 10px 12px;
+  color: var(--fff-blue-dark);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.notion-callout {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  border-radius: 12px;
+  padding: 12px 13px;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.notion-callout-red {
+  border: 1px solid #ffc4ca;
+  background: #fff1f3;
+}
+
+.notion-callout-red strong {
+  color: #9c1725;
+}
+
+.notion-callout-yellow {
+  border: 1px solid #efd98c;
+  background: #fff9df;
+  color: #675315;
+}
+
+.notion-note-details {
+  overflow: hidden;
+  border: 1px solid var(--gray-200);
+  border-radius: 12px;
   background: #fff;
 }
 
-.notes-empty {
-  color: var(--gray-600);
-  padding: 18px;
+.notion-note-details > summary {
+  cursor: pointer;
+  list-style-position: inside;
+  padding: 12px 13px;
+  color: var(--fff-blue-dark);
+  font-size: 0.94rem;
+  font-weight: 800;
+  line-height: 1.35;
+  user-select: none;
 }
 
-:root[data-theme='dark'] .notes-site-shell {
-  border-color: #27324d;
-  box-shadow: none;
+.notion-note-details[open] > summary {
+  border-bottom: 1px solid var(--gray-100);
 }
 
-:root[data-theme='dark'] .notes-site-toolbar {
-  border-bottom-color: #27324d;
-  background: #111a2d;
-  color: #edf1ff;
+.notion-note-details-content {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  padding: 13px;
 }
 
-:root[data-theme='dark'] .notes-site-open,
-:root[data-theme='dark'] .notes-site-tab {
-  border-color: #27324d;
+.notion-note-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+}
+
+:root[data-theme='dark'] .notes-source-link {
   background: #18233a;
   color: #edf1ff;
 }
 
-:root[data-theme='dark'] .notes-site-tab.is-active {
-  border-color: var(--fff-blue);
-  background: var(--fff-blue);
-  color: #fff;
+:root[data-theme='dark'] .notion-note-page {
+  border-color: #27324d;
+  background: #111a2d;
+  color: #c7d0e4;
+  box-shadow: none;
+}
+
+:root[data-theme='dark'] .notion-note-page section + section,
+:root[data-theme='dark'] .notion-note-details[open] > summary {
+  border-top-color: #27324d;
+  border-bottom-color: #27324d;
+}
+
+:root[data-theme='dark'] .notion-note-page h2,
+:root[data-theme='dark'] .notion-note-page h3,
+:root[data-theme='dark'] .notion-note-page strong,
+:root[data-theme='dark'] .notion-note-details > summary {
+  color: #edf1ff;
+}
+
+:root[data-theme='dark'] .notion-note-page blockquote {
+  background: #17213a;
+  color: #edf1ff;
+}
+
+:root[data-theme='dark'] .notion-note-details {
+  border-color: #27324d;
+  background: #10182a;
+}
+
+:root[data-theme='dark'] .notion-callout-red {
+  border-color: #64313a;
+  background: #3b1720;
+}
+
+:root[data-theme='dark'] .notion-callout-red strong {
+  color: #ff9ba6;
+}
+
+:root[data-theme='dark'] .notion-callout-yellow {
+  border-color: #665619;
+  background: #312b18;
+  color: #fff0b7;
 }
 
 @media (max-width: 640px) {
-  .notes-screen {
-    gap: 8px;
+  .notes-web-header {
+    align-items: flex-start;
   }
 
-  .notes-site-shell {
+  .notes-source-link {
+    padding: 7px 9px;
+    font-size: 0.78rem;
+  }
+
+  .notion-note-page {
     margin-inline: -4px;
     border-radius: 12px;
-  }
-
-  .notes-site-toolbar {
-    min-height: 44px;
-  }
-
-  .notes-site-frame {
-    height: calc(100dvh - 185px);
-    min-height: 540px;
+    padding: 14px;
   }
 }
