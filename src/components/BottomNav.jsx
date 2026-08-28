@@ -53,7 +53,7 @@ const NAV_ITEMS = [
   },
 ]
 
-const REVIEW_SUBPAGES = new Set(['memorized', 'favorites', 'mistakes', 'unvalidated'])
+const REVIEW_SUBPAGES = new Set(['favorites', 'mistakes', 'unvalidated'])
 const SETTINGS_SUBPAGES = new Set(['answers'])
 
 export default function BottomNav({ activeScreen, onNavigate }) {
