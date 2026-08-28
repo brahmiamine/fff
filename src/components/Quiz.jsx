@@ -100,7 +100,7 @@ export default function Quiz({
 
   function handleValidate() {
     if (selected.length === 0) return
-    onValidate(question.id)
+    onValidate(question, selected)
     void playSound(isAnswerCorrect(question, selected) ? 'correct' : 'wrong', soundsEnabled)
     setRevealed(true)
   }
