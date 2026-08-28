@@ -16,7 +16,7 @@ test('settings defaults stay stable and user values are normalized', () => {
     questionTimeSeconds: 60,
     showExplanations: true,
     animationsEnabled: true,
-    soundsEnabled: false,
+    soundsEnabled: true,
     theme: 'system',
   })
 
@@ -28,7 +28,7 @@ test('settings defaults stay stable and user values are normalized', () => {
     questionTimeSeconds: 45,
     showExplanations: false,
     animationsEnabled: false,
-    soundsEnabled: true,
+    soundsEnabled: false,
     theme: 'dark',
   }), {
     questionLot: 'lot2',
@@ -38,7 +38,7 @@ test('settings defaults stay stable and user values are normalized', () => {
     questionTimeSeconds: 45,
     showExplanations: false,
     animationsEnabled: false,
-    soundsEnabled: true,
+    soundsEnabled: false,
     theme: 'dark',
   })
 })
@@ -55,7 +55,11 @@ test('older saved settings inherit safe experience defaults', () => {
 
   assert.equal(settings.questionLot, 'lot1')
   assert.equal(settings.animationsEnabled, true)
-  assert.equal(settings.soundsEnabled, false)
+  assert.equal(settings.soundsEnabled, true)
+})
+
+test('future numbered question lots are accepted', () => {
+  assert.equal(normalizeSettings({ questionLot: 'lot12' }).questionLot, 'lot12')
 })
 
 test('custom question time accepts practical values and rejects out-of-range values', () => {
@@ -69,7 +73,7 @@ test('custom question time accepts practical values and rejects out-of-range val
 
 test('invalid settings fall back safely without losing valid preferences', () => {
   const settings = normalizeSettings({
-    questionLot: 'lot99',
+    questionLot: 'bad-lot',
     defaultQuestionCount: 99,
     defaultMode: 'invalid',
     defaultTimed: 'yes',
@@ -87,7 +91,7 @@ test('invalid settings fall back safely without losing valid preferences', () =>
   assert.equal(settings.questionTimeSeconds, 60)
   assert.equal(settings.showExplanations, true)
   assert.equal(settings.animationsEnabled, true)
-  assert.equal(settings.soundsEnabled, false)
+  assert.equal(settings.soundsEnabled, true)
   assert.equal(settings.theme, 'system')
 })
 
