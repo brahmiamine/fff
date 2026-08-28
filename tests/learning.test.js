@@ -4,14 +4,12 @@ import { isAnswerCorrect } from '../src/utils/answers.js'
 import { getRemainingSeconds, pauseTimedState, resumeTimedState } from '../src/utils/session.js'
 import {
   computeLearningSummary,
-  excludeMemorizedQuestions,
   markQuestionsValidated,
   normalizeLearningState,
   recordQuizAttempts,
   selectAdaptiveQuestions,
   selectMistakeQuestions,
   toggleFavorite,
-  toggleMemorized,
 } from '../src/utils/learning.js'
 
 const questions = [
@@ -62,10 +60,10 @@ test('validated questions are counted once even after repeated validation', () =
   assert.equal(summary.perQuestion.find((item) => item.id === 'c').validated, false)
 })
 
-test('legacy learning data migrates attempted questions to validated ids', () => {
+test('legacy learning data migrates attempts and drops removed memorized data', () => {
   const state = normalizeLearningState({
     favorites: [],
-    memorized: [],
+    memorized: ['b'],
     questions: {
       a: { seenCount: 2 },
       b: { seenCount: 0 },
@@ -73,6 +71,7 @@ test('legacy learning data migrates attempted questions to validated ids', () =>
   })
 
   assert.deepEqual(state.validated, ['a'])
+  assert.equal('memorized' in state, false)
 })
 
 test('adaptive selection prioritizes unseen and weak/recently wrong questions', () => {
@@ -94,7 +93,7 @@ test('summary and favorites expose actionable progress counts without due dates'
   assert.equal(summary.seenQuestions, 2)
   assert.equal(summary.mistakeCount, 1)
   assert.equal(summary.favoriteCount, 1)
-  assert.equal(summary.memorizedCount, 0)
+  assert.equal('memorizedCount' in summary, false)
   assert.equal('dueCount' in summary, false)
 })
 
@@ -108,25 +107,4 @@ test('correct answer removes a question from current mistakes while keeping its 
   assert.equal(state.questions.a.lastResult, true)
   assert.deepEqual(selectMistakeQuestions(questions, state, 20).map((q) => q.id), [])
   assert.equal(computeLearningSummary(questions, state).mistakeCount, 0)
-})
-
-test('memorized questions stay excluded until explicitly restored', () => {
-  let state = toggleMemorized(undefined, 'b')
-  assert.deepEqual(excludeMemorizedQuestions(questions, state).map((q) => q.id), ['a', 'c'])
-  assert.equal(computeLearningSummary(questions, state).memorizedCount, 1)
-
-  state = toggleMemorized(state, 'b')
-  assert.deepEqual(excludeMemorizedQuestions(questions, state).map((q) => q.id), ['a', 'b', 'c'])
-  assert.equal(computeLearningSummary(questions, state).memorizedCount, 0)
-})
-
-test('memorized wrong questions are not counted as active errors', () => {
-  let state = recordQuizAttempts(undefined, [questions[1]], { b: ['2'] })
-  assert.equal(computeLearningSummary(questions, state).mistakeCount, 1)
-
-  state = toggleMemorized(state, 'b')
-  assert.equal(computeLearningSummary(questions, state).mistakeCount, 0)
-
-  state = toggleMemorized(state, 'b')
-  assert.equal(computeLearningSummary(questions, state).mistakeCount, 1)
 })
