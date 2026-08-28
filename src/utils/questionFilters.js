@@ -60,11 +60,7 @@ export function getQuestionFilterOptions(questions) {
   }
 }
 
-export function selectUnvalidatedQuestions(questions, validatedIds = [], memorizedIds = null) {
+export function selectUnvalidatedQuestions(questions, validatedIds = []) {
   const validated = new Set(validatedIds)
-  const memorized = memorizedIds == null ? null : new Set(memorizedIds)
-
-  return questions.filter((question) => (
-    !validated.has(question.id) && (!memorized || !memorized.has(question.id))
-  ))
+  return questions.filter((question) => !validated.has(question.id))
 }
