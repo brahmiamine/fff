@@ -1,11 +1,10 @@
 import QuestionMedia from './QuestionMedia.jsx'
 import PageBackButton from './PageBackButton.jsx'
 
-export default function MistakeQuestions({ questions, learningSummary, memorizedIds, onStart, onBack }) {
-  const memorized = new Set(memorizedIds)
+export default function MistakeQuestions({ questions, learningSummary, onStart, onBack }) {
   const questionById = new Map(questions.map((question) => [question.id, question]))
   const items = learningSummary.perQuestion
-    .filter((item) => item.lastResult === false && !memorized.has(item.id))
+    .filter((item) => item.lastResult === false)
     .map((item) => ({ ...item, sourceQuestion: questionById.get(item.id) }))
     .filter((item) => item.sourceQuestion)
     .sort((a, b) => b.wrongCount - a.wrongCount || a.mastery - b.mastery)
